@@ -1,146 +1,45 @@
----
-import { Icon } from 'astro-icon/components'
-import {
-  INSTAGRAM_URL,
-  YOUTUBE_URL,
-  TWITCH_URL,
-  TWITTER_URL,
-} from '../lib/config';
----
+Kommentiere beide Telefonnummer-Einträge so aus:
 
-<footer class='h-auto'>
-  <div class='w-full h-16 bg-gradient-to-b from-transparent to-emerald-950/20'>
-  </div>
-  <div
-    class='bg-emerald-950/20 h-full flex flex-col xl:flex-row gap-8 pb-8 justify-between px-16'
-  >
-    <div class='flex flex-col gap-4'>
-      <h2 class='text-lg font-bold' id='contact'>Kontakt</h2>
-      <ul class='flex flex-col gap-2'>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:mail' size={18} class='text-emerald-500' />
-          <span>
-            <a href='mailto:info@managames.de'>info&commat;managames.de</a>
-          </span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon
-            name='tabler:brand-whatsapp'
-            size={18}
-            class='text-emerald-500'
-          />
-          <span>
-            <a href='tel:+4917672250669'>+49 176 722 506 69</a>
-          </span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon
-            name='tabler:brand-whatsapp'
-            size={18}
-            class='text-emerald-500'
-          />
-          <span>
-            <a href='tel:+4917672250669'>+49 176 722 506 69</a>
-          </span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:map-pin' size={18} class='text-emerald-500' />
-          <span>
-            <a href='#'>Blissestr. 5, 10715 Berlin</a>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class='flex flex-col gap-4'>
-      <h2 class='text-lg font-bold'>Öffnungszeiten</h2>
-      <ul class='flex flex-col gap-2'>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:clock' size={18} class='text-emerald-500' />
-          <span>Montag</span>
-          <span>16:30 - 22 Uhr</span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:clock' size={18} class='text-emerald-500' />
-          <span>Dienstag</span>
-          <span>16:30 - 22 Uhr</span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:clock' size={18} class='text-emerald-500' />
-          <span>Mittwoch</span>
-          <span>16:30 - 22 Uhr</span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:clock' size={18} class='text-emerald-500' />
-          <span>Donnerstag</span>
-          <span>16:30 - 22 Uhr</span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:clock' size={18} class='text-emerald-500' />
-          <span>Freitag</span>
-          <span>16:30 - 22 Uhr</span>
-        </li>
-        <li class='flex gap-2 items-center'>
-          <Icon name='tabler:clock' size={18} class='text-emerald-500' />
-          <span>Samstag</span>
-          <span>13:30 - 22 Uhr</span>
-        </li>
-        <li class='flex gap-2 items-center text-neutral-500'>
-          <Icon name='tabler:clock' size={18} />
-          <span>Sonntag</span>
-          <span>geschlossen</span>
-        </li>
-      </ul>
-    </div>
-    <div class='flex flex-col gap-4'>
-      <h2 class='text-lg font-bold'>Wichtige Links</h2>
-      <ul>
-        <li>
-          <a href='/impressum' class='flex gap-2 items-center'>
-            <Icon name='tabler:user' size={18} class='text-emerald-500' />
-            <span>Impressum</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <ul
-    class='flex flex-col sm:flex-row px-8 justify-between xl:justify-center xl:gap-16 border-b-8 border-emerald-500 py-8 bg-emerald-950/20'
-  >
-    <li>
-      <a
-        href={INSTAGRAM_URL}
-        class='flex gap-2 items-center justify-center text-pink-500'
-      >
-        <Icon name='tabler:brand-instagram' size={18} />
-        <span>Instagram</span>
-      </a>
-    </li>
-    <li>
-      <a
-        href={YOUTUBE_URL}
-        class='flex gap-2 items-center justify-center text-red-500'
-      >
-        <Icon name='tabler:brand-youtube' size={18} />
-        <span>YouTube</span>
-      </a>
-    </li>
-    <li>
-      <a
-        href={TWITCH_URL}
-        class='flex gap-2 items-center justify-center text-purple-500'
-      >
-        <Icon name='tabler:brand-twitch' size={18} />
-        <span>Twitch</span>
-      </a>
-    </li>
-    <li>
-      <a
-        href={TWITTER_URL}
-        class='flex gap-2 items-center justify-center text-blue-500'
-      >
-        <Icon name='tabler:brand-twitter' size={18} />
-        <span>Twitter</span>
-      </a>
-    </li>
-  </ul>
-</footer>
+```astro
+<ul class='flex flex-col gap-2'>
+  <li class='flex gap-2 items-center'>
+    <Icon name='tabler:mail' size={18} class='text-emerald-500' />
+    <span>
+      <a href='mailto:info@managames.de'>info&commat;managames.de</a>
+    </span>
+  </li>
+
+  <!--
+  <li class='flex gap-2 items-center'>
+    <Icon
+      name='tabler:brand-whatsapp'
+      size={18}
+      class='text-emerald-500'
+    />
+    <span>
+      <a href='tel:+4917672250669'>+49 176 722 506 69</a>
+    </span>
+  </li>
+
+  <li class='flex gap-2 items-center'>
+    <Icon
+      name='tabler:brand-whatsapp'
+      size={18}
+      class='text-emerald-500'
+    />
+    <span>
+      <a href='tel:+4917672250669'>+49 176 722 506 69</a>
+    </span>
+  </li>
+  -->
+
+  <li class='flex gap-2 items-center'>
+    <Icon name='tabler:map-pin' size={18} class='text-emerald-500' />
+    <span>
+      <a href='#'>Blissestr. 5, 10715 Berlin</a>
+    </span>
+  </li>
+</ul>
+```
+
+Damit werden beide Telefonnummern vorerst nicht mehr auf der Website angezeigt.
