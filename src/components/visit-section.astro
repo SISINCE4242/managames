@@ -1,0 +1,200 @@
+﻿---
+import { Icon } from 'astro-icon/components';
+import SectionHeading from './section-heading.astro';
+import { CLOSED, INSTAGRAM_URL, OPENING_HOURS, SITE, TWITCH_URL } from '../lib/config';
+---
+
+<section id="visit" class="relative scroll-mt-24 py-20 sm:py-28">
+  <div class="mx-auto mb-20 h-px max-w-7xl bg-gradient-to-r from-transparent via-mana-400/35 to-transparent"></div>
+
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <SectionHeading
+      eyebrow="04 — Visit us"
+      title="See you"
+      accent="at the store."
+      align="center"
+      class="mx-auto max-w-2xl"
+    />
+
+    <div class="mt-14 grid gap-4 lg:grid-cols-3">
+      <!-- Opening hours -->
+      <div data-reveal data-tilt="4" class="panel panel-hover holo lg:col-span-2 p-6 sm:p-8">
+        <div class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-xl border border-mana-400/25 bg-mana-400/10 text-mana-300">
+            <Icon name="tabler:clock-hour-4" size={20} />
+          </span>
+          <h3 class="font-display text-xl font-bold text-neutral-50">Opening hours</h3>
+        </div>
+
+        <ul class="mt-6 grid gap-1 sm:grid-cols-2 sm:gap-x-8">
+          {
+            OPENING_HOURS.map((entry) => (
+              <li
+                data-hours-row={entry.weekday}
+                class="flex items-center justify-between gap-4 rounded-lg px-3 py-2.5 transition-colors duration-300"
+              >
+                <span
+                  class={`text-sm font-medium ${entry.hours === CLOSED ? 'text-neutral-600' : 'text-neutral-300'}`}
+                >
+                  {entry.day}
+                </span>
+                <span class="flex items-center gap-2.5">
+                  <span
+                    class="hours-today eyebrow hidden rounded-full bg-mana-400 px-2 py-0.5 text-[9px] font-bold text-black"
+                    aria-hidden="true"
+                  >
+                    Today
+                  </span>
+                  <span
+                    class={`font-mono text-sm tabular-nums ${entry.hours === CLOSED ? 'text-neutral-600' : 'text-neutral-200'}`}
+                  >
+                    {entry.hours}
+                  </span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div
+          id="open-status"
+          class="mt-6 hidden items-center gap-2.5 rounded-xl border px-4 py-3 text-sm font-semibold"
+        >
+          <span id="open-dot" class="h-2 w-2 shrink-0 rounded-full"></span>
+          <span id="open-text"></span>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div data-reveal style="--reveal-delay:110ms" data-tilt="4" class="panel panel-hover holo flex flex-col p-6 sm:p-8">
+        <div class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-xl border border-mana-400/25 bg-mana-400/10 text-mana-300">
+            <Icon name="tabler:map-pin" size={20} />
+          </span>
+          <h3 class="font-display text-xl font-bold text-neutral-50">How to find us</h3>
+        </div>
+
+        <address class="mt-6 not-italic">
+          <span class="block font-display text-lg font-semibold text-neutral-100">{SITE.name}</span>
+          <span class="mt-1 block text-neutral-400">{SITE.street}</span>
+          <span class="block text-neutral-400">{SITE.zip}</span>
+        </address>
+
+        <p class="mt-4 flex items-start gap-2 text-sm text-neutral-500">
+          <Icon name="tabler:train" size={17} class="mt-0.5 shrink-0 text-mana-400" />
+          Right at Blissestrasse underground station (U7)
+        </p>
+
+        <a href={`mailto:${SITE.email}`} class="mt-4 flex items-center gap-2 text-sm text-mana-300 transition-colors hover:text-mana-100">
+          <Icon name="tabler:mail" size={17} />
+          {SITE.email}
+        </a>
+
+        <a href={SITE.mapsUrl} target="_blank" rel="noopener" class="btn btn-primary mt-auto w-full !mt-7">
+          <Icon name="tabler:navigation" size={17} />
+          Start navigation
+        </a>
+      </div>
+    </div>
+
+    <!-- CTA banner -->
+    <div
+      data-reveal
+      class="relative mt-4 overflow-hidden rounded-2xl border border-mana-400/25 bg-[linear-gradient(140deg,rgba(18,201,107,.14),rgba(5,7,10,.85)_60%)] p-8 text-center sm:p-12"
+    >
+      <div class="pointer-events-none absolute inset-0 opacity-40">
+        <div class="absolute left-1/2 top-0 h-56 w-[70%] -translate-x-1/2 rounded-full bg-mana-400/30 blur-[80px]"></div>
+      </div>
+
+      <div class="relative">
+        <h3 class="font-display text-3xl font-bold leading-tight text-neutral-50 sm:text-4xl">
+          Never played a TCG before?
+        </h3>
+        <p class="mx-auto mt-4 max-w-xl text-neutral-400">
+          No problem — just drop by. We will explain the rules, lend you a deck
+          and play the first round with you.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-primary">
+            <Icon name="tabler:brand-instagram" size={18} />
+            Follow us on Instagram
+          </a>
+          <a href={TWITCH_URL} target="_blank" rel="noopener" class="btn btn-ghost">
+            <Icon name="tabler:brand-twitch" size={18} />
+            Watch us on Twitch
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const HOURS: Record<number, [number, number] | null> = {
+    0: null,
+    1: [16 * 60 + 30, 22 * 60],
+    2: [16 * 60 + 30, 22 * 60],
+    3: [16 * 60 + 30, 22 * 60],
+    4: [16 * 60 + 30, 22 * 60],
+    5: [16 * 60 + 30, 22 * 60],
+    6: [13 * 60 + 30, 22 * 60],
+  };
+
+  const now = new Date();
+  const weekday = now.getDay();
+  const minutes = now.getHours() * 60 + now.getMinutes();
+
+  /* Highlight today's row */
+  const row = document.querySelector<HTMLElement>(`[data-hours-row="${weekday}"]`);
+  if (row) {
+    row.classList.add('bg-mana-400/[0.08]', 'ring-1', 'ring-inset', 'ring-mana-400/25');
+    row.querySelector('.hours-today')?.classList.remove('hidden');
+  }
+
+  /* Open / closed */
+  const status = document.getElementById('open-status');
+  const dot = document.getElementById('open-dot');
+  const text = document.getElementById('open-text');
+
+  if (status && dot && text) {
+    const today = HOURS[weekday];
+    const isOpen = Boolean(today && minutes >= today[0] && minutes < today[1]);
+
+    const format = (value: number) =>
+      `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;
+
+    if (isOpen && today) {
+      status.classList.add('border-mana-400/40', 'bg-mana-400/[0.09]', 'text-mana-200');
+      dot.classList.add('bg-mana-400', 'shadow-[0_0_12px_rgba(46,224,131,.9)]');
+      text.textContent = `Open now — until ${format(today[1])}`;
+    } else {
+      /* find the next opening day */
+      let nextDay = weekday;
+      let opensAt: number | null = null;
+      if (today && minutes < today[0]) {
+        opensAt = today[0];
+      } else {
+        for (let i = 1; i <= 7; i += 1) {
+          const candidate = HOURS[(weekday + i) % 7];
+          if (candidate) {
+            nextDay = (weekday + i) % 7;
+            opensAt = candidate[0];
+            break;
+          }
+        }
+      }
+      const names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      status.classList.add('border-white/10', 'bg-white/[0.03]', 'text-neutral-400');
+      dot.classList.add('bg-neutral-500');
+      text.textContent =
+        opensAt === null
+          ? 'Currently closed'
+          : nextDay === weekday
+            ? `Closed — opens today at ${format(opensAt)}`
+            : `Closed — opens ${names[nextDay]} at ${format(opensAt)}`;
+    }
+
+    status.classList.remove('hidden');
+    status.classList.add('flex');
+  }
+</script>

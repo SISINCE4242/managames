@@ -1,0 +1,146 @@
+﻿---
+import { Icon } from 'astro-icon/components';
+import MediaFrame from './media-frame.astro';
+import SectionHeading from './section-heading.astro';
+import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
+---
+
+<section id="assortment" class="relative scroll-mt-24 py-20 sm:py-28">
+  <!-- Divider -->
+  <div class="mx-auto mb-20 h-px max-w-7xl bg-gradient-to-r from-transparent via-mana-400/35 to-transparent"></div>
+
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+      <SectionHeading eyebrow="02 — Assortment" title="Everything you need" accent="to play." />
+      <p data-reveal style="--reveal-delay:120ms" class="max-w-md text-lg leading-relaxed text-neutral-400">
+        Enjoy a big variety of <span class="font-semibold text-neutral-200">Singles</span>,
+        <span class="font-semibold text-neutral-200">Sealed Products</span> and
+        <span class="font-semibold text-neutral-200">Accessoires</span>!
+      </p>
+    </div>
+
+    <!-- Categories -->
+    <ul class="mt-14 grid gap-4 sm:grid-cols-3">
+      {
+        CATEGORIES.map((category, index) => (
+          <li
+            data-reveal
+            style={`--reveal-delay:${index * 110}ms`}
+            data-tilt="5"
+            class="panel panel-hover holo group relative overflow-hidden p-7"
+          >
+            <span class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-mana-400/[0.09] blur-2xl transition-all duration-500 group-hover:bg-mana-400/20" />
+            <span class="relative grid h-12 w-12 place-items-center rounded-xl border border-mana-400/25 bg-black/50 text-mana-300 transition-all duration-500 group-hover:border-mana-400/70 group-hover:text-mana-100">
+              <Icon name={category.icon} size={22} />
+            </span>
+            <h3 class="relative mt-5 font-display text-xl font-bold text-neutral-50">{category.title}</h3>
+            <p class="relative mt-2.5 text-sm leading-relaxed text-neutral-400">{category.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Games + shelf -->
+    <div class="mt-16 grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-12">
+      <div>
+        <div data-reveal class="flex items-baseline justify-between gap-4">
+          <h3 class="font-display text-2xl font-bold text-neutral-50">We offer</h3>
+          <span class="eyebrow text-[10px] text-mana-300/70">{GAMES.length} games</span>
+        </div>
+
+        <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {
+            GAMES.map((game, index) => (
+              <li
+                data-reveal="zoom"
+                style={`--reveal-delay:${index * 55}ms; --accent:${game.color};`}
+                data-tilt="9"
+                class="game-tile holo group relative flex flex-col justify-between overflow-hidden rounded-2xl p-4"
+              >
+                <span class="game-glow" aria-hidden="true" />
+                <span class="relative flex items-center justify-between">
+                  <span class="game-chip" />
+                  <Icon
+                    name="tabler:cards-filled"
+                    size={16}
+                    class="text-white/15 transition-colors duration-500 group-hover:text-white/40"
+                  />
+                </span>
+                <span class="relative mt-8 block font-display text-sm font-bold leading-tight text-neutral-50 sm:text-base">
+                  {game.name}
+                </span>
+                <span class="relative mt-1.5 block text-[11px] leading-snug text-neutral-500 transition-colors duration-500 group-hover:text-neutral-300">
+                  {game.blurb}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p data-reveal class="mt-6 flex items-start gap-2.5 text-sm text-neutral-400">
+          <Icon name="tabler:refresh" size={17} class="mt-0.5 shrink-0 text-mana-400" />
+          Boosters, decks and single cards are in stock for almost every TCG and restocked continuously.
+        </p>
+      </div>
+
+      <!-- Shelf slot -->
+      <div data-reveal="right" class="lg:sticky lg:top-28">
+        <MediaFrame
+          src={MEDIA.shelf.src}
+          fallback={MEDIA.shelf.fallback}
+          alt="Shop shelf with boosters, displays and accessoires at Mana Games"
+          label="Our shelf at the store"
+          pending={MEDIA.shelf.pending}
+          pendingLabel="Shelf photo coming soon"
+          ratio="aspect-[3/4]"
+          tilt={6}
+        />
+        <p class="mt-4 text-center text-xs text-neutral-500">
+          Come by and browse for yourself — or just ask us for a specific card.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .game-tile {
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    background:
+      linear-gradient(155deg, color-mix(in srgb, var(--accent) 11%, transparent), rgba(6, 9, 8, 0.9) 60%),
+      rgba(8, 12, 10, 0.72);
+    min-height: 165px;
+    transition:
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.45s ease,
+      box-shadow 0.45s ease;
+  }
+
+  .game-tile:hover {
+    border-color: color-mix(in srgb, var(--accent) 75%, transparent);
+    box-shadow: 0 24px 60px -30px var(--accent), 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .game-glow {
+    position: absolute;
+    inset: auto -30% -45% -30%;
+    height: 70%;
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 40%, transparent), transparent 70%);
+    opacity: 0.25;
+    filter: blur(26px);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .game-tile:hover .game-glow {
+    opacity: 0.75;
+  }
+
+  .game-chip {
+    display: block;
+    height: 9px;
+    width: 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+  }
+</style>

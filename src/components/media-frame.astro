@@ -1,0 +1,93 @@
+﻿---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  src: string;
+  fallback?: string;
+  alt: string;
+  /** Small label in the bottom-left corner of the frame */
+  label?: string;
+  /** true = image is still missing, renders a styled placeholder */
+  pending?: boolean;
+  /** Text shown inside the placeholder */
+  pendingLabel?: string;
+  ratio?: string;
+  tilt?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const {
+  src,
+  fallback,
+  alt,
+  label,
+  pending = false,
+  pendingLabel = 'Image coming soon',
+  ratio = 'aspect-[4/3]',
+  tilt = 5,
+  class: className = '',
+  loading = 'lazy',
+} = Astro.props;
+---
+
+<figure
+  data-media={pending ? 'missing' : 'ok'}
+  data-tilt={tilt}
+  class={`holo group relative overflow-hidden rounded-2xl border border-mana-400/20 bg-ink-card ${ratio} ${className}`}
+>
+  {
+    !pending && (
+      <img
+        src={src}
+        data-fallback={fallback}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+        class="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]"
+      />
+    )
+  }
+
+  <!-- Placeholder when the image is missing or has not been delivered yet -->
+  <div
+    class="placeholder absolute inset-0 grid place-items-center bg-[radial-gradient(ellipse_at_center,rgba(18,201,107,.16),transparent_70%)]"
+  >
+    <div class="flex flex-col items-center gap-3 px-6 text-center">
+      <span
+        class="relative grid h-14 w-14 place-items-center rounded-2xl border border-dashed border-mana-400/50 text-mana-300"
+      >
+        <Icon name="tabler:photo-plus" size={24} />
+        <span class="absolute inset-0 rounded-2xl border border-mana-400/40 animate-pulse-ring"></span>
+      </span>
+      <span class="eyebrow text-[10px] text-mana-300/80">{pendingLabel}</span>
+    </div>
+  </div>
+
+  <!-- Frame overlays -->
+  <div
+    class="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/[0.06] transition-all duration-500 group-hover:ring-mana-400/40"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
+  >
+  </div>
+  <div class="corners pointer-events-none absolute inset-0"></div>
+
+  {
+    label && (
+      <figcaption class="pointer-events-none absolute bottom-4 left-4 right-4 flex items-center gap-2">
+        <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-mana-400 shadow-[0_0_10px_rgba(46,224,131,.9)]" />
+        <span class="eyebrow text-[10px] text-mana-100/90">{label}</span>
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  /* Only show the placeholder when there is no image */
+  figure[data-media='ok'] .placeholder {
+    display: none;
+  }
+</style>

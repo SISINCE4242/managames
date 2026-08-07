@@ -1,0 +1,201 @@
+﻿---
+import { Icon } from 'astro-icon/components';
+import BrandMark from './brand-mark.astro';
+import { NAV_LINKS, SITE } from '../lib/config';
+
+const onHome = Astro.url.pathname === '/';
+const href = (hash: string) => (onHome ? hash : `/${hash}`);
+---
+
+<header
+  id="site-nav"
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-500"
+>
+  <div class="border-b border-transparent" data-nav-shell>
+    <nav class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
+      <a href="/" class="group flex items-center gap-3" aria-label={`${SITE.name} home`}>
+        <BrandMark
+          size={44}
+          class="shrink-0 transition-all duration-500 group-hover:border-mana-400/80 group-hover:shadow-glow"
+        />
+        <span class="flex flex-col leading-none">
+          <span
+            class="whitespace-nowrap font-display text-base font-bold uppercase tracking-[0.14em] text-neutral-100 sm:text-lg sm:tracking-[0.16em]"
+          >
+            Mana <span class="text-gradient">Games</span>
+          </span>
+          <span class="eyebrow mt-1 whitespace-nowrap text-[9px] text-mana-300/60">
+            Berlin · TCG Store
+          </span>
+        </span>
+      </a>
+
+      <ul class="hidden items-center gap-1 lg:flex">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={href(link.href)}
+                data-nav-link={link.href}
+                class="relative rounded-full px-4 py-2 text-sm font-medium text-neutral-400 transition-colors duration-300 hover:text-mana-100"
+              >
+                <span class="relative z-10">{link.label}</span>
+                <span
+                  class="nav-pill absolute inset-0 rounded-full border border-mana-400/40 bg-mana-400/10 opacity-0 transition-opacity duration-300"
+                  aria-hidden="true"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:block">
+          <a href={href('#visit')} class="btn btn-primary !px-5 !py-2.5 !text-sm">
+            <Icon name="tabler:map-pin" size={16} />
+            Visit us
+          </a>
+        </span>
+
+        <button
+          type="button"
+          id="nav-toggle"
+          class="grid h-11 w-11 place-items-center rounded-xl border border-mana-400/25 bg-black/40 text-mana-200 transition-colors hover:border-mana-400/70 lg:hidden"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="nav-drawer"
+        >
+          <Icon name="tabler:menu-2" size={20} id="nav-icon-open" />
+          <Icon name="tabler:x" size={20} id="nav-icon-close" class="hidden" />
+        </button>
+      </div>
+    </nav>
+
+    <!-- Scroll progress -->
+    <div class="relative h-px w-full bg-mana-400/10">
+      <div
+        id="scroll-progress"
+        class="h-full w-0 origin-left bg-gradient-to-r from-mana-600 via-mana-300 to-mana-500 shadow-[0_0_12px_rgba(46,224,131,.9)]"
+      >
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div
+    id="nav-drawer"
+    class="grid grid-rows-[0fr] overflow-hidden border-b border-mana-400/10 bg-black/95 backdrop-blur-xl transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] lg:hidden"
+  >
+    <div class="min-h-0">
+      <ul class="flex flex-col gap-1 px-5 py-5">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={href(link.href)}
+                data-drawer-link
+                class="flex items-center justify-between rounded-xl border border-transparent px-4 py-3.5 text-base font-medium text-neutral-300 transition-colors hover:border-mana-400/30 hover:bg-mana-400/[0.07] hover:text-mana-100"
+              >
+                {link.label}
+                <Icon name="tabler:arrow-right" size={16} class="text-mana-400/70" />
+              </a>
+            </li>
+          ))
+        }
+        <li class="mt-2">
+          <a href={SITE.mapsUrl} target="_blank" rel="noopener" class="btn btn-primary w-full">
+            <Icon name="tabler:map-pin" size={16} />
+            Get directions
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="h-20" aria-hidden="true"></div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const shell = nav?.querySelector('[data-nav-shell]') as HTMLElement | null;
+  const progress = document.getElementById('scroll-progress');
+  const toggle = document.getElementById('nav-toggle');
+  const drawer = document.getElementById('nav-drawer');
+  const iconOpen = document.getElementById('nav-icon-open');
+  const iconClose = document.getElementById('nav-icon-close');
+
+  /* Sticky look + progress bar */
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progress) progress.style.width = `${max > 0 ? Math.min((y / max) * 100, 100) : 0}%`;
+      if (shell) {
+        const solid = y > 24;
+        shell.classList.toggle('bg-black/70', solid);
+        shell.classList.toggle('backdrop-blur-xl', solid);
+        shell.classList.toggle('border-mana-400/15', solid);
+        shell.classList.toggle('border-transparent', !solid);
+      }
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Mobile Drawer */
+  const setDrawer = (open: boolean) => {
+    if (!drawer || !toggle) return;
+    drawer.classList.toggle('grid-rows-[1fr]', open);
+    drawer.classList.toggle('grid-rows-[0fr]', !open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    iconOpen?.classList.toggle('hidden', open);
+    iconClose?.classList.toggle('hidden', !open);
+  };
+
+  toggle?.addEventListener('click', () => {
+    setDrawer(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+  document.querySelectorAll('[data-drawer-link]').forEach((link) => {
+    link.addEventListener('click', () => setDrawer(false));
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setDrawer(false);
+  });
+
+  /* Highlight the section currently in view */
+  const navLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+  );
+  const sections = navLinks
+    .map((link) => document.querySelector(link.dataset.navLink || ''))
+    .filter((el): el is HTMLElement => Boolean(el));
+
+  if (sections.length) {
+    const setActive = (id: string) => {
+      navLinks.forEach((link) => {
+        const on = link.dataset.navLink === `#${id}`;
+        link.classList.toggle('text-mana-100', on);
+        link.classList.toggle('text-neutral-400', !on);
+        link.querySelector('.nav-pill')?.classList.toggle('opacity-100', on);
+        link.querySelector('.nav-pill')?.classList.toggle('opacity-0', !on);
+      });
+    };
+
+    const spy = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: [0, 0.25, 0.5, 1] },
+    );
+    sections.forEach((section) => spy.observe(section));
+  }
+</script>

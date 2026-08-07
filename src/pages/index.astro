@@ -1,143 +1,50 @@
 ---
-import { TOURNAMENTS } from '../lib/config';
-import HomeSection from '../components/home-section.astro';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/hero.astro';
+import AboutSection from '../components/about-section.astro';
+import AssortmentSection from '../components/assortment-section.astro';
+import ScheduleSection from '../components/schedule-section.astro';
+import VisitSection from '../components/visit-section.astro';
+import { CLOSED, GAMES, OPENING_HOURS, SITE } from '../lib/config';
+
+const dayMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Store',
+  name: SITE.name,
+  description: SITE.tagline,
+  url: 'https://managames.de/',
+  image: 'https://managames.de/header.png',
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.street,
+    postalCode: '10715',
+    addressLocality: 'Berlin',
+    addressCountry: 'DE',
+  },
+  openingHoursSpecification: OPENING_HOURS.filter((entry) => entry.hours !== CLOSED).map(
+    (entry) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: dayMap[entry.weekday],
+      opens: entry.hours.split(' – ')[0],
+      closes: entry.hours.split(' – ')[1],
+    }),
+  ),
+  makesOffer: GAMES.map((game) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Product', name: `${game.name} Trading Cards` },
+  })),
+};
 ---
 
-<Layout title='ManaGames'>
-  <main>
-    <section
-      class='h-96 bg-gradient-to-b from-transparent via-emerald-900/30 to-transparent mb-16'
-    >
-      <div class='flex flex-col gap-4 justify-center items-center h-full'>
-        <span
-          class='bg-emerald-500/40 border border-emerald-500 rounded-full px-2 py-1 text-sm text-emerald-50'
-          >TCG Shop für Turniere</span
-        >
-        <div class='flex flex-col text-center justify-center items-center'>
-          <h2 class='text-4xl lg:text-5xl xl:text-7xl font-medium'>
-            Organisation von <span class='highlight'>Turnieren </span>
-          </h2>
-          <h2 class='text-4xl lg:text-5xl xl:text-6xl font-medium'>
-             &
-          </h2>
-          <h2 class='text-4xl lg:text-5xl xl:text-7xl font-medium'>
-             An- und Verkauf von <span class='highlight'>TCG-Produkte</span>
-          </h2>
-        </div>
-      </div>
-    </section>
-    <div class='px-8 pb-16 flex flex-col items-center'>
-      <HomeSection
-        src='./VordererLaden.jpeg'
-      >
-        <h2>Über Uns</h2>
-        <p>
-          "Trading Card Game is not a  Hobby, but a Lifestyle"<br />
-          <br />
-          Wir stehen zu 100% hinter diesem Zitat. 
-          Wir selbst sind leidenschaftliche Spieler/Sammler und möchten dieses wundervolle Hobby mit Weiteren teilen!
-          
-          Durch dieses Hobby haben wir mit jungen Jahren englisch gelernt und uns pragmatisches Denken angeeignet.
-          
-          Ob man spielt, sammelt oder investiert - alles macht Spaß und bringt viele Vorteile mit sich!
-          
-        </p>
-        Also stürzt Euch rein in diese Welt voller Wunder und genießt die wunderschöne Zeit mit Euren Freunden!
+<Layout>
+  <Hero />
+  <AboutSection />
+  <AssortmentSection />
+  <ScheduleSection />
+  <VisitSection />
 
-        <p>
-          
-        </p>
-      </HomeSection>
-      <HomeSection
-        src='./MY.jpeg'
-        reverse
-      >
-        <h2>Tournament Schedule</h2>
-
-        <ul>
-          <li>Montag:</li>
-          <li>17:30 - Yu-Gi-Oh! (Goat)</li>
-          <li>18:00 - Magic (Standard)</li>
-          <li>18:30 - Dragonball</li>
-          <li>19:00 - Flesh & Blood</li>
-          <br />
-          <li>Dienstag:</li>
-          <li>17:30 - Pokemon</li>
-          <li>17:30 - Yu-Gi-Oh!</li>
-          <li>17:30 - Lorcana</li>
-          <li>18:00 - Magic (Pauper)</li>
-          <li>18:00 - Star Wars</li>
-          <li>18:00 - Grand Archive</li>
-          <li>18:30 - One Piece</li>
-          <br />
-          <li>Mittwoch:</li>
-          <li>17:30 - Yu-Gi-Oh! (Edison)</li>
-          <li>17:30 - Lorcana</li>
-          <li>18:00 - Yu-Gi-Oh!</li>
-          <li>18:30 - Dragonball</li>
-          <li>18:30 - Magic (Highlander)</li>
-          <br />
-          <li>Donnerstag:</li>
-          <li>17:30 - Pokemon</li>
-          <li>17:30 - Yu-Gi-Oh! (HAT)</li>
-          <li>18:00 - Magic (Pioneer)</li>
-          <li>18:00 - Digimon</li>
-          <li>18:00 - Star Wars</li>
-          <br />
-          <li>Freitag:</li>
-          <li>18:00 - Digimon</li>
-          <li>18:00 - Magic (Draft)</li>
-          <li>18:30 - One Piece</li>
-          <br />
-          <li>Samstag:</li>
-          <li>14:00 - Magic (Legacy)</li>
-          <li>14:30 - Pokemon</li>
-          <li>15:00 - Flesh & Blood</li>
-          <li>16:00 - Digimon</li>
-          <li>16:30 - Dragonball</li>
-          <li>17:30 - Yu-Gi-Oh!</li>
-          <li>17:30 - Lorcana</li>
-          <li>18:00 - Grand Archive</li>
-          <li>18:00 - Magic (Commander)</li>
-          <li>18:30 - One Piece (Monthly Format)</li>         
-        </ul>
-
-        <p>Anmeldung ist derzeit immer vor Ort.</p>
-      </HomeSection>
-      <HomeSection
-        src='./PB.jpeg'
-      >
-        <h2>Sortiment</h2>
-        <p>
-          Mana Games - Home of all  Trading Card Games!<br />
-          <br />
-          Egal ob alt oder neu, ob Fantasy oder Anime, hier findest Du alle beliebten Tcgs.
-          
-          Sei es die neuen bzw. ongoing Games wie:
-          
-          Magic the Gathering, Yu-Gi-Oh!, Pokemon, Flesh & Blood, One Piece, Lorcana.
-          
-          Oder die alten bzw. eingestellten Games wie:
-           
-          Dragonball Z, Bleach, Naruto, Inu Yasha, Duel Masters, Huntik.
-          
-          Booster, Decks und Einzelkarten sind fast von jedem Tcg vorhanden und werden stetig restocked!<br />
-          <br />
-          
-          
-          Natürlich dürfen auch die Accessoires nicht fehlen!
-          
-          Hüllen, Boxen, Playmats, Würfel, Cases und Weiteres stehen in diversen Farben und Formen im Angebot!
-        </p>
-      </HomeSection>
-      <div class="mt-8 bg-gradient-to-r w-full from-transparent via-emerald-400 to-transparent h-2"></div>
-    </div>
-  </main>
-
-  <style>
-    .highlight {
-      @apply font-bold bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-600 text-transparent bg-clip-text inline-block;
-    }
-  </style>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
 </Layout>

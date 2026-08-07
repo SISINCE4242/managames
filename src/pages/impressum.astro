@@ -1,14 +1,61 @@
 ---
+import { Icon } from 'astro-icon/components';
 import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/section-heading.astro';
+import { SITE } from '../lib/config';
 ---
 
-<Layout title='Impressum - managames.de'>
-  <main class='prose prose-invert prose-emerald px-16'>
-    <h1>Impressum</h1>
-    <p>Angaben gemäß § 5 TMG</p>
-    <p>Blissestr. 5 10715 Berlin</p>
-    <p>Vertreten durch: Enver Temiz</p>
-    <p>Kontakt: E-Mail: info@managames.de</p>
+<Layout
+  title="Legal notice (Impressum) – Mana Games Berlin"
+  description="Legal notice and provider identification for Mana Games, Blissestr. 5, 10715 Berlin."
+>
+  <section class="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-28">
+    <a
+      href="/"
+      class="mb-10 inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-mana-200"
+    >
+      <Icon name="tabler:arrow-left" size={16} />
+      Back to home
+    </a>
 
-  </main>
+    <SectionHeading eyebrow="Legal" title="Impressum" />
+
+    <p class="mt-6 text-sm text-neutral-500">
+      Provider identification under German law. The legal terms below are kept in German,
+      as required by § 5 TMG.
+    </p>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      <div class="panel corners p-6">
+        <h2 class="eyebrow text-[10px] font-semibold text-mana-300">Angaben gemäß § 5 TMG</h2>
+        <address class="mt-4 not-italic leading-relaxed text-neutral-300">
+          <span class="block font-display font-semibold text-neutral-100">{SITE.name}</span>
+          {SITE.street}<br />
+          {SITE.zip}
+        </address>
+      </div>
+
+      <div class="panel corners p-6">
+        <h2 class="eyebrow text-[10px] font-semibold text-mana-300">Vertreten durch</h2>
+        <p class="mt-4 text-neutral-300">Enver Temiz</p>
+      </div>
+
+      <div class="panel corners p-6 sm:col-span-2">
+        <h2 class="eyebrow text-[10px] font-semibold text-mana-300">Kontakt</h2>
+        <a
+          href={`mailto:${SITE.email}`}
+          class="mt-4 inline-flex items-center gap-2.5 text-neutral-300 transition-colors hover:text-mana-200"
+        >
+          <Icon name="tabler:mail" size={18} class="text-mana-400" />
+          {SITE.email}
+        </a>
+      </div>
+    </div>
+
+    <p class="mt-10 text-xs leading-relaxed text-neutral-600">
+      All brand names and logos mentioned (including Magic: The Gathering, Yu-Gi-Oh!, Pokémon,
+      One Piece, Naruto, Dragon Ball, Riftbound, Flesh &amp; Blood and Digimon) are the property
+      of their respective rights holders and are used here solely to describe our assortment.
+    </p>
+  </section>
 </Layout>

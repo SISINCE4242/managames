@@ -1,0 +1,37 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  /** Zweite Zeile, wird als Gradient gerendert */
+  accent?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const { eyebrow, title, accent, align = 'left', class: className = '' } = Astro.props;
+const isCenter = align === 'center';
+---
+
+<div
+  data-reveal
+  class={`flex flex-col gap-4 ${isCenter ? 'items-center text-center' : 'items-start'} ${className}`}
+>
+  <span
+    class="inline-flex items-center gap-2.5 rounded-full border border-mana-400/25 bg-mana-400/[0.07] px-3.5 py-1.5"
+  >
+    <span class="relative flex h-1.5 w-1.5">
+      <span class="absolute inline-flex h-full w-full rounded-full bg-mana-400 animate-pulse-ring"></span>
+      <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-mana-300"></span>
+    </span>
+    <span class="eyebrow text-[10px] font-semibold text-mana-200">{eyebrow}</span>
+  </span>
+
+  <h2 class="font-display text-4xl font-bold leading-[1.05] tracking-tight text-neutral-50 sm:text-5xl lg:text-6xl">
+    {title}
+    {accent && <><br /><span class="text-gradient">{accent}</span></>}
+  </h2>
+
+  <span
+    class={`block h-px w-24 bg-gradient-to-r from-mana-400 to-transparent ${isCenter ? 'mx-auto' : ''}`}
+  ></span>
+</div>

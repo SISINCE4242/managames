@@ -1,87 +1,469 @@
----
-import AppFooter from "../components/app-footer.astro";
-import AppHeader from "../components/app-header.astro";
+﻿---
+import '@fontsource-variable/space-grotesk';
+import SiteNav from '../components/site-nav.astro';
+import SiteFooter from '../components/site-footer.astro';
+
 interface Props {
-  title: string;
+  title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title = 'Mana Games — Your LGS store for anything TCG! | Berlin',
+  description = 'Mana Games Berlin: your local game store for Magic, Yu-Gi-Oh!, Pokémon, One Piece, Riftbound, Flesh & Blood, Digimon, Naruto and Dragon Ball. Singles, sealed products, accessoires and tournaments six days a week.',
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="ManaGames - Organisation von Turnieren & An- und Verkauf von TCG-Produkte"
-    />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#05070a" />
 
-    <!-- Primary Meta Tags -->
-    <title>
-      Mana Games - Organisation von Turnieren & An- und Verkauf von
-      TCG-Produkte.
-    </title>
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
     <meta
-      name="title"
-      content="Mana Games - Organisation von Turnieren & An- und Verkauf von TCG-Produkte."
+      name="keywords"
+      content="mana games, mana games berlin, lgs berlin, local game store berlin, trading card game berlin, magic the gathering berlin, yugioh berlin, pokemon cards berlin, one piece card game, riftbound, flesh and blood, digimon, tcg tournaments berlin, wilmersdorf, blissestrasse"
     />
-    <meta
-      name="description"
-      content="'Trading Card Game is not a Hobby, but a Lifestyle' Wir stehen zu 100% hinter diesem Zitat. Wir selbst sind leidenschaftliche Spieler/Sammler und möchten dieses wundervolle Hobby mit Weiteren teilen! Durch dieses Hobby haben wir mit jungen Jahren englisch gelernt und uns pragmatisches Denken angeeignet. Ob man spielt, sammelt oder investiert - alles macht Spaß und bringt viele Vorteile mit sich! Also stürzt Euch rein in diese Welt voller Wunder und genießt die wunderschöne Zeit mit Euren Freunden!"
-    />
-    <meta name="keywords" content="mana, mana games, games, berlin, mana games berlin, trading cards, one peace card game, tournament, locals, sercan isincelik, enver temiz, ">
-    <!-- Open Graph / Facebook -->
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://managames.de/" />
-    <meta
-      property="og:title"
-      content="Mana Games - Organisation von Turnieren & An- und Verkauf von TCG-Produkte."
-    />
-    <meta
-      property="og:description"
-      content="'Trading Card Game is not a Hobby, but a Lifestyle' Wir stehen zu 100% hinter diesem Zitat. Wir selbst sind leidenschaftliche Spieler/Sammler und möchten dieses wundervolle Hobby mit Weiteren teilen! Durch dieses Hobby haben wir mit jungen Jahren englisch gelernt und uns pragmatisches Denken angeeignet. Ob man spielt, sammelt oder investiert - alles macht Spaß und bringt viele Vorteile mit sich! Also stürzt Euch rein in diese Welt voller Wunder und genießt die wunderschöne Zeit mit Euren Freunden!"
-    />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:image" content="https://managames.de/header.png" />
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://managames.de/" />
-    <meta
-      property="twitter:title"
-      content="Mana Games - Organisation von Turnieren & An- und Verkauf von TCG-Produkte."
-    />
-    <meta
-      property="twitter:description"
-      content="'Trading Card Game is not a Hobby, but a Lifestyle' Wir stehen zu 100% hinter diesem Zitat. Wir selbst sind leidenschaftliche Spieler/Sammler und möchten dieses wundervolle Hobby mit Weiteren teilen! Durch dieses Hobby haben wir mit jungen Jahren englisch gelernt und uns pragmatisches Denken angeeignet. Ob man spielt, sammelt oder investiert - alles macht Spaß und bringt viele Vorteile mit sich! Also stürzt Euch rein in diese Welt voller Wunder und genießt die wunderschöne Zeit mit Euren Freunden!"
-    />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content="https://managames.de/header.png" />
-
-    <!-- Meta Tags Generated with https://metatags.io -->
   </head>
-  <body
-    class="bg-black text-white flex flex-col min-h-screen overflow-x-hidden"
-  >
-    <AppHeader />
-    <div class="flex-grow">
-      <slot />
+
+  <body class="min-h-screen bg-ink font-sans text-neutral-200 antialiased">
+    <!-- Background layers -->
+    <div class="pointer-events-none fixed inset-0 -z-50 overflow-hidden" aria-hidden="true">
+      <div class="bg-grid absolute inset-0"></div>
+      <div
+        class="absolute -left-[15%] top-[-10%] h-[55vw] w-[55vw] rounded-full bg-mana-500/[0.14] blur-[130px] animate-drift"
+      >
+      </div>
+      <div
+        class="absolute -right-[20%] top-[35%] h-[50vw] w-[50vw] rounded-full bg-emerald-400/[0.10] blur-[140px] animate-drift"
+        style="animation-delay:-9s"
+      >
+      </div>
+      <div
+        class="absolute bottom-[-15%] left-[25%] h-[45vw] w-[45vw] rounded-full bg-mana-700/[0.16] blur-[150px] animate-drift"
+        style="animation-delay:-17s"
+      >
+      </div>
+      <div class="bg-noise absolute inset-0"></div>
+      <div class="bg-vignette absolute inset-0"></div>
     </div>
-    <AppFooter />
+
+    <!-- Cursor spotlight (desktop only) -->
+    <div id="spotlight" class="pointer-events-none fixed inset-0 -z-40 hidden lg:block" aria-hidden="true"></div>
+
+    <SiteNav />
+    <main id="top">
+      <slot />
+    </main>
+    <SiteFooter />
+
+    <style is:global>
+      :root {
+        --mana: #2ee083;
+        --mana-dim: #12c96b;
+        --mana-deep: #068146;
+        --mx: 50%;
+        --my: 50%;
+      }
+
+      html {
+        scroll-padding-top: 6rem;
+      }
+
+      body {
+        background-color: #05070a;
+        overflow-x: hidden;
+      }
+
+      ::selection {
+        background: rgba(46, 224, 131, 0.32);
+        color: #eafff3;
+      }
+
+      /* ---------- Background ---------- */
+      .bg-grid {
+        background-image:
+          linear-gradient(to right, rgba(46, 224, 131, 0.055) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(46, 224, 131, 0.055) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 78%);
+        -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 78%);
+      }
+
+      .bg-noise {
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .bg-vignette {
+        background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.75) 100%);
+      }
+
+      #spotlight {
+        background: radial-gradient(
+          520px circle at var(--px, 50%) var(--py, 0%),
+          rgba(46, 224, 131, 0.07),
+          transparent 65%
+        );
+        transition: opacity 0.4s ease;
+      }
+
+      /* ---------- Typography building blocks ---------- */
+      .text-gradient {
+        background-image: linear-gradient(120deg, #c8ffe1 0%, #2ee083 42%, #068146 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .text-outline {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(46, 224, 131, 0.42);
+      }
+
+      .eyebrow {
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+      }
+
+      /* ---------- Scroll reveal ---------- */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+      }
+      [data-reveal='left'] {
+        transform: translateX(-36px);
+      }
+      [data-reveal='right'] {
+        transform: translateX(36px);
+      }
+      [data-reveal='zoom'] {
+        transform: scale(0.94);
+      }
+      [data-reveal].is-in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ---------- Glass / panels ---------- */
+      .panel {
+        position: relative;
+        border-radius: 1.25rem;
+        border: 1px solid rgba(46, 224, 131, 0.16);
+        background:
+          linear-gradient(160deg, rgba(18, 201, 107, 0.07), rgba(5, 7, 10, 0.72) 55%),
+          rgba(8, 12, 10, 0.6);
+        backdrop-filter: blur(14px);
+      }
+
+      .panel-hover {
+        transition:
+          border-color 0.35s ease,
+          box-shadow 0.35s ease,
+          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .panel-hover:hover {
+        border-color: rgba(46, 224, 131, 0.5);
+        box-shadow: 0 0 0 1px rgba(46, 224, 131, 0.2), 0 24px 60px -30px rgba(46, 224, 131, 0.7);
+        transform: translateY(-4px);
+      }
+
+      /* Corner markers, like the frame of a trading card */
+      .corners::before,
+      .corners::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-color: rgba(46, 224, 131, 0.75);
+        border-style: solid;
+        pointer-events: none;
+      }
+      .corners::before {
+        top: 10px;
+        left: 10px;
+        border-width: 1px 0 0 1px;
+        border-top-left-radius: 4px;
+      }
+      .corners::after {
+        bottom: 10px;
+        right: 10px;
+        border-width: 0 1px 1px 0;
+        border-bottom-right-radius: 4px;
+      }
+
+      /* ---------- Holo card ---------- */
+      .holo {
+        position: relative;
+        isolation: isolate;
+        transform-style: preserve-3d;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .holo::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        background: linear-gradient(
+          115deg,
+          transparent 20%,
+          rgba(200, 255, 225, 0.35) 36%,
+          rgba(46, 224, 131, 0.28) 44%,
+          rgba(120, 220, 255, 0.22) 52%,
+          transparent 68%
+        );
+        background-size: 260% 260%;
+        background-position: var(--mx, 50%) var(--my, 50%);
+        mix-blend-mode: overlay;
+      }
+      .holo::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        z-index: 3;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        background: radial-gradient(
+          260px circle at var(--mx, 50%) var(--my, 50%),
+          rgba(234, 255, 243, 0.22),
+          transparent 60%
+        );
+      }
+      .holo:hover::before,
+      .holo:hover::after,
+      .holo.is-active::before,
+      .holo.is-active::after {
+        opacity: 1;
+      }
+
+      /* ---------- Buttons ---------- */
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 9999px;
+        padding: 0.85rem 1.6rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.01em;
+        overflow: hidden;
+        transition:
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s ease,
+          background-color 0.3s ease,
+          border-color 0.3s ease,
+          color 0.3s ease;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn-primary {
+        background: linear-gradient(120deg, #2ee083, #12c96b 55%, #068146);
+        color: #04120b;
+        box-shadow: 0 12px 40px -14px rgba(46, 224, 131, 0.95);
+      }
+      .btn-primary:hover {
+        box-shadow: 0 18px 55px -14px rgba(46, 224, 131, 1);
+      }
+      .btn-ghost {
+        border: 1px solid rgba(46, 224, 131, 0.35);
+        color: #c8ffe1;
+        background: rgba(46, 224, 131, 0.05);
+      }
+      .btn-ghost:hover {
+        border-color: rgba(46, 224, 131, 0.85);
+        background: rgba(46, 224, 131, 0.12);
+      }
+
+      /* ---------- Marquee ---------- */
+      .marquee-mask {
+        mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+      }
+      .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: marquee 42s linear infinite;
+      }
+      .marquee-mask:hover .marquee-track {
+        animation-play-state: paused;
+      }
+
+      /* ---------- Scrollbar ---------- */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(46, 224, 131, 0.45) transparent;
+      }
+      *::-webkit-scrollbar {
+        width: 9px;
+        height: 9px;
+      }
+      *::-webkit-scrollbar-thumb {
+        background: rgba(46, 224, 131, 0.4);
+        border-radius: 9999px;
+      }
+      *::-webkit-scrollbar-thumb:hover {
+        background: rgba(46, 224, 131, 0.7);
+      }
+      *::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      :focus-visible {
+        outline: 2px solid rgba(46, 224, 131, 0.9);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        .marquee-track,
+        .animate-drift,
+        .animate-float,
+        .animate-pulse-ring {
+          animation: none !important;
+        }
+      }
+    </style>
+
+    <script>
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* --- Scroll reveal --- */
+      const revealables = document.querySelectorAll('[data-reveal]');
+      if (revealables.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-in');
+              io.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        );
+        revealables.forEach((el) => io.observe(el));
+      }
+
+      /* --- 3D tilt + holo sheen --- */
+      const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (supportsHover && !reduceMotion) {
+        document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+          const max = Number(el.dataset.tilt) || 8;
+          let frame = 0;
+
+          el.addEventListener('pointermove', (event) => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+              frame = 0;
+              const rect = el.getBoundingClientRect();
+              const px = (event.clientX - rect.left) / rect.width;
+              const py = (event.clientY - rect.top) / rect.height;
+              el.style.setProperty('--mx', `${px * 100}%`);
+              el.style.setProperty('--my', `${py * 100}%`);
+              el.style.transform = `perspective(1100px) rotateX(${(0.5 - py) * max * 2}deg) rotateY(${(px - 0.5) * max * 2}deg) translateZ(0)`;
+            });
+          });
+
+          el.addEventListener('pointerleave', () => {
+            el.style.transform = '';
+            el.style.setProperty('--mx', '50%');
+            el.style.setProperty('--my', '50%');
+          });
+        });
+      }
+
+      /* --- Cursor spotlight --- */
+      const spotlight = document.getElementById('spotlight');
+      if (spotlight && supportsHover && !reduceMotion) {
+        let spotFrame = 0;
+        window.addEventListener('pointermove', (event) => {
+          if (spotFrame) return;
+          spotFrame = requestAnimationFrame(() => {
+            spotFrame = 0;
+            spotlight.style.setProperty('--px', `${event.clientX}px`);
+            spotlight.style.setProperty('--py', `${event.clientY}px`);
+          });
+        });
+      }
+
+      /* --- Count-up numbers --- */
+      document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+        const target = Number(el.dataset.count) || 0;
+        const counter = new IntersectionObserver((entries) => {
+          if (!entries[0].isIntersecting) return;
+          counter.disconnect();
+          if (reduceMotion) {
+            el.textContent = String(target);
+            return;
+          }
+          const duration = 1400;
+          const start = performance.now();
+          const step = (now: number) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = String(Math.round(target * eased));
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+        counter.observe(el);
+      });
+
+      /* --- Image fallback for assets that are still missing --- */
+      document.querySelectorAll<HTMLImageElement>('img[data-fallback]').forEach((img) => {
+        img.addEventListener(
+          'error',
+          () => {
+            const fallback = img.dataset.fallback;
+            if (fallback && img.src !== fallback) {
+              img.src = fallback;
+            } else {
+              img.closest('[data-media]')?.setAttribute('data-media', 'missing');
+            }
+          },
+          { once: false },
+        );
+      });
+    </script>
   </body>
 </html>
-
-<style>
-  body {
-    background-image: radial-gradient(
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 0
-    );
-    background-size: 40px 40px;
-    background-position: -19px -19px;
-  }
-</style>
