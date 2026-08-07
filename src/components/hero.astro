@@ -205,12 +205,17 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     }
   }
 
-  .fan-card:hover {
+  .fan-card:hover,
+  .fan-card.is-tapped {
     z-index: 20;
     box-shadow:
       0 0 0 1px var(--accent),
       0 40px 80px -30px rgba(0, 0, 0, 1),
       0 0 90px -20px var(--accent);
+  }
+
+  .fan-card.is-tapped {
+    transform: translate3d(var(--tx), calc(var(--ty) - 22px), 0) rotate(calc(var(--rot) * 0.4)) scale(1.08) !important;
   }
 
   .fan-inner {
@@ -301,6 +306,7 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (fine && !reduce) {
+      /* Desktop: mouse parallax */
       let frame = 0;
       const container = fan.closest('section') as HTMLElement;
 
@@ -329,6 +335,39 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
           card.style.transform = '';
           card.classList.remove('is-active');
         });
+      });
+    } else if (!reduce) {
+      /* Mobile: tap a card to bring it to the front */
+      let tapped: HTMLElement | null = null;
+
+      cards.forEach((card) => {
+        card.addEventListener('pointerdown', (event) => {
+          event.stopPropagation();
+
+          if (tapped === card) {
+            /* tap same card again → collapse */
+            card.classList.remove('is-tapped', 'is-active');
+            tapped = null;
+            return;
+          }
+
+          /* untap previous */
+          if (tapped) {
+            tapped.classList.remove('is-tapped', 'is-active');
+            tapped.style.zIndex = '';
+          }
+
+          card.classList.add('is-tapped', 'is-active');
+          tapped = card;
+        });
+      });
+
+      /* tap outside → collapse */
+      fan.addEventListener('pointerdown', () => {
+        if (tapped) {
+          tapped.classList.remove('is-tapped', 'is-active');
+          tapped = null;
+        }
       });
     }
   }
