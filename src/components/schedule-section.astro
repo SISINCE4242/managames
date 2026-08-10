@@ -12,11 +12,22 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
 
   <div class="mx-auto max-w-7xl px-5 sm:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-      <SectionHeading
-        eyebrow="03 — Tournament Schedule"
-        title="Six evenings."
-        accent={`${totalEvents} tournaments.`}
-      />
+      <div class="flex min-w-0 items-end justify-between gap-4 lg:contents">
+        <SectionHeading
+          eyebrow="03 — Tournament Schedule"
+          title="Six evenings."
+          accent={`${totalEvents} tournaments.`}
+        />
+        <!-- Mobile/tablet only: desktop keeps its own floating mascot below, untouched -->
+        <div data-reveal="right" class="w-16 shrink-0 lg:hidden">
+          <MediaFrame
+            src={MEDIA.mascotPoint.src}
+            alt="Our Mana Games mascot pointing at the schedule"
+            ratio="aspect-[2/3]"
+            tilt={4}
+          />
+        </div>
+      </div>
       <div data-reveal style="--reveal-delay:120ms" class="flex flex-col gap-3">
         <p class="max-w-sm text-lg leading-relaxed text-neutral-400">
           Locked into the calendar every week. Pick your day — we take care of the rest.
