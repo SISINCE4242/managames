@@ -28,6 +28,9 @@ export const MEDIA = {
   signage: { src: '/Mana Games.png' },
   shelf: { src: '/Regal.jpeg', pending: false },
   mascot: { src: '/Mana-Girl.png' },
+  mascotWave: { src: '/mana-girl-winken.png' },
+  mascotPresent: { src: '/mana-girl-präsentieren.png' },
+  mascotPoint: { src: '/mana-girl-zeigen.png' },
 };
 
 export type GamePattern =

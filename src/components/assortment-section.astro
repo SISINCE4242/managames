@@ -129,6 +129,15 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
 
       <!-- Shelf slot -->
       <div data-reveal="right" class="lg:sticky lg:top-28">
+        <div class="mx-auto mb-5 w-full max-w-[13rem]">
+          <MediaFrame
+            src={MEDIA.mascotPresent.src}
+            alt="Our Mana Games mascot presenting the assortment"
+            label="Take your pick!"
+            ratio="aspect-[2/3]"
+            tilt={6}
+          />
+        </div>
         <MediaFrame
           src={MEDIA.shelf.src}
           alt="Shop shelf with boosters, displays and accessoires at Mana Games"
