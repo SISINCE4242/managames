@@ -236,7 +236,13 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
   .next-line[data-today='true'] {
     color: color-mix(in srgb, var(--accent) 85%, white 15%);
   }
-  .today-dot {
+  /*
+    .today-dot / .next-arrow / .upcoming-* below are built with
+    document.createElement() at runtime, so they never receive Astro's
+    data-astro-cid scoping attribute — :global() opts them out of scoping
+    so they still match.
+  */
+  :global(.today-dot) {
     display: inline-block;
     height: 6px;
     width: 6px;
@@ -257,13 +263,13 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
       transform: scale(1.35);
     }
   }
-  .next-arrow {
+  :global(.next-arrow) {
     margin-left: auto;
     opacity: 0.6;
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
-  .game-tile:hover .next-arrow,
-  .game-tile:focus-visible .next-arrow {
+  .game-tile:hover :global(.next-arrow),
+  .game-tile:focus-visible :global(.next-arrow) {
     transform: translateX(3px);
     opacity: 1;
   }
@@ -286,7 +292,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
     margin: 0;
     padding: 0;
   }
-  .upcoming-item {
+  :global(.upcoming-item) {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -296,16 +302,16 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
     font-size: 10.5px;
     line-height: 1.25;
   }
-  .upcoming-item:last-child {
+  :global(.upcoming-item:last-child) {
     border-bottom: none;
   }
-  .upcoming-when {
+  :global(.upcoming-when) {
     flex-shrink: 0;
     font-weight: 700;
     color: var(--accent);
     white-space: nowrap;
   }
-  .upcoming-label {
+  :global(.upcoming-label) {
     color: rgba(255, 255, 255, 0.7);
   }
 

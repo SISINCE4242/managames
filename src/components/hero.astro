@@ -492,13 +492,17 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     transform: rotate(140deg);
   }
 
-  /* Stat bars — shared between the draw result and the explore overlay */
-  .stat-row {
+  /*
+    Stat bars are built with document.createElement() at runtime, so they
+    never receive Astro's data-astro-cid scoping attribute — :global()
+    opts these selectors out of scoping so they still match.
+  */
+  :global(.stat-row) {
     display: flex;
     align-items: center;
     gap: 0.65rem;
   }
-  .stat-label {
+  :global(.stat-label) {
     width: 84px;
     flex-shrink: 0;
     font-size: 10px;
@@ -507,7 +511,7 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     letter-spacing: 0.05em;
     color: rgba(255, 255, 255, 0.55);
   }
-  .stat-track {
+  :global(.stat-track) {
     position: relative;
     flex: 1;
     height: 5px;
@@ -515,7 +519,7 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     background: rgba(255, 255, 255, 0.08);
     overflow: hidden;
   }
-  .stat-fill {
+  :global(.stat-fill) {
     display: block;
     height: 100%;
     width: 0%;
@@ -524,7 +528,7 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
     transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .stat-value {
+  :global(.stat-value) {
     width: 30px;
     flex-shrink: 0;
     text-align: right;
@@ -538,7 +542,7 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     .draw-result.draw-in {
       animation: none;
     }
-    .stat-fill {
+    :global(.stat-fill) {
       transition: none;
     }
   }
@@ -602,7 +606,8 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     color: var(--accent);
   }
 
-  .good-chip {
+  /* JS-created (document.createElement) — needs :global(), see stat bars above */
+  :global(.good-chip) {
     display: inline-flex;
     align-items: center;
     border-radius: 999px;
