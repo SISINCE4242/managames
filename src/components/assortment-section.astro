@@ -1,5 +1,6 @@
 ﻿---
 import { Icon } from 'astro-icon/components';
+import GamePattern from './game-pattern.astro';
 import MediaFrame from './media-frame.astro';
 import SectionHeading from './section-heading.astro';
 import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
@@ -58,6 +59,7 @@ import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
                 class="game-tile holo group relative flex flex-col justify-between overflow-hidden rounded-2xl p-4"
               >
                 <span class="game-glow" aria-hidden="true" />
+                <GamePattern pattern={game.pattern} />
                 <span class="relative flex items-center justify-between">
                   <span class="game-chip" />
                   <Icon

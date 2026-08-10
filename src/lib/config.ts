@@ -29,24 +29,36 @@ export const MEDIA = {
   shelf: { src: '/Regal.jpeg', pending: false },
 };
 
+export type GamePattern =
+  | 'magic'
+  | 'yugioh'
+  | 'pokemon'
+  | 'onepiece'
+  | 'naruto'
+  | 'dragonball'
+  | 'riftbound'
+  | 'fleshblood'
+  | 'digimon';
+
 export type Game = {
   name: string;
   /** Short form used for the badges in the tournament schedule */
   key: string;
   color: string;
   blurb: string;
+  pattern: GamePattern;
 };
 
 export const GAMES: Game[] = [
-  { name: 'Magic: The Gathering', key: 'Magic', color: '#f59e0b', blurb: 'Standard · Pioneer · Modern · Pauper · Draft · Highlander · Premodern' },
-  { name: 'Yu-Gi-Oh!', key: 'Yu-Gi-Oh!', color: '#a855f7', blurb: 'Goat · Edison · HAT · Perfect Circle · Charlestone · Nexus Night' },
-  { name: 'Pokémon', key: 'Pokemon', color: '#facc15', blurb: 'Singles, sealed products and weekly locals' },
-  { name: 'One Piece', key: 'One Piece', color: '#ef4444', blurb: 'Locals and Extra Regulation' },
-  { name: 'Naruto', key: 'Naruto', color: '#fb923c', blurb: 'The classic — back in the weekly line-up' },
-  { name: 'Dragon Ball', key: 'Dragon Ball', color: '#e879f9', blurb: 'Every Saturday at the store' },
-  { name: 'Riftbound', key: 'Riftbound', color: '#22d3ee', blurb: 'The League of Legends TCG — freshly launched' },
-  { name: 'Flesh & Blood', key: 'Flesh & Blood', color: '#fb7185', blurb: 'Hero battles every Monday' },
-  { name: 'Digimon', key: 'Digimon', color: '#60a5fa', blurb: 'Digivolve night every Thursday' },
+  { name: 'Magic: The Gathering', key: 'Magic', color: '#f59e0b', blurb: 'Standard · Pioneer · Modern · Pauper · Draft · Highlander · Premodern', pattern: 'magic' },
+  { name: 'Yu-Gi-Oh!', key: 'Yu-Gi-Oh!', color: '#a855f7', blurb: 'Goat · Edison · HAT · Perfect Circle · Charlestone · Nexus Night', pattern: 'yugioh' },
+  { name: 'Pokémon', key: 'Pokemon', color: '#facc15', blurb: 'Singles, sealed products and weekly locals', pattern: 'pokemon' },
+  { name: 'One Piece', key: 'One Piece', color: '#ef4444', blurb: 'Locals and Extra Regulation', pattern: 'onepiece' },
+  { name: 'Naruto', key: 'Naruto', color: '#fb923c', blurb: 'The classic — back in the weekly line-up', pattern: 'naruto' },
+  { name: 'Dragon Ball', key: 'Dragon Ball', color: '#e879f9', blurb: 'Every Saturday at the store', pattern: 'dragonball' },
+  { name: 'Riftbound', key: 'Riftbound', color: '#22d3ee', blurb: 'The League of Legends TCG — freshly launched', pattern: 'riftbound' },
+  { name: 'Flesh & Blood', key: 'Flesh & Blood', color: '#fb7185', blurb: 'Hero battles every Monday', pattern: 'fleshblood' },
+  { name: 'Digimon', key: 'Digimon', color: '#60a5fa', blurb: 'Digivolve night every Thursday', pattern: 'digimon' },
 ];
 
 export const GAME_COLORS: Record<string, string> = Object.fromEntries(
