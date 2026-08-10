@@ -1,6 +1,5 @@
 ﻿---
 import { Icon } from 'astro-icon/components';
-import MediaFrame from './media-frame.astro';
 import SectionHeading from './section-heading.astro';
 import { GAME_COLORS, MEDIA, SCHEDULE } from '../lib/config';
 
@@ -19,13 +18,8 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
           accent={`${totalEvents} tournaments.`}
         />
         <!-- Mobile/tablet only: desktop keeps its own floating mascot below, untouched -->
-        <div data-reveal="right" class="w-16 shrink-0 lg:hidden">
-          <MediaFrame
-            src={MEDIA.mascotPoint.src}
-            alt="Our Mana Games mascot pointing at the schedule"
-            ratio="aspect-[2/3]"
-            tilt={4}
-          />
+        <div data-reveal="right" class="mascot-point-mobile shrink-0 lg:hidden">
+          <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
         </div>
       </div>
       <div data-reveal style="--reveal-delay:120ms" class="flex flex-col gap-3">
@@ -57,14 +51,8 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
 
     <!-- Tabs -->
     <div data-reveal class="relative mt-8">
-      <div data-reveal="right" class="absolute -top-24 right-0 z-10 hidden w-[8rem] lg:block">
-        <MediaFrame
-          src={MEDIA.mascotPoint.src}
-          alt="Our Mana Games mascot pointing at the schedule"
-          label="Check this out!"
-          ratio="aspect-[2/3]"
-          tilt={6}
-        />
+      <div data-reveal="right" class="mascot-point-desktop absolute -top-24 right-0 z-10 hidden lg:block">
+        <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
       </div>
 
       <div
@@ -184,6 +172,18 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
 </section>
 
 <style>
+  /* Freestanding mascot, no card frame — the art's own alpha fade blends it in */
+  .mascot-point-mobile img {
+    height: 4.5rem;
+    width: auto;
+    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.5));
+  }
+  .mascot-point-desktop img {
+    height: 9rem;
+    width: auto;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5));
+  }
+
   .day-tab[aria-selected='true'] {
     border-color: rgba(46, 224, 131, 0.65);
     background: linear-gradient(160deg, rgba(46, 224, 131, 0.18), rgba(5, 8, 6, 0.8));
