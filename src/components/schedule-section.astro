@@ -11,7 +11,7 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
   <div class="mx-auto mb-20 h-px max-w-7xl bg-gradient-to-r from-transparent via-mana-400/35 to-transparent"></div>
 
   <div class="mx-auto max-w-7xl px-5 sm:px-8">
-    <div class="grid gap-10 lg:grid-cols-[1fr_auto_auto] lg:items-end">
+    <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
       <SectionHeading
         eyebrow="03 — Tournament Schedule"
         title="Six evenings."
@@ -25,15 +25,6 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
           <Icon name="tabler:alert-circle" size={17} />
           On-site registration only! <span class="font-normal text-neutral-500">(Anmeldung nur vor Ort)</span>
         </p>
-      </div>
-      <div data-reveal="right" class="hidden w-[9rem] shrink-0 lg:block">
-        <MediaFrame
-          src={MEDIA.mascotPoint.src}
-          alt="Our Mana Games mascot pointing at the schedule"
-          label="Check this out!"
-          ratio="aspect-[2/3]"
-          tilt={6}
-        />
       </div>
     </div>
 
@@ -54,7 +45,17 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
     </div>
 
     <!-- Tabs -->
-    <div data-reveal class="mt-8">
+    <div data-reveal class="relative mt-8">
+      <div data-reveal="right" class="absolute -top-24 right-0 z-10 hidden w-[8rem] lg:block">
+        <MediaFrame
+          src={MEDIA.mascotPoint.src}
+          alt="Our Mana Games mascot pointing at the schedule"
+          label="Check this out!"
+          ratio="aspect-[2/3]"
+          tilt={6}
+        />
+      </div>
+
       <div
         role="tablist"
         aria-label="Tournament schedule by day of the week"
