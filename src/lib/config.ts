@@ -25,7 +25,7 @@ export const MEDIA = {
   logo: { src: '/logo.png' },
   storefront: { src: '/storefront.jpeg', fallback: '/VordererLaden.jpeg' },
   community: { src: '/community.jpeg', fallback: '/MY.jpeg' },
-  shelf: { src: '/shelf.jpeg', fallback: '/MY.jpeg', pending: true },
+  shelf: { src: '/Regal.jpeg', pending: false },
 };
 
 export type Game = {
