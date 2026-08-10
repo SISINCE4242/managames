@@ -1,6 +1,6 @@
 ﻿---
 import { Icon } from 'astro-icon/components';
-import { GAMES, SITE, STATS } from '../lib/config';
+import { GAME_COLORS, GAMES, SITE, STATS, TCG_PROFILES } from '../lib/config';
 
 // Cards in the fan — ordered back to front
 const fanCards = [
@@ -89,16 +89,17 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
         id="card-fan"
         class="relative mx-auto flex h-[clamp(320px,52vw,520px)] w-full max-w-lg items-center justify-center"
         style="perspective:1400px"
-        aria-hidden="true"
       >
         <!-- Glow behind the fan -->
         <div
           class="absolute h-[70%] w-[70%] rounded-full bg-mana-500/25 blur-[90px]"
+          aria-hidden="true"
         >
         </div>
         <div
           class="absolute h-[46%] w-[46%] rounded-full border border-mana-400/20"
           style="animation:pulseRing 3.4s ease-out infinite"
+          aria-hidden="true"
         >
         </div>
 
@@ -111,6 +112,10 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
               <article
                 class="fan-card holo"
                 data-depth={(index + 1) / total}
+                data-game-key={game.key}
+                role="button"
+                tabindex="0"
+                aria-label={`Select ${game.name}`}
                 style={`--rot:${offset * 13}deg; --tx:${offset * 52}px; --ty:${Math.abs(offset) * 16}px; --z:${index}; --accent:${game.color};`}
               >
                 <div class="fan-inner">
@@ -153,6 +158,94 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
           </span>
         </span>
       </p>
+
+      <!-- Draw a card -->
+      <div class="mt-6" data-draw-zone data-profiles={JSON.stringify(TCG_PROFILES)} data-colors={JSON.stringify(GAME_COLORS)}>
+        <!-- Prompt state -->
+        <div data-draw-prompt class="text-center">
+          <button type="button" class="btn btn-primary mx-auto" data-draw-btn>
+            <Icon name="tabler:cards" size={18} />
+            Draw a Card
+          </button>
+          <p class="mt-3 text-xs text-neutral-500">Not sure what to play? Let fate decide.</p>
+        </div>
+
+        <!-- Result state -->
+        <div data-draw-result class="draw-result hidden panel corners p-5" style="--accent:#2ee083">
+          <div class="flex items-center justify-between gap-3">
+            <span class="eyebrow text-[10px] text-mana-300/80">Your Draw</span>
+            <button type="button" class="draw-icon-btn" data-draw-again aria-label="Draw another card">
+              <Icon name="tabler:refresh" size={14} />
+            </button>
+          </div>
+
+          <h3 class="mt-2 font-display text-xl font-bold text-neutral-50" data-result-name></h3>
+          <p class="tag-line mt-1 text-[11px] font-semibold uppercase tracking-wide" data-result-tags></p>
+
+          <div class="mt-4 flex flex-col gap-2" data-result-stats></div>
+
+          <p class="mt-4 text-sm leading-relaxed text-neutral-300" data-result-short></p>
+
+          <div class="mt-5 flex items-center gap-3">
+            <button type="button" class="btn btn-primary flex-1" data-explore-btn>
+              Explore
+              <Icon name="tabler:arrow-right" size={16} />
+            </button>
+            <button type="button" class="btn btn-ghost" data-draw-again>
+              <Icon name="tabler:refresh" size={16} />
+              Draw Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explore overlay -->
+  <div class="explore-overlay" data-explore-overlay hidden>
+    <div class="explore-scrim" data-explore-close aria-hidden="true"></div>
+    <div
+      class="explore-panel panel corners"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="explore-name"
+      style="--accent:#2ee083"
+    >
+      <button type="button" class="back-link" data-explore-close>
+        <Icon name="tabler:arrow-left" size={16} />
+        Back to Hand
+      </button>
+
+      <h3 id="explore-name" class="mt-5 font-display text-2xl font-bold text-neutral-50" data-explore-name></h3>
+      <p class="tag-line mt-1 text-[11px] font-semibold uppercase tracking-wide" data-explore-tags></p>
+
+      <div class="mt-6">
+        <span class="eyebrow text-[10px] text-mana-300/80">What's it about?</span>
+        <p class="mt-2 text-sm leading-relaxed text-neutral-300" data-explore-about></p>
+      </div>
+
+      <div class="mt-6 flex flex-col gap-2.5" data-explore-stats></div>
+
+      <div class="mt-6">
+        <span class="eyebrow text-[10px] text-mana-300/80">You'll like it if...</span>
+        <p class="mt-2 text-sm leading-relaxed text-neutral-300" data-explore-like></p>
+      </div>
+
+      <div class="mt-6">
+        <span class="eyebrow text-[10px] text-mana-300/80">Good to know</span>
+        <ul class="mt-2.5 flex flex-wrap gap-2" data-explore-good></ul>
+      </div>
+
+      <div class="mt-7 flex items-center gap-3">
+        <button type="button" class="btn btn-ghost flex-1" data-explore-close>
+          <Icon name="tabler:arrow-left" size={16} />
+          Back to Hand
+        </button>
+        <button type="button" class="btn btn-primary flex-1" data-explore-draw-again>
+          <Icon name="tabler:refresh" size={16} />
+          Draw Another
+        </button>
+      </div>
     </div>
   </div>
 
@@ -195,8 +288,10 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     transform: translate3d(var(--tx), var(--ty), 0) rotate(var(--rot));
     transition:
       transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.5s ease;
+      box-shadow 0.5s ease,
+      filter 0.35s ease;
     will-change: transform;
+    cursor: pointer;
   }
 
   /* Fly-in animation on load */
@@ -217,6 +312,7 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
   }
 
   .fan-card:hover,
+  .fan-card:focus-visible,
   .fan-card.is-tapped {
     z-index: 20;
     box-shadow:
@@ -225,8 +321,54 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
       0 0 90px -20px var(--accent);
   }
 
+  .fan-card:hover .fan-inner,
+  .fan-card:focus-visible .fan-inner {
+    filter: brightness(1.08);
+  }
+
   .fan-card.is-tapped {
     transform: translate3d(var(--tx), calc(var(--ty) - 22px), 0) rotate(calc(var(--rot) * 0.4)) scale(1.08) !important;
+  }
+
+  /* Card currently shown in the "Your Draw" panel */
+  .fan-card.is-drawn {
+    z-index: 25;
+    box-shadow:
+      0 0 0 2px var(--accent),
+      0 40px 90px -28px rgba(0, 0, 0, 1),
+      0 0 70px -10px var(--accent);
+    animation: drawnGlow 2.6s ease-in-out infinite;
+  }
+
+  @keyframes drawnGlow {
+    0%,
+    100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.12);
+    }
+  }
+
+  /* Quick shuffle flicker while "Draw a Card" is resolving */
+  #card-fan.is-shuffling .fan-card {
+    animation: shuffleFlicker 0.6s ease-in-out;
+    animation-delay: var(--shuffle-delay, 0ms);
+  }
+
+  @keyframes shuffleFlicker {
+    0%,
+    100% {
+      filter: brightness(1);
+    }
+    35% {
+      filter: brightness(1.6);
+      transform: translate3d(var(--tx), calc(var(--ty) - 10px), 0) rotate(calc(var(--rot) + 6deg)) scale(1.03);
+    }
+    65% {
+      filter: brightness(1.2);
+      transform: translate3d(var(--tx), calc(var(--ty) + 4px), 0) rotate(calc(var(--rot) - 5deg));
+    }
   }
 
   .fan-inner {
@@ -303,6 +445,182 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
   @media (prefers-reduced-motion: reduce) {
     #card-fan.is-ready .fan-card {
       animation: none;
+    }
+    .fan-card.is-drawn,
+    #card-fan.is-shuffling .fan-card {
+      animation: none;
+    }
+  }
+
+  /* ---------- Draw a card ---------- */
+  .draw-result {
+    transition: opacity 0.3s ease;
+  }
+  .draw-result.draw-in {
+    animation: drawIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes drawIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .tag-line {
+    color: var(--accent);
+  }
+
+  .draw-icon-btn {
+    display: grid;
+    height: 28px;
+    width: 28px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    background: rgba(0, 0, 0, 0.3);
+    color: color-mix(in srgb, var(--accent) 85%, white 15%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  }
+  .draw-icon-btn:hover,
+  .draw-icon-btn:focus-visible {
+    border-color: var(--accent);
+    transform: rotate(140deg);
+  }
+
+  /* Stat bars — shared between the draw result and the explore overlay */
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .stat-label {
+    width: 84px;
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .stat-track {
+    position: relative;
+    flex: 1;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+  .stat-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 55%, white 25%));
+    box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
+    transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stat-value {
+    width: 30px;
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 10px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .draw-result.draw-in {
+      animation: none;
+    }
+    .stat-fill {
+      transition: none;
+    }
+  }
+
+  /* ---------- Explore overlay ---------- */
+  .explore-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+  }
+  .explore-overlay[hidden] {
+    display: none;
+  }
+
+  .explore-scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 5, 4, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .explore-overlay.is-open .explore-scrim {
+    opacity: 1;
+  }
+
+  .explore-panel {
+    position: relative;
+    z-index: 1;
+    width: min(30rem, 100%);
+    max-height: min(42rem, 88vh);
+    overflow-y: auto;
+    padding: 1.75rem;
+    opacity: 0;
+    transform: scale(0.95) translateY(14px);
+    transition: opacity 0.32s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .explore-overlay.is-open .explore-panel {
+    opacity: 1;
+    transform: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.25s ease;
+  }
+  .back-link:hover,
+  .back-link:focus-visible {
+    color: var(--accent);
+  }
+
+  .good-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+    padding: 0.35rem 0.75rem;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .explore-scrim,
+    .explore-panel {
+      transition: opacity 0.2s ease;
+    }
+    .explore-panel {
+      transform: none !important;
     }
   }
 </style>
@@ -381,5 +699,242 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
         }
       });
     }
+  }
+</script>
+
+<script>
+  type Stats = { strategy: number; pace: number; collecting: number; accessibility: number };
+  type Profile = {
+    displayName: string;
+    tags: string[];
+    stats: Stats;
+    short: string;
+    about: string;
+    likeIf: string;
+    goodToKnow: string[];
+  };
+
+  const zone = document.querySelector<HTMLElement>('[data-draw-zone]');
+  if (zone) {
+    const profiles: Record<string, Profile> = JSON.parse(zone.dataset.profiles ?? '{}');
+    const colors: Record<string, string> = JSON.parse(zone.dataset.colors ?? '{}');
+    const keys = Object.keys(profiles);
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const promptEl = zone.querySelector<HTMLElement>('[data-draw-prompt]');
+    const resultEl = zone.querySelector<HTMLElement>('[data-draw-result]');
+    const resultName = zone.querySelector<HTMLElement>('[data-result-name]');
+    const resultTags = zone.querySelector<HTMLElement>('[data-result-tags]');
+    const resultStats = zone.querySelector<HTMLElement>('[data-result-stats]');
+    const resultShort = zone.querySelector<HTMLElement>('[data-result-short]');
+
+    const overlay = document.querySelector<HTMLElement>('[data-explore-overlay]');
+    const explorePanel = overlay?.querySelector<HTMLElement>('.explore-panel') ?? null;
+    const exploreName = overlay?.querySelector<HTMLElement>('[data-explore-name]') ?? null;
+    const exploreTags = overlay?.querySelector<HTMLElement>('[data-explore-tags]') ?? null;
+    const exploreAbout = overlay?.querySelector<HTMLElement>('[data-explore-about]') ?? null;
+    const exploreLike = overlay?.querySelector<HTMLElement>('[data-explore-like]') ?? null;
+    const exploreStats = overlay?.querySelector<HTMLElement>('[data-explore-stats]') ?? null;
+    const exploreGood = overlay?.querySelector<HTMLElement>('[data-explore-good]') ?? null;
+
+    const fanCards = Array.from(document.querySelectorAll<HTMLElement>('#card-fan .fan-card'));
+    const cardFan = document.getElementById('card-fan');
+
+    const statLabels: [keyof Stats, string][] = [
+      ['strategy', 'Strategy'],
+      ['pace', 'Pace'],
+      ['collecting', 'Collecting'],
+      ['accessibility', 'Accessibility'],
+    ];
+
+    const renderStats = (container: HTMLElement | null, stats: Stats) => {
+      if (!container) return;
+      container.replaceChildren();
+      statLabels.forEach(([key, label]) => {
+        const value = stats[key];
+        const row = document.createElement('div');
+        row.className = 'stat-row';
+
+        const lab = document.createElement('span');
+        lab.className = 'stat-label';
+        lab.textContent = label;
+
+        const track = document.createElement('span');
+        track.className = 'stat-track';
+        const fill = document.createElement('span');
+        fill.className = 'stat-fill';
+        track.append(fill);
+
+        const val = document.createElement('span');
+        val.className = 'stat-value';
+        val.textContent = `${value}/10`;
+
+        row.append(lab, track, val);
+        container.append(row);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            fill.style.width = `${value * 10}%`;
+          });
+        });
+      });
+    };
+
+    let currentKey: string | null = null;
+    let lastKey: string | null = null;
+
+    const pickRandom = () => {
+      const pool = keys.filter((k) => k !== lastKey);
+      const candidates = pool.length ? pool : keys;
+      return candidates[Math.floor(Math.random() * candidates.length)];
+    };
+
+    const focusFanCard = (key: string) => {
+      fanCards.forEach((card) => card.classList.toggle('is-drawn', card.dataset.gameKey === key));
+    };
+
+    const populateResult = (key: string) => {
+      const p = profiles[key];
+      if (!p || !resultEl) return;
+      resultEl.style.setProperty('--accent', colors[key] ?? '#2ee083');
+      if (resultName) resultName.textContent = p.displayName;
+      if (resultTags) resultTags.textContent = p.tags.join(' · ');
+      if (resultShort) resultShort.textContent = p.short;
+      renderStats(resultStats, p.stats);
+    };
+
+    const showResult = (key: string, animate = true) => {
+      currentKey = key;
+      lastKey = key;
+      populateResult(key);
+      promptEl?.classList.add('hidden');
+      resultEl?.classList.remove('hidden');
+      if (animate && !reduce && resultEl) {
+        resultEl.classList.remove('draw-in');
+        void resultEl.offsetWidth;
+        resultEl.classList.add('draw-in');
+      }
+    };
+
+    const reveal = (key: string, { shuffle }: { shuffle: boolean }) => {
+      if (!shuffle || reduce || fanCards.length === 0) {
+        focusFanCard(key);
+        showResult(key);
+        return;
+      }
+      cardFan?.classList.add('is-shuffling');
+      fanCards.forEach((card, i) => card.style.setProperty('--shuffle-delay', `${i * 70}ms`));
+      window.setTimeout(() => {
+        cardFan?.classList.remove('is-shuffling');
+        focusFanCard(key);
+        showResult(key);
+      }, 620);
+    };
+
+    /* "Draw a Card" + "Draw Again" → random pick, shuffle flourish */
+    zone.querySelectorAll<HTMLElement>('[data-draw-btn], [data-draw-again]').forEach((btn) => {
+      btn.addEventListener('click', () => reveal(pickRandom(), { shuffle: true }));
+    });
+
+    /* Clicking / tapping a specific fan card → select exactly that game */
+    fanCards.forEach((card) => {
+      const key = card.dataset.gameKey;
+      if (!key || !profiles[key]) return;
+
+      card.addEventListener('click', () => reveal(key, { shuffle: false }));
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          reveal(key, { shuffle: false });
+        }
+      });
+    });
+
+    /* ---------- Explore overlay ---------- */
+    let lastFocused: HTMLElement | null = null;
+
+    const populateExplore = (key: string) => {
+      const p = profiles[key];
+      if (!p) return;
+      explorePanel?.style.setProperty('--accent', colors[key] ?? '#2ee083');
+      if (exploreName) exploreName.textContent = p.displayName;
+      if (exploreTags) exploreTags.textContent = p.tags.join(' · ');
+      if (exploreAbout) exploreAbout.textContent = p.about;
+      if (exploreLike) exploreLike.textContent = p.likeIf.charAt(0).toUpperCase() + p.likeIf.slice(1);
+      renderStats(exploreStats, p.stats);
+
+      if (exploreGood) {
+        exploreGood.replaceChildren();
+        p.goodToKnow.forEach((item) => {
+          const li = document.createElement('li');
+          li.className = 'good-chip';
+          li.textContent = item;
+          exploreGood.append(li);
+        });
+      }
+    };
+
+    const getFocusable = () =>
+      Array.from(
+        explorePanel?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      );
+
+    const openExplore = () => {
+      if (!currentKey || !overlay) return;
+      populateExplore(currentKey);
+      lastFocused = document.activeElement as HTMLElement | null;
+      overlay.hidden = false;
+      requestAnimationFrame(() => overlay.classList.add('is-open'));
+      const focusable = getFocusable();
+      (focusable[0] ?? explorePanel)?.focus();
+    };
+
+    const closeExplore = () => {
+      if (!overlay) return;
+      overlay.classList.remove('is-open');
+      window.setTimeout(
+        () => {
+          overlay.hidden = true;
+        },
+        reduce ? 0 : 300,
+      );
+      lastFocused?.focus();
+    };
+
+    zone.querySelector('[data-explore-btn]')?.addEventListener('click', openExplore);
+    overlay?.querySelectorAll('[data-explore-close]').forEach((el) => el.addEventListener('click', closeExplore));
+
+    overlay?.querySelector('[data-explore-draw-again]')?.addEventListener('click', () => {
+      const key = pickRandom();
+      currentKey = key;
+      lastKey = key;
+      focusFanCard(key);
+      populateResult(key);
+      populateExplore(key);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!overlay || overlay.hidden) return;
+      if (event.key === 'Escape') {
+        closeExplore();
+        return;
+      }
+      if (event.key === 'Tab') {
+        const focusable = getFocusable();
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
   }
 </script>

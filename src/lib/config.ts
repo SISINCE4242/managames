@@ -65,6 +65,118 @@ export const GAME_COLORS: Record<string, string> = Object.fromEntries(
   GAMES.map((g) => [g.key, g.color]),
 );
 
+export type TcgProfile = {
+  /** Fuller display name used only in the "Draw a card" discovery feature */
+  displayName: string;
+  tags: string[];
+  stats: { strategy: number; pace: number; collecting: number; accessibility: number };
+  /** One-line summary shown on the draw result card */
+  short: string;
+  /** Longer "What's it about?" paragraph shown in the explore overlay */
+  about: string;
+  /** "You'll like it if..." sentence */
+  likeIf: string;
+  /** 2-3 short "Good to know" chips */
+  goodToKnow: string[];
+};
+
+/**
+ * Editorial store assessments for the "Draw a card" discovery feature —
+ * not official ratings. Keyed by Game.key.
+ */
+export const TCG_PROFILES: Record<string, TcgProfile> = {
+  Magic: {
+    displayName: 'Magic: The Gathering',
+    tags: ['Deep', 'Versatile', 'Deckbuilding'],
+    stats: { strategy: 10, pace: 6, collecting: 10, accessibility: 6 },
+    short: 'A huge strategic sandbox built around deck construction, synergies and many different ways to play.',
+    about:
+      'Magic rewards planning, creative deck building and adapting to your opponent. Its many formats range from competitive one-on-one play to social multiplayer.',
+    likeIf: 'you enjoy deep strategy, experimentation and almost endless deck-building possibilities.',
+    goodToKnow: ['Many Formats', 'High Strategic Depth', '1v1 & Multiplayer'],
+  },
+  'Yu-Gi-Oh!': {
+    displayName: 'Yu-Gi-Oh!',
+    tags: ['Fast', 'Combo-driven', 'Technical'],
+    stats: { strategy: 9, pace: 9, collecting: 9, accessibility: 5 },
+    short: 'A fast tactical card game built around powerful combinations, sequencing and explosive turns.',
+    about:
+      'Build combinations between Monsters, Spells, Traps and the Extra Deck to create powerful plays and disrupt your opponent.',
+    likeIf: 'you enjoy combos, complex interactions and finding the strongest sequence of plays.',
+    goodToKnow: ['Fast Duels', 'Extra Deck', 'High Combo Depth'],
+  },
+  Pokemon: {
+    displayName: 'Pokémon TCG',
+    tags: ['Accessible', 'Tactical', 'Collectible'],
+    stats: { strategy: 8, pace: 7, collecting: 10, accessibility: 9 },
+    short: 'An approachable strategy game where Pokémon evolve, use Energy and battle for Prize cards.',
+    about:
+      'Build a 60-card deck around Pokémon, Trainers and Energy, develop your board and take Prize cards by knocking out opposing Pokémon.',
+    likeIf: 'you want an easy entry into TCGs with plenty of strategy and a huge collecting side.',
+    goodToKnow: ['2 Players', 'Evolution', '6 Prize Cards'],
+  },
+  'One Piece': {
+    displayName: 'One Piece Card Game',
+    tags: ['Tactical', 'Leader-based', 'Synergy'],
+    stats: { strategy: 8, pace: 7, collecting: 9, accessibility: 8 },
+    short: 'Build around a Leader and use DON!! efficiently to strengthen your characters and execute your game plan.',
+    about:
+      'Your Leader defines your deck while DON!! works both as a resource and a way to increase power, creating meaningful decisions every turn.',
+    likeIf: 'you enjoy resource management, deck synergy and building around a central leader.',
+    goodToKnow: ['Leader Based', '50-Card Deck', 'DON!! Resource'],
+  },
+  Naruto: {
+    displayName: 'Naruto Mythos TCG',
+    tags: ['Tactical', 'Mission-based', 'Resource'],
+    stats: { strategy: 8, pace: 6, collecting: 8, accessibility: 7 },
+    short: 'Deploy ninja, manage Chakra and fight to complete missions before your opponent.',
+    about:
+      "New missions shape each round while players spend Chakra to deploy characters and compete for victory points, making positioning and resource management important.",
+    likeIf: 'you enjoy tactical objectives, resource decisions and adapting your plan as the battlefield changes.',
+    goodToKnow: ['Mission System', 'Chakra Management', 'Victory Points'],
+  },
+  'Dragon Ball': {
+    displayName: 'Dragon Ball Super Card Game: Fusion World',
+    tags: ['Fast', 'Aggressive', 'Combo'],
+    stats: { strategy: 8, pace: 9, collecting: 9, accessibility: 8 },
+    short: 'Fast battles built around Leaders, powerful attacks, Combo cards and dramatic Awaken moments.',
+    about:
+      'Cards can reinforce attacks and defense through Combos, while Leaders transform through Awaken and can dramatically change the flow of a battle.',
+    likeIf: 'you enjoy aggressive games, big momentum swings and chaining cards together during combat.',
+    goodToKnow: ['Leader Based', 'Combo System', 'Awaken Mechanic'],
+  },
+  Riftbound: {
+    displayName: 'Riftbound',
+    tags: ['Strategic', 'Positional', 'Objective-based'],
+    stats: { strategy: 9, pace: 7, collecting: 8, accessibility: 8 },
+    short: 'Deploy Champions and units across shared battlefields and fight for control to score points.',
+    about:
+      "Rather than simply reducing an opponent's life total, Riftbound revolves around moving units, conquering battlefields and holding objectives until you reach the winning score.",
+    likeIf: 'you enjoy board control, positioning, objectives and tactical decisions beyond direct combat.',
+    goodToKnow: ['Battlefield Control', 'First to 8 Points', '1v1 & Multiplayer'],
+  },
+  'Flesh & Blood': {
+    displayName: 'Flesh & Blood',
+    tags: ['Deep', 'Competitive', 'Skill-intensive'],
+    stats: { strategy: 10, pace: 8, collecting: 8, accessibility: 5 },
+    short: 'A highly tactical combat TCG where nearly every card can become an attack, defense or resource.',
+    about:
+      'Attack, defend and pitch cards for resources while managing your hand efficiently. Small decisions compound across the match, creating very high strategic depth.',
+    likeIf: 'you enjoy competitive play, mastering matchups and being rewarded for precise decisions.',
+    goodToKnow: ['Hero Based', 'Attack/Defend/Pitch', 'High Skill Ceiling'],
+  },
+  Digimon: {
+    displayName: 'Digimon Card Game',
+    tags: ['Evolution', 'Tactical', 'Momentum'],
+    stats: { strategy: 8, pace: 8, collecting: 9, accessibility: 8 },
+    short: "Build Digimon through evolution while carefully managing a shared resource system and attacking your opponent's Security.",
+    about:
+      'Digivolution builds stronger Digimon while the Memory Gauge creates a unique push-and-pull resource system between both players.',
+    likeIf: 'you enjoy evolving units, building synergistic stacks and balancing powerful plays against resource efficiency.',
+    goodToKnow: ['Digivolution', 'Memory Gauge', 'Security System'],
+  },
+};
+
 export const CATEGORIES = [
   {
     title: 'Singles',
