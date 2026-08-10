@@ -68,16 +68,16 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
       <dl data-reveal style="--reveal-delay:380ms" class="mt-12 grid max-w-lg grid-cols-3 gap-4">
         {
           STATS.map((stat) => (
-            <div class="panel panel-hover px-4 py-4">
+            <a href={stat.href} class="panel panel-hover px-4 py-4 cursor-pointer no-underline group/stat">
               <dt class="sr-only">{stat.label}</dt>
               <dd>
                 <span class="block font-display text-3xl font-bold text-gradient sm:text-4xl">
                   <span data-count={stat.value}>0</span>
                   {stat.suffix}
                 </span>
-                <span class="mt-1.5 block text-[11px] leading-tight text-neutral-400">{stat.label}</span>
+                <span class="mt-1.5 block text-[11px] leading-tight text-neutral-400 transition-colors group-hover/stat:text-mana-300">{stat.label}</span>
               </dd>
-            </div>
+            </a>
           ))
         }
       </dl>

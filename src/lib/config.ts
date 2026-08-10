@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'Mana Games',
-  tagline: 'Your LGS store for anything TCG!',
+  tagline: 'Your LGS for anything TCG!',
   city: 'Berlin',
   street: 'Blissestr. 5',
   zip: '10715 Berlin',
@@ -149,19 +149,19 @@ export const SCHEDULE: Day[] = [
 export const CLOSED = 'closed';
 
 export const OPENING_HOURS = [
-  { day: 'Monday', weekday: 1, hours: '16:30 – 22:00' },
-  { day: 'Tuesday', weekday: 2, hours: '16:30 – 22:00' },
-  { day: 'Wednesday', weekday: 3, hours: '16:30 – 22:00' },
-  { day: 'Thursday', weekday: 4, hours: '16:30 – 22:00' },
-  { day: 'Friday', weekday: 5, hours: '16:30 – 22:00' },
-  { day: 'Saturday', weekday: 6, hours: '13:30 – 22:00' },
+  { day: 'Monday', weekday: 1, hours: '17:00 – 22:00' },
+  { day: 'Tuesday', weekday: 2, hours: '17:00 – 22:00' },
+  { day: 'Wednesday', weekday: 3, hours: '17:00 – 22:00' },
+  { day: 'Thursday', weekday: 4, hours: '17:00 – 22:00' },
+  { day: 'Friday', weekday: 5, hours: '17:00 – 22:00' },
+  { day: 'Saturday', weekday: 6, hours: '14:00 – 22:00' },
   { day: 'Sunday', weekday: 0, hours: CLOSED },
 ];
 
 export const STATS = [
-  { value: 9, suffix: '', label: 'Trading Card Games' },
-  { value: 26, suffix: '', label: 'Tournaments per week' },
-  { value: 6, suffix: '', label: 'Days a week open' },
+  { value: 9, suffix: '', label: 'Trading Card Games', href: '#assortment' },
+  { value: 26, suffix: '', label: 'Tournaments per week', href: '#schedule' },
+  { value: 6, suffix: '', label: 'Days a week open', href: '#visit' },
 ];
 
 export const NAV_LINKS = [
