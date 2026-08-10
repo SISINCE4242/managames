@@ -22,9 +22,10 @@ export const TWITTER_URL = 'https://www.twitter.com/example';
 export const MEDIA = {
   // No fallback on purpose: the old logo (PB.jpeg) must not be shown any more.
   // Until /logo.png exists, <BrandMark> renders a drawn card fan instead.
-  logo: { src: '/logo.png' },
+  logo: { src: '/Mana Games Logo.png' },
   storefront: { src: '/storefront.jpeg', fallback: '/VordererLaden.jpeg' },
   community: { src: '/community.jpeg', fallback: '/MY.jpeg' },
+  signage: { src: '/Mana Games.png' },
   shelf: { src: '/Regal.jpeg', pending: false },
 };
 
