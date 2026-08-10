@@ -1,6 +1,5 @@
 ﻿---
 import { Icon } from 'astro-icon/components';
-import MediaFrame from './media-frame.astro';
 import SectionHeading from './section-heading.astro';
 import { CLOSED, INSTAGRAM_URL, MEDIA, OPENING_HOURS, SITE, TWITCH_URL } from '../lib/config';
 ---
@@ -107,14 +106,13 @@ import { CLOSED, INSTAGRAM_URL, MEDIA, OPENING_HOURS, SITE, TWITCH_URL } from '.
         <div class="absolute left-1/2 top-0 h-56 w-[70%] -translate-x-1/2 rounded-full bg-mana-400/30 blur-[80px]"></div>
       </div>
 
-      <div class="relative grid items-center gap-8 text-center lg:grid-cols-[13rem_1fr] lg:gap-10 lg:text-left">
-        <div class="mx-auto w-full max-w-[13rem]">
-          <MediaFrame
-            src={MEDIA.mascotWave.src}
-            alt="Our Mana Games mascot, waving hello"
-            label="See you at the store!"
-            ratio="aspect-[2/3]"
-            tilt={6}
+      <div class="relative grid items-center gap-4 text-center lg:grid-cols-[11rem_1fr] lg:gap-10 lg:text-left">
+        <div class="mascot-cutout mx-auto w-full max-w-[11rem]">
+          <img
+            src={MEDIA.mascotHowTo.src}
+            alt="Our Mana Games mascot, puzzling over a hand of cards"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 
@@ -141,6 +139,22 @@ import { CLOSED, INSTAGRAM_URL, MEDIA, OPENING_HOURS, SITE, TWITCH_URL } from '.
     </div>
   </div>
 </section>
+
+<style>
+  /*
+    This particular mascot pose was delivered on a plain white background
+    (not a transparent cutout). mix-blend-mode: multiply against the CTA
+    banner's dark gradient makes white read as transparent, so she stands
+    freely instead of sitting in a boxed card frame.
+  */
+  .mascot-cutout img {
+    display: block;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.45));
+  }
+</style>
 
 <script>
   const HOURS: Record<number, [number, number] | null> = {

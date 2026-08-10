@@ -31,6 +31,7 @@ export const MEDIA = {
   mascotWave: { src: '/mana-girl-winken.png' },
   mascotPresent: { src: '/mana-girl-präsentieren.png' },
   mascotPoint: { src: '/mana-girl-zeigen.png' },
+  mascotHowTo: { src: '/mana-girl-howtoplay.png' },
 };
 
 export type GamePattern =
