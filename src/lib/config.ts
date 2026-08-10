@@ -159,6 +159,23 @@ export const SCHEDULE: Day[] = [
   { name: 'Sunday', short: 'Sun', weekday: 0, slots: [] },
 ];
 
+export type GameEvent = { weekday: number; time: string; format?: string };
+
+/**
+ * Per-game recurring weekly events, derived directly from SCHEDULE so the
+ * tournament schedule stays the single source of truth. Consumed by the
+ * TCG flip-cards ("We offer") to show each game's next/upcoming slots.
+ */
+export const GAME_EVENTS: Record<string, GameEvent[]> = Object.fromEntries(
+  GAMES.map((g) => [g.key, [] as GameEvent[]]),
+);
+
+SCHEDULE.forEach((day) => {
+  day.slots.forEach((slot) => {
+    GAME_EVENTS[slot.game]?.push({ weekday: day.weekday, time: slot.time, format: slot.format });
+  });
+});
+
 export const CLOSED = 'closed';
 
 export const OPENING_HOURS = [

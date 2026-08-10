@@ -3,7 +3,15 @@ import { Icon } from 'astro-icon/components';
 import GamePattern from './game-pattern.astro';
 import MediaFrame from './media-frame.astro';
 import SectionHeading from './section-heading.astro';
-import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
+import { CATEGORIES, GAME_EVENTS, GAMES, MEDIA } from '../lib/config';
+
+/**
+ * Small descriptive badge for the flip-card back, derived only from data
+ * already in GAME_EVENTS — nothing invented per game. Kept to a single
+ * badge: with 3 upcoming slots already listed, a second badge like
+ * "Multiple Formats" is redundant and only forces a wrap on narrow cards.
+ */
+const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Weekly Play'] : []);
 ---
 
 <section id="assortment" class="relative scroll-mt-24 py-20 sm:py-28">
@@ -52,28 +60,62 @@ import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
         <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {
             GAMES.map((game, index) => (
-              <li
-                data-reveal="zoom"
-                style={`--reveal-delay:${index * 55}ms; --accent:${game.color};`}
-                data-tilt="9"
-                class="game-tile holo group relative flex flex-col justify-between overflow-hidden rounded-2xl p-4"
-              >
-                <span class="game-glow" aria-hidden="true" />
-                <GamePattern pattern={game.pattern} />
-                <span class="relative flex items-center justify-between">
-                  <span class="game-chip" />
-                  <Icon
-                    name="tabler:cards-filled"
-                    size={16}
-                    class="text-white/15 transition-colors duration-500 group-hover:text-white/40"
-                  />
-                </span>
-                <span class="relative mt-8 block font-display text-sm font-bold leading-tight text-neutral-50 sm:text-base">
-                  {game.name}
-                </span>
-                <span class="relative mt-1.5 block text-[11px] leading-snug text-neutral-500 transition-colors duration-500 group-hover:text-neutral-300">
-                  {game.blurb}
-                </span>
+              <li data-reveal="zoom" style={`--reveal-delay:${index * 55}ms; --accent:${game.color};`} class="relative">
+                <div
+                  class="game-tile holo group relative block overflow-hidden rounded-2xl"
+                  data-flip-card
+                  data-game={game.key}
+                  data-events={JSON.stringify(GAME_EVENTS[game.key] ?? [])}
+                  role="button"
+                  tabindex="0"
+                  aria-pressed="false"
+                  aria-label={`${game.name} — press to flip for upcoming tournaments`}
+                >
+                  <span class="game-glow" aria-hidden="true" />
+                  <GamePattern pattern={game.pattern} />
+
+                  <span class="flip-inner">
+                    {/* Front */}
+                    <span class="flip-face flip-front flex flex-col justify-between p-4">
+                      <span class="relative flex items-center justify-between">
+                        <span class="game-chip" />
+                        <Icon
+                          name="tabler:flip-horizontal"
+                          size={14}
+                          class="flip-cue text-white/15 transition-colors duration-500 group-hover:text-white/45"
+                        />
+                      </span>
+                      <span class="relative mt-6 block font-display text-sm font-bold leading-tight text-neutral-50 sm:text-base">
+                        {game.name}
+                      </span>
+                      <span class="relative mt-1.5 block text-[11px] leading-snug text-neutral-500 transition-colors duration-500 group-hover:text-neutral-300">
+                        {game.blurb}
+                      </span>
+                      <span class="next-line relative mt-3 flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-wide text-neutral-500" data-next-slot />
+                    </span>
+
+                    {/* Back */}
+                    <span class="flip-face flip-back flex flex-col p-4">
+                      <span class="relative flex items-center justify-between gap-2">
+                        <span class="font-display text-sm font-bold leading-tight text-neutral-50">{game.name}</span>
+                        <span class="back-btn" aria-hidden="true">
+                          <Icon name="tabler:x" size={13} />
+                        </span>
+                      </span>
+                      <span class="eyebrow relative mt-1.5 block text-[9px] text-mana-300/70">Upcoming</span>
+                      <ul class="upcoming-list relative mt-1 flex flex-col" data-upcoming-list />
+                      <span class="relative mt-auto flex flex-wrap gap-1.5 pt-1.5" data-badges>
+                        {badgesFor(game.key).map((badge) => (
+                          <span class="mini-badge">{badge}</span>
+                        ))}
+                      </span>
+                      <a href="#schedule" class="all-events relative mt-1.5 inline-flex items-center gap-1 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-mana-300" data-no-flip>
+                        All events
+                        <Icon name="tabler:arrow-right" size={12} />
+                      </a>
+                    </span>
+                  </span>
+                </div>
               </li>
             ))
           }
@@ -110,14 +152,24 @@ import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
     background:
       linear-gradient(155deg, color-mix(in srgb, var(--accent) 11%, transparent), rgba(6, 9, 8, 0.9) 60%),
       rgba(8, 12, 10, 0.72);
-    min-height: 165px;
+    min-height: 195px;
+    perspective: 1200px;
+    cursor: pointer;
     transition:
-      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
       border-color 0.45s ease,
       box-shadow 0.45s ease;
   }
 
-  .game-tile:hover {
+  @media (max-width: 480px) {
+    .game-tile {
+      min-height: 286px;
+    }
+  }
+
+  .game-tile:hover,
+  .game-tile:focus-visible {
+    transform: translateY(-2px);
     border-color: color-mix(in srgb, var(--accent) 75%, transparent);
     box-shadow: 0 24px 60px -30px var(--accent), 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
   }
@@ -132,7 +184,8 @@ import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
     transition: opacity 0.5s ease;
     pointer-events: none;
   }
-  .game-tile:hover .game-glow {
+  .game-tile:hover .game-glow,
+  .game-tile:focus-visible .game-glow {
     opacity: 0.75;
   }
 
@@ -144,4 +197,288 @@ import { CATEGORIES, GAMES, MEDIA } from '../lib/config';
     background: var(--accent);
     box-shadow: 0 0 14px var(--accent);
   }
+
+  /* ---------- Flip mechanics ---------- */
+  .flip-inner {
+    /* absolute + inset (not height:100%) so it resolves against .game-tile's
+       used height even though that height only comes from min-height */
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .game-tile[aria-pressed='true'] .flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-face {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .flip-back {
+    transform: rotateY(180deg);
+  }
+
+  .flip-cue {
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .game-tile:hover .flip-cue,
+  .game-tile:focus-visible .flip-cue {
+    transform: scale(1.15);
+  }
+
+  /* ---------- Front: next-event line ---------- */
+  .next-line {
+    min-height: 12px;
+  }
+  .next-line[data-today='true'] {
+    color: color-mix(in srgb, var(--accent) 85%, white 15%);
+  }
+  .today-dot {
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: todayPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes todayPulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.55;
+      transform: scale(1.35);
+    }
+  }
+  .next-arrow {
+    margin-left: auto;
+    opacity: 0.6;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .game-tile:hover .next-arrow,
+  .game-tile:focus-visible .next-arrow {
+    transform: translateX(3px);
+    opacity: 1;
+  }
+
+  /* ---------- Back face ---------- */
+  .back-btn {
+    display: grid;
+    height: 26px;
+    width: 26px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    background: rgba(0, 0, 0, 0.3);
+    color: color-mix(in srgb, var(--accent) 85%, white 15%);
+  }
+
+  .upcoming-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .upcoming-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem;
+    padding: 0.15rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 10.5px;
+    line-height: 1.25;
+  }
+  .upcoming-item:last-child {
+    border-bottom: none;
+  }
+  .upcoming-when {
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .upcoming-label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .mini-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    padding: 0.14rem 0.5rem;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .all-events {
+    transition: gap 0.3s ease, color 0.3s ease;
+  }
+  .all-events:hover,
+  .all-events:focus-visible {
+    gap: 0.4rem;
+    color: #eafff3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-inner {
+      transition: none;
+      transform: none !important;
+    }
+    .flip-face {
+      transition: opacity 0.25s ease;
+    }
+    .flip-back {
+      transform: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .flip-front {
+      opacity: 1;
+    }
+    .game-tile[aria-pressed='true'] .flip-front {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .game-tile[aria-pressed='true'] .flip-back {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .today-dot {
+      animation: none;
+    }
+  }
 </style>
+
+<script>
+  type GameEvent = { weekday: number; time: string; format?: string };
+
+  const dayShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+  const toMinutes = (time: string) => {
+    const [h, m] = time.split(':').map(Number);
+    return h * 60 + m;
+  };
+
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-flip-card]'));
+
+  if (cards.length) {
+    const now = new Date();
+    const minutesNow = now.getHours() * 60 + now.getMinutes();
+    const dayNow = now.getDay();
+
+    /* Minutes from now until the event, wrapping around the week — same
+       logic as the "Up next" banner in the tournament schedule. */
+    const distance = (weekday: number, time: string) => {
+      let dayDelta = (weekday - dayNow + 7) % 7;
+      const minutes = toMinutes(time);
+      if (dayDelta === 0 && minutes <= minutesNow) dayDelta = 7;
+      return dayDelta * 1440 + minutes - minutesNow;
+    };
+
+    cards.forEach((card) => {
+      const gameName = card.dataset.game ?? '';
+      let events: GameEvent[] = [];
+      try {
+        events = JSON.parse(card.dataset.events ?? '[]');
+      } catch {
+        events = [];
+      }
+
+      const sorted = events
+        .map((event) => ({ ...event, delta: distance(event.weekday, event.time) }))
+        .sort((a, b) => a.delta - b.delta);
+
+      const nextSlot = card.querySelector<HTMLElement>('[data-next-slot]');
+      const upcomingList = card.querySelector<HTMLElement>('[data-upcoming-list]');
+
+      if (sorted.length === 0) {
+        nextSlot?.replaceChildren();
+        upcomingList?.replaceChildren();
+        return;
+      }
+
+      const first = sorted[0];
+      const label = first.format || gameName;
+      const isToday = first.weekday === dayNow && first.delta < 1440;
+
+      if (nextSlot) {
+        nextSlot.dataset.today = String(isToday);
+        nextSlot.replaceChildren();
+
+        if (isToday) {
+          const dot = document.createElement('span');
+          dot.className = 'today-dot';
+          const text = document.createElement('span');
+          text.textContent = `TODAY · ${first.time} · ${label}`;
+          nextSlot.append(dot, text);
+        } else {
+          const text = document.createElement('span');
+          text.textContent = `NEXT · ${dayShort[first.weekday]} ${first.time} · ${label}`;
+          nextSlot.append(text);
+        }
+
+        const arrow = document.createElement('span');
+        arrow.className = 'next-arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '→';
+        nextSlot.append(arrow);
+      }
+
+      if (upcomingList) {
+        upcomingList.replaceChildren();
+        sorted.slice(0, 3).forEach((event) => {
+          const item = document.createElement('li');
+          item.className = 'upcoming-item';
+
+          const when = document.createElement('span');
+          when.className = 'upcoming-when';
+          when.textContent = `${dayShort[event.weekday]} · ${event.time}`;
+
+          const evLabel = document.createElement('span');
+          evLabel.className = 'upcoming-label';
+          evLabel.textContent = `— ${event.format || gameName}`;
+
+          item.append(when, evLabel);
+          upcomingList.append(item);
+        });
+      }
+    });
+
+    /* Flip toggle: click/tap anywhere on the card, Enter/Space when focused.
+       Controls inside the card (the "All events" link) opt out via
+       [data-no-flip] so they can act normally instead of flipping. */
+    cards.forEach((card) => {
+      const toggle = () => {
+        const pressed = card.getAttribute('aria-pressed') === 'true';
+        card.setAttribute('aria-pressed', String(!pressed));
+      };
+
+      card.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('[data-no-flip]')) return;
+        toggle();
+      });
+
+      card.addEventListener('keydown', (event) => {
+        if (event.target !== card) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+    });
+  }
+</script>
