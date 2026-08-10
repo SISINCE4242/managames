@@ -85,16 +85,16 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
 
     <!-- Card fan -->
     <div class="relative">
+      <!-- Mascot -->
+      <div class="mascot-topper">
+        <img src={MEDIA.mascotWave.src} alt="Our Mana Games mascot waving hello" loading="eager" decoding="async" />
+      </div>
+
       <div
         id="card-fan"
         class="relative mx-auto flex h-[clamp(320px,52vw,520px)] w-full max-w-lg items-center justify-center"
         style="perspective:1400px"
       >
-        <!-- Mascot hologram, ambient background only -->
-        <div class="mascot-hologram" aria-hidden="true">
-          <img src={MEDIA.mascotWave.src} alt="" loading="eager" decoding="async" />
-        </div>
-
         <!-- Glow behind the fan -->
         <div
           class="absolute h-[70%] w-[70%] rounded-full bg-mana-500/25 blur-[90px]"
@@ -277,62 +277,17 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
 
 <style>
   /*
-    Ambient "hologram" of the mascot, faint and behind the cards — purely
-    atmospheric so it never competes with the fan or the text column.
+    Freestanding mascot above the fan — no card frame, the art's own
+    built-in glow/alpha fade does the blending.
   */
-  .mascot-hologram {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    pointer-events: none;
-    overflow: hidden;
-    opacity: 0.32;
-    mix-blend-mode: screen;
-    -webkit-mask-image: radial-gradient(ellipse 62% 78% at 50% 42%, #000 45%, transparent 88%);
-    mask-image: radial-gradient(ellipse 62% 78% at 50% 42%, #000 45%, transparent 88%);
-    animation: hologramFlicker 5s ease-in-out infinite;
+  .mascot-topper {
+    display: flex;
+    justify-content: center;
   }
-  .mascot-hologram img {
-    height: 92%;
+  .mascot-topper img {
+    height: clamp(170px, 22vw, 260px);
     width: auto;
-    object-fit: contain;
-    filter: grayscale(1) sepia(1) hue-rotate(68deg) saturate(6) brightness(1.15) contrast(1.05);
-  }
-  .mascot-hologram::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-      to bottom,
-      rgba(46, 224, 131, 0.12) 0px,
-      rgba(46, 224, 131, 0.12) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-    mix-blend-mode: overlay;
-  }
-
-  @keyframes hologramFlicker {
-    0%,
-    100% {
-      opacity: 0.32;
-    }
-    45% {
-      opacity: 0.22;
-    }
-    50% {
-      opacity: 0.4;
-    }
-    78% {
-      opacity: 0.26;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mascot-hologram {
-      animation: none;
-    }
+    filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.5));
   }
 
   .fan-card {
