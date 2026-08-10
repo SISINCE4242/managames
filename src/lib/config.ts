@@ -27,6 +27,7 @@ export const MEDIA = {
   community: { src: '/community.jpeg', fallback: '/MY.jpeg' },
   signage: { src: '/Mana Games.png' },
   shelf: { src: '/Regal.jpeg', pending: false },
+  mascot: { src: '/Mana-Girl.png' },
 };
 
 export type GamePattern =
