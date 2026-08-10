@@ -152,19 +152,18 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
     background:
       linear-gradient(155deg, color-mix(in srgb, var(--accent) 11%, transparent), rgba(6, 9, 8, 0.9) 60%),
       rgba(8, 12, 10, 0.72);
-    min-height: 195px;
+    /* Fixed regardless of breakpoint: card width (not viewport width) is
+       what drives text wrapping on the back face, and the narrowest cards
+       actually occur right at the "lg" split into games+shelf columns
+       (~155px), not only on small mobile screens (~152px) — so one height
+       that covers that narrow case covers every wider layout too. */
+    min-height: 286px;
     perspective: 1200px;
     cursor: pointer;
     transition:
       transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
       border-color 0.45s ease,
       box-shadow 0.45s ease;
-  }
-
-  @media (max-width: 480px) {
-    .game-tile {
-      min-height: 286px;
-    }
   }
 
   .game-tile:hover,
