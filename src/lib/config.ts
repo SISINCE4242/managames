@@ -56,7 +56,7 @@ export type Game = {
 
 export const GAMES: Game[] = [
   { name: 'Magic: The Gathering', key: 'Magic', color: '#f59e0b', blurb: 'Standard · Pioneer · Modern · Pauper · Draft · Highlander · Premodern', pattern: 'magic' },
-  { name: 'Yu-Gi-Oh!', key: 'Yu-Gi-Oh!', color: '#a855f7', blurb: 'Goat · Edison · HAT · Perfect Circle · Charlestone · Nexus Night', pattern: 'yugioh' },
+  { name: 'Yu-Gi-Oh!', key: 'Yu-Gi-Oh!', color: '#a855f7', blurb: 'Goat · Edison · HAT · Perfect Circle · Nexus', pattern: 'yugioh' },
   { name: 'Pokémon', key: 'Pokemon', color: '#facc15', blurb: 'Singles, sealed products and weekly locals', pattern: 'pokemon' },
   { name: 'One Piece', key: 'One Piece', color: '#ef4444', blurb: 'Locals and Extra Regulation', pattern: 'onepiece' },
   { name: 'Naruto', key: 'Naruto', color: '#fb923c', blurb: 'The classic — back in the weekly line-up', pattern: 'naruto' },
@@ -255,7 +255,7 @@ export const SCHEDULE: Day[] = [
     weekday: 5,
     slots: [
       { time: '18:00', game: 'Magic', format: 'Draft' },
-      { time: '18:15', game: 'Yu-Gi-Oh!', format: 'Nexus Night' },
+      { time: '18:15', game: 'Yu-Gi-Oh!', format: 'Nexus' },
       { time: '18:30', game: 'One Piece' },
     ],
   },
@@ -267,7 +267,6 @@ export const SCHEDULE: Day[] = [
       { time: '14:15', game: 'Yu-Gi-Oh!', format: 'Edison' },
       { time: '14:30', game: 'Magic', format: 'Premodern' },
       { time: '17:00', game: 'Dragon Ball' },
-      { time: '17:30', game: 'Yu-Gi-Oh!', format: 'Charlestone' },
       { time: '18:00', game: 'Magic', format: 'Modern' },
       { time: '18:30', game: 'Naruto' },
       { time: '18:30', game: 'One Piece', format: 'Extra Regulation' },
@@ -307,7 +306,7 @@ export const OPENING_HOURS = [
 
 export const STATS = [
   { value: 9, suffix: '', label: 'Trading Card Games', href: '#assortment' },
-  { value: 26, suffix: '', label: 'Tournaments per week', href: '#schedule' },
+  { value: 25, suffix: '', label: 'Tournaments per week', href: '#schedule' },
   { value: 6, suffix: '', label: 'Days a week open', href: '#visit' },
 ];
 
