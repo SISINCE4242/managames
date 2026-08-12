@@ -102,7 +102,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
                           <Icon name="tabler:x" size={13} />
                         </span>
                       </span>
-                      <span class="eyebrow relative mt-1.5 block text-[9px] text-mana-300/70">Upcoming</span>
+                      <span class="eyebrow relative mt-1.5 block text-[9px] text-mana-300/70">Weekly Schedule</span>
                       <ul class="upcoming-list relative mt-1 flex flex-col" data-upcoming-list />
                       <span class="relative mt-auto flex flex-wrap gap-1.5 pt-1.5" data-badges>
                         {badgesFor(game.key).map((badge) => (
@@ -416,6 +416,13 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
         .map((event) => ({ ...event, delta: distance(event.weekday, event.time) }))
         .sort((a, b) => a.delta - b.delta);
 
+      /* Full list for the back face: Monday first through Saturday, not
+         "soonest from today" like the front's next-event line. */
+      const weekOrder = (weekday: number) => (weekday === 0 ? 7 : weekday);
+      const byWeekday = [...events].sort(
+        (a, b) => weekOrder(a.weekday) - weekOrder(b.weekday) || toMinutes(a.time) - toMinutes(b.time),
+      );
+
       const nextSlot = card.querySelector<HTMLElement>('[data-next-slot]');
       const upcomingList = card.querySelector<HTMLElement>('[data-upcoming-list]');
 
@@ -454,7 +461,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
 
       if (upcomingList) {
         upcomingList.replaceChildren();
-        sorted.slice(0, 3).forEach((event) => {
+        byWeekday.forEach((event) => {
           const item = document.createElement('li');
           item.className = 'upcoming-item';
 
