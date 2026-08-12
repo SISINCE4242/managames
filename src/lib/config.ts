@@ -399,7 +399,7 @@ export const SCHEDULE: Day[] = [
     short: 'Fri',
     weekday: 5,
     slots: [
-      { time: '18:00', game: 'Magic', format: 'Draft' },
+      { time: '19:00', game: 'Magic', format: 'Draft' },
       { time: '18:15', game: 'Yu-Gi-Oh!', format: 'Nexus' },
       { time: '18:30', game: 'One Piece' },
     ],
