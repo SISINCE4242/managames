@@ -127,6 +127,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     'schedule.inMin': 'in',
     'schedule.min': 'min',
     'schedule.todayAt': 'today at',
+    'schedule.tomorrowAt': 'tomorrow at',
     'schedule.pointLabel': 'Check this out!',
 
     // Visit
@@ -265,6 +266,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     'schedule.inMin': 'in',
     'schedule.min': 'Min.',
     'schedule.todayAt': 'heute um',
+    'schedule.tomorrowAt': 'morgen um',
     'schedule.pointLabel': 'Schau hier vorbei!',
 
     'visit.eyebrow': '04 — Besuch uns',

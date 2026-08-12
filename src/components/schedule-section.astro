@@ -379,14 +379,19 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
         const renderNextEvent = () => {
           const lang = getLang();
           const { slot, delta } = upcoming;
-          const hours = Math.floor(delta / 60);
           const weekday = Number(slot.dataset.weekday);
+          /* Same calendar day as today, not just "within 24h" — Tue 20:00
+             is ~21.5h from Wed 17:30 but that's tomorrow, not today. */
+          const isToday = weekday === dayNow;
+          const isTomorrow = weekday === (dayNow + 1) % 7;
           const when =
             delta < 60
               ? `${UI[lang]['schedule.inMin']} ${delta} ${UI[lang]['schedule.min']}`
-              : hours < 24
+              : isToday
                 ? `${UI[lang]['schedule.todayAt']} ${slot.dataset.time}`
-                : `${DAY_NAMES[lang][weekday]} ${UI[lang]['visit.at']} ${slot.dataset.time}`;
+                : isTomorrow
+                  ? `${UI[lang]['schedule.tomorrowAt']} ${slot.dataset.time}`
+                  : `${DAY_NAMES[lang][weekday]} ${UI[lang]['visit.at']} ${slot.dataset.time}`;
           text.textContent = `${slot.dataset.label} – ${when}`;
         };
 
