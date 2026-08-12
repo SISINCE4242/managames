@@ -7,10 +7,14 @@ interface Props {
   alt: string;
   /** Small label in the bottom-left corner of the frame */
   label?: string;
+  /** i18n dict key for `label`, if translatable */
+  labelKey?: string;
   /** true = image is still missing, renders a styled placeholder */
   pending?: boolean;
   /** Text shown inside the placeholder */
   pendingLabel?: string;
+  /** i18n dict key for `pendingLabel`, if translatable */
+  pendingLabelKey?: string;
   ratio?: string;
   tilt?: number;
   class?: string;
@@ -22,8 +26,10 @@ const {
   fallback,
   alt,
   label,
+  labelKey,
   pending = false,
   pendingLabel = 'Image coming soon',
+  pendingLabelKey,
   ratio = 'aspect-[4/3]',
   tilt = 5,
   class: className = '',
@@ -60,7 +66,7 @@ const {
         <Icon name="tabler:photo-plus" size={24} />
         <span class="absolute inset-0 rounded-2xl border border-mana-400/40 animate-pulse-ring"></span>
       </span>
-      <span class="eyebrow text-[10px] text-mana-300/80">{pendingLabel}</span>
+      <span class="eyebrow text-[10px] text-mana-300/80" data-i18n={pendingLabelKey}>{pendingLabel}</span>
     </div>
   </div>
 
@@ -79,7 +85,7 @@ const {
     label && (
       <figcaption class="pointer-events-none absolute bottom-4 left-4 right-4 flex items-center gap-2">
         <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-mana-400 shadow-[0_0_10px_rgba(46,224,131,.9)]" />
-        <span class="eyebrow text-[10px] text-mana-100/90">{label}</span>
+        <span class="eyebrow text-[10px] text-mana-100/90" data-i18n={labelKey}>{label}</span>
       </figcaption>
     )
   }

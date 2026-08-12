@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import SectionHeading from './section-heading.astro';
 import { GAME_COLORS, MEDIA, SCHEDULE } from '../lib/config';
+import { DAY_NAMES, UI } from '../lib/i18n';
 
 const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
 ---
@@ -14,8 +15,11 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
       <div class="flex min-w-0 items-end justify-between gap-4 lg:contents">
         <SectionHeading
           eyebrow="03 — Tournament Schedule"
+          eyebrowKey="schedule.eyebrow"
           title="Six evenings."
+          titleKey="schedule.title"
           accent={`${totalEvents} tournaments.`}
+          accentDe={`${totalEvents} ${UI.de['schedule.tournaments']}.`}
         />
         <!-- Mobile/tablet only: desktop keeps its own floating mascot below, untouched -->
         <div data-reveal="right" class="mascot-point-mobile shrink-0 lg:hidden">
@@ -23,12 +27,13 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
         </div>
       </div>
       <div data-reveal style="--reveal-delay:120ms" class="flex flex-col gap-3">
-        <p class="max-w-sm text-lg leading-relaxed text-neutral-400">
+        <p class="max-w-sm text-lg leading-relaxed text-neutral-400" data-i18n="schedule.introText">
           Locked into the calendar every week. Pick your day — we take care of the rest.
         </p>
         <p class="flex items-center gap-2 text-sm font-semibold text-mana-300">
           <Icon name="tabler:alert-circle" size={17} />
-          On-site registration only! <span class="font-normal text-neutral-500">(Anmeldung nur vor Ort)</span>
+          <span data-i18n="schedule.regOnly">On-site registration only!</span>{' '}
+          <span class="font-normal text-neutral-500" data-i18n="schedule.regOnlyDe">(Anmeldung nur vor Ort)</span>
         </p>
       </div>
     </div>
@@ -44,7 +49,7 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
         <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-mana-300"></span>
       </span>
       <p class="text-sm text-neutral-300">
-        <span class="eyebrow mr-2 text-[10px] text-mana-300">Up next</span>
+        <span class="eyebrow mr-2 text-[10px] text-mana-300" data-i18n="schedule.upNext">Up next</span>
         <span id="next-event-text" class="font-display font-semibold text-neutral-50"></span>
       </p>
     </div>
@@ -73,15 +78,20 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
               class="day-tab group relative shrink-0 rounded-xl border border-mana-400/15 bg-black/40 px-4 py-3 text-left transition-all duration-300 hover:border-mana-400/45 sm:px-5"
             >
               <span class="relative z-10 block font-display text-sm font-bold uppercase tracking-wider">
-                <span class="sm:hidden">{day.short}</span>
-                <span class="hidden sm:inline">{day.name}</span>
+                <span class="sm:hidden" data-i18n-en={day.short} data-i18n-de={DAY_NAMES.de[day.weekday].slice(0, 2).toUpperCase()}>{day.short}</span>
+                <span class="hidden sm:inline" data-i18n-en={day.name} data-i18n-de={DAY_NAMES.de[day.weekday]}>{day.name}</span>
               </span>
-              <span class="relative z-10 mt-1 block text-[10px] font-medium">
+              <span
+                class="relative z-10 mt-1 block text-[10px] font-medium"
+                data-i18n-en={day.slots.length > 0 ? `${day.slots.length} tournaments` : 'Closed'}
+                data-i18n-de={day.slots.length > 0 ? `${day.slots.length} ${UI.de['schedule.tournaments']}` : UI.de['schedule.closed']}
+              >
                 {day.slots.length > 0 ? `${day.slots.length} tournaments` : 'Closed'}
               </span>
               <span
                 class="today-badge absolute -right-1.5 -top-1.5 z-20 hidden rounded-full bg-mana-400 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-black shadow-[0_0_14px_rgba(46,224,131,.9)]"
                 aria-hidden="true"
+                data-i18n="schedule.today"
               >
                 Today
               </span>
@@ -107,9 +117,9 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
                   <span class="grid h-14 w-14 place-items-center rounded-2xl border border-mana-400/20 text-mana-400/60">
                     <Icon name="tabler:moon-stars" size={24} />
                   </span>
-                  <p class="font-display text-xl font-bold text-neutral-200">Sundays we are closed</p>
-                  <p class="max-w-sm text-sm text-neutral-500">
-                    We are recharging our mana pools. Back on Monday from 16:30.
+                  <p class="font-display text-xl font-bold text-neutral-200" data-i18n="schedule.sundaysClosed">Sundays we are closed</p>
+                  <p class="max-w-sm text-sm text-neutral-500" data-i18n="schedule.sundaysClosedText">
+                    We are recharging our mana pools. Back on Monday from 17:00.
                   </p>
                 </div>
               ) : (
@@ -161,11 +171,16 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
     >
       <span class="flex items-center gap-2.5">
         <Icon name="tabler:calendar-check" size={17} class="text-mana-400" />
-        {totalEvents} tournaments per week · Monday to Saturday
+        <span
+          data-i18n-en={`${totalEvents} ${UI.en['schedule.perWeek']}`}
+          data-i18n-de={`${totalEvents} ${UI.de['schedule.perWeek']}`}
+        >
+          {totalEvents} {UI.en['schedule.perWeek']}
+        </span>
       </span>
       <span class="flex items-center gap-2.5">
         <Icon name="tabler:door-enter" size={17} class="text-mana-400" />
-        Registration on site at the store only
+        <span data-i18n="schedule.regFootnote">Registration on site at the store only</span>
       </span>
     </div>
   </div>
@@ -286,6 +301,10 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
 </style>
 
 <script>
+  import { DAY_NAMES, UI, type Lang } from '../lib/i18n';
+
+  const getLang = (): Lang => ((window as any).mgGetLang?.() as Lang) ?? 'en';
+
   const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-day-tab]'));
   const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-day-panel]'));
 
@@ -357,15 +376,22 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
       const banner = document.getElementById('next-event');
       const text = document.getElementById('next-event-text');
       if (banner && text) {
-        const { slot, delta } = upcoming;
-        const hours = Math.floor(delta / 60);
-        const when =
-          delta < 60
-            ? `in ${delta} min`
-            : hours < 24
-              ? `today at ${slot.dataset.time}`
-              : `${slot.dataset.dayName} at ${slot.dataset.time}`;
-        text.textContent = `${slot.dataset.label} – ${when}`;
+        const renderNextEvent = () => {
+          const lang = getLang();
+          const { slot, delta } = upcoming;
+          const hours = Math.floor(delta / 60);
+          const weekday = Number(slot.dataset.weekday);
+          const when =
+            delta < 60
+              ? `${UI[lang]['schedule.inMin']} ${delta} ${UI[lang]['schedule.min']}`
+              : hours < 24
+                ? `${UI[lang]['schedule.todayAt']} ${slot.dataset.time}`
+                : `${DAY_NAMES[lang][weekday]} ${UI[lang]['visit.at']} ${slot.dataset.time}`;
+          text.textContent = `${slot.dataset.label} – ${when}`;
+        };
+
+        renderNextEvent();
+        document.addEventListener('mg:langchange', renderNextEvent);
         banner.classList.remove('hidden');
         banner.classList.add('flex');
       }

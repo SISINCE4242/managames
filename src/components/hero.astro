@@ -11,7 +11,12 @@ const fanCards = [
   GAMES.find((g) => g.key === 'Magic')!,
 ];
 
-const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires'];
+const ticker = [
+  ...GAMES.map((g) => ({ text: g.name, i18nKey: undefined as string | undefined })),
+  { text: 'Singles', i18nKey: 'ticker.singles' },
+  { text: 'Sealed', i18nKey: 'ticker.sealed' },
+  { text: 'Accessoires', i18nKey: 'ticker.accessoires' },
+];
 ---
 
 <section class="relative overflow-hidden pb-20 pt-10 sm:pt-16 lg:pb-28 lg:pt-20">
@@ -44,11 +49,17 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
         data-reveal
         style="--reveal-delay:160ms"
         class="mt-6 max-w-xl font-display text-xl font-medium text-neutral-200 sm:text-2xl"
+        data-i18n="hero.tagline"
       >
-        {SITE.tagline}
+        {SITE.tagline.en}
       </p>
 
-      <p data-reveal style="--reveal-delay:220ms" class="mt-4 max-w-xl text-base leading-relaxed text-neutral-400">
+      <p
+        data-reveal
+        style="--reveal-delay:220ms"
+        class="mt-4 max-w-xl text-base leading-relaxed text-neutral-400"
+        data-i18n="hero.description"
+      >
         Your local game store in Berlin-Wilmersdorf. Singles, sealed products and accessoires
         for 9 trading card games — plus tournaments six evenings a week.
       </p>
@@ -56,11 +67,11 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
       <div data-reveal style="--reveal-delay:300ms" class="mt-9 flex flex-wrap items-center gap-3">
         <a href="#schedule" class="btn btn-primary">
           <Icon name="tabler:calendar-event" size={18} />
-          See the schedule
+          <span data-i18n="hero.seeSchedule">See the schedule</span>
         </a>
         <a href={SITE.mapsUrl} target="_blank" rel="noopener" class="btn btn-ghost">
           <Icon name="tabler:map-pin" size={18} />
-          Get directions
+          <span data-i18n="hero.getDirections">Get directions</span>
         </a>
       </div>
 
@@ -69,13 +80,20 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
         {
           STATS.map((stat) => (
             <a href={stat.href} class="panel panel-hover px-4 py-4 cursor-pointer no-underline group/stat">
-              <dt class="sr-only">{stat.label}</dt>
+              <dt class="sr-only" data-i18n={stat.labelKey}>
+                {stat.labelKey}
+              </dt>
               <dd>
                 <span class="block font-display text-3xl font-bold text-gradient sm:text-4xl">
                   <span data-count={stat.value}>0</span>
                   {stat.suffix}
                 </span>
-                <span class="mt-1.5 block text-[11px] leading-tight text-neutral-400 transition-colors group-hover/stat:text-mana-300">{stat.label}</span>
+                <span
+                  class="mt-1.5 block text-[11px] leading-tight text-neutral-400 transition-colors group-hover/stat:text-mana-300"
+                  data-i18n={stat.labelKey}
+                >
+                  {stat.labelKey}
+                </span>
               </dd>
             </a>
           ))
@@ -150,13 +168,13 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
       </div>
 
       <p class="mt-3 text-center text-[11px] text-neutral-600 lg:mt-0">
-        <span class="hidden lg:inline">Move your mouse over the cards</span>
+        <span class="hidden lg:inline" data-i18n="hero.moveMouse">Move your mouse over the cards</span>
         <span id="tap-hint" class="inline-flex items-center gap-2 lg:hidden">
           <span class="relative flex h-1.5 w-1.5 shrink-0">
             <span class="absolute inline-flex h-full w-full rounded-full bg-mana-400/60 animate-pulse-ring"></span>
             <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-mana-400/80"></span>
           </span>
-          <span class="eyebrow text-[9px] text-mana-300/60 tracking-[0.22em]">Tap a card to play it</span>
+          <span class="eyebrow text-[9px] text-mana-300/60 tracking-[0.22em]" data-i18n="hero.tapCard">Tap a card to play it</span>
           <span class="relative flex h-1.5 w-1.5 shrink-0">
             <span class="absolute inline-flex h-full w-full rounded-full bg-mana-400/60 animate-pulse-ring" style="animation-delay:0.6s"></span>
             <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-mana-400/80"></span>
@@ -170,16 +188,16 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
         <div data-draw-prompt class="text-center">
           <button type="button" class="btn btn-primary mx-auto" data-draw-btn>
             <Icon name="tabler:cards" size={18} />
-            Draw a Card
+            <span data-i18n="hero.drawCard">Draw a Card</span>
           </button>
-          <p class="mt-3 text-xs text-neutral-500">Not sure what to play? Let fate decide.</p>
+          <p class="mt-3 text-xs text-neutral-500" data-i18n="hero.drawSubtitle">Not sure what to play? Let fate decide.</p>
         </div>
 
         <!-- Result state -->
         <div data-draw-result class="draw-result hidden panel corners p-5" style="--accent:#2ee083">
           <div class="flex items-center justify-between gap-3">
-            <span class="eyebrow text-[10px] text-mana-300/80">Your Draw</span>
-            <button type="button" class="draw-icon-btn" data-draw-again aria-label="Draw another card">
+            <span class="eyebrow text-[10px] text-mana-300/80" data-i18n="hero.yourDraw">Your Draw</span>
+            <button type="button" class="draw-icon-btn" data-draw-again data-i18n-attr-aria-label="hero.drawAgainAria" aria-label="Draw another card">
               <Icon name="tabler:refresh" size={14} />
             </button>
           </div>
@@ -193,12 +211,12 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
 
           <div class="mt-5 flex items-center gap-3">
             <button type="button" class="btn btn-primary flex-1" data-explore-btn>
-              Explore
+              <span data-i18n="hero.explore">Explore</span>
               <Icon name="tabler:arrow-right" size={16} />
             </button>
             <button type="button" class="btn btn-ghost" data-draw-again>
               <Icon name="tabler:refresh" size={16} />
-              Draw Again
+              <span data-i18n="hero.drawAgain">Draw Again</span>
             </button>
           </div>
         </div>
@@ -218,37 +236,37 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     >
       <button type="button" class="back-link" data-explore-close>
         <Icon name="tabler:arrow-left" size={16} />
-        Back to Hand
+        <span data-i18n="hero.backToHand">Back to Hand</span>
       </button>
 
       <h3 id="explore-name" class="mt-5 font-display text-2xl font-bold text-neutral-50" data-explore-name></h3>
       <p class="tag-line mt-1 text-[11px] font-semibold uppercase tracking-wide" data-explore-tags></p>
 
       <div class="mt-6">
-        <span class="eyebrow text-[10px] text-mana-300/80">What's it about?</span>
+        <span class="eyebrow text-[10px] text-mana-300/80" data-i18n="hero.whatsItAbout">What's it about?</span>
         <p class="mt-2 text-sm leading-relaxed text-neutral-300" data-explore-about></p>
       </div>
 
       <div class="mt-6 flex flex-col gap-2.5" data-explore-stats></div>
 
       <div class="mt-6">
-        <span class="eyebrow text-[10px] text-mana-300/80">You'll like it if...</span>
+        <span class="eyebrow text-[10px] text-mana-300/80" data-i18n="hero.youllLikeIf">You'll like it if...</span>
         <p class="mt-2 text-sm leading-relaxed text-neutral-300" data-explore-like></p>
       </div>
 
       <div class="mt-6">
-        <span class="eyebrow text-[10px] text-mana-300/80">Good to know</span>
+        <span class="eyebrow text-[10px] text-mana-300/80" data-i18n="hero.goodToKnow">Good to know</span>
         <ul class="mt-2.5 flex flex-wrap gap-2" data-explore-good></ul>
       </div>
 
       <div class="mt-7 flex items-center gap-3">
         <button type="button" class="btn btn-ghost flex-1" data-explore-close>
           <Icon name="tabler:arrow-left" size={16} />
-          Back to Hand
+          <span data-i18n="hero.backToHand">Back to Hand</span>
         </button>
         <button type="button" class="btn btn-primary flex-1" data-explore-draw-again>
           <Icon name="tabler:refresh" size={16} />
-          Draw Another
+          <span data-i18n="hero.drawAnother">Draw Another</span>
         </button>
       </div>
     </div>
@@ -262,8 +280,11 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
           <div class="flex shrink-0 items-center">
             {ticker.map((item) => (
               <span class="flex items-center gap-6 px-6">
-                <span class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400 transition-colors hover:text-mana-300">
-                  {item}
+                <span
+                  class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400 transition-colors hover:text-mana-300"
+                  data-i18n={item.i18nKey}
+                >
+                  {item.text}
                 </span>
                 <span class="h-1 w-1 rotate-45 bg-mana-400/70" />
               </span>
@@ -738,16 +759,21 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
 </script>
 
 <script>
+  import { UI, type Lang } from '../lib/i18n';
+
   type Stats = { strategy: number; pace: number; collecting: number; accessibility: number };
+  type Localized = { en: string; de: string };
   type Profile = {
     displayName: string;
-    tags: string[];
+    tags: { en: string[]; de: string[] };
     stats: Stats;
-    short: string;
-    about: string;
-    likeIf: string;
-    goodToKnow: string[];
+    short: Localized;
+    about: Localized;
+    likeIf: Localized;
+    goodToKnow: { en: string[]; de: string[] };
   };
+
+  const getLang = (): Lang => ((window as any).mgGetLang?.() as Lang) ?? 'en';
 
   const zone = document.querySelector<HTMLElement>('[data-draw-zone]');
   if (zone) {
@@ -776,18 +802,20 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     const fanCards = Array.from(document.querySelectorAll<HTMLElement>('#card-fan .fan-card'));
     const cardFan = document.getElementById('card-fan');
 
-    const statLabels: [keyof Stats, string][] = [
-      ['strategy', 'Strategy'],
-      ['pace', 'Pace'],
-      ['collecting', 'Collecting'],
-      ['accessibility', 'Accessibility'],
+    const statKeys: [keyof Stats, string][] = [
+      ['strategy', 'hero.stat.strategy'],
+      ['pace', 'hero.stat.pace'],
+      ['collecting', 'hero.stat.collecting'],
+      ['accessibility', 'hero.stat.accessibility'],
     ];
 
     const renderStats = (container: HTMLElement | null, stats: Stats) => {
       if (!container) return;
+      const lang = getLang();
       container.replaceChildren();
-      statLabels.forEach(([key, label]) => {
+      statKeys.forEach(([key, labelKey]) => {
         const value = stats[key];
+        const label = UI[lang][labelKey] ?? UI.en[labelKey];
         const row = document.createElement('div');
         row.className = 'stat-row';
 
@@ -832,10 +860,11 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     const populateResult = (key: string) => {
       const p = profiles[key];
       if (!p || !resultEl) return;
+      const lang = getLang();
       resultEl.style.setProperty('--accent', colors[key] ?? '#2ee083');
       if (resultName) resultName.textContent = p.displayName;
-      if (resultTags) resultTags.textContent = p.tags.join(' · ');
-      if (resultShort) resultShort.textContent = p.short;
+      if (resultTags) resultTags.textContent = p.tags[lang].join(' · ');
+      if (resultShort) resultShort.textContent = p.short[lang];
       renderStats(resultStats, p.stats);
     };
 
@@ -892,16 +921,20 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
     const populateExplore = (key: string) => {
       const p = profiles[key];
       if (!p) return;
+      const lang = getLang();
       explorePanel?.style.setProperty('--accent', colors[key] ?? '#2ee083');
       if (exploreName) exploreName.textContent = p.displayName;
-      if (exploreTags) exploreTags.textContent = p.tags.join(' · ');
-      if (exploreAbout) exploreAbout.textContent = p.about;
-      if (exploreLike) exploreLike.textContent = p.likeIf.charAt(0).toUpperCase() + p.likeIf.slice(1);
+      if (exploreTags) exploreTags.textContent = p.tags[lang].join(' · ');
+      if (exploreAbout) exploreAbout.textContent = p.about[lang];
+      if (exploreLike) {
+        const likeIf = p.likeIf[lang];
+        exploreLike.textContent = likeIf.charAt(0).toUpperCase() + likeIf.slice(1);
+      }
       renderStats(exploreStats, p.stats);
 
       if (exploreGood) {
         exploreGood.replaceChildren();
-        p.goodToKnow.forEach((item) => {
+        p.goodToKnow[lang].forEach((item) => {
           const li = document.createElement('li');
           li.className = 'good-chip';
           li.textContent = item;
@@ -969,6 +1002,14 @@ const ticker = [...GAMES.map((g) => g.name), 'Singles', 'Sealed', 'Accessoires']
           event.preventDefault();
           first.focus();
         }
+      }
+    });
+
+    /* Re-render the currently drawn card / open overlay when the language changes */
+    document.addEventListener('mg:langchange', () => {
+      if (currentKey) {
+        populateResult(currentKey);
+        if (overlay && !overlay.hidden) populateExplore(currentKey);
       }
     });
   }

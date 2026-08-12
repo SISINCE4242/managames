@@ -43,6 +43,14 @@ const {
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content="https://managames.de/header.png" />
+
+    <script is:inline>
+      // Runs before paint to avoid an English->German flash on repeat visits.
+      try {
+        var saved = localStorage.getItem('mg-lang');
+        if (saved === 'de') document.documentElement.setAttribute('data-lang', 'de');
+      } catch (e) {}
+    </script>
   </head>
 
   <body class="min-h-screen bg-ink font-sans text-neutral-200 antialiased">
@@ -347,6 +355,61 @@ const {
         border-radius: 6px;
       }
 
+      /* ---------- Language switch ---------- */
+      .lang-switch {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: 2.75rem;
+        width: 4.6rem;
+        flex-shrink: 0;
+        border-radius: 9999px;
+        border: 1px solid rgba(46, 224, 131, 0.25);
+        background: rgba(0, 0, 0, 0.4);
+        padding: 0 0.3rem;
+        transition: border-color 0.3s ease;
+      }
+      .lang-switch:hover {
+        border-color: rgba(46, 224, 131, 0.7);
+      }
+      .lang-switch-option {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: rgba(255, 255, 255, 0.45);
+        transition: color 0.3s ease;
+        pointer-events: none;
+      }
+      .lang-switch-thumb {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        width: calc(50% - 3px);
+        border-radius: 9999px;
+        background: linear-gradient(120deg, #2ee083, #12c96b 55%, #068146);
+        box-shadow: 0 4px 14px -4px rgba(46, 224, 131, 0.9);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      html[data-lang='de'] .lang-switch-thumb {
+        transform: translateX(calc(100% + 0px));
+      }
+      html:not([data-lang='de']) .lang-switch-option[data-lang-opt='en'],
+      html[data-lang='de'] .lang-switch-option[data-lang-opt='de'] {
+        color: #04120b;
+        font-weight: 800;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .lang-switch-thumb {
+          transition: none;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
@@ -463,6 +526,66 @@ const {
           },
           { once: false },
         );
+      });
+    </script>
+
+    <script>
+      import { LANG_STORAGE_KEY, UI, type Lang } from '../lib/i18n';
+
+      const applyLanguage = (lang: Lang) => {
+        document.documentElement.setAttribute('lang', lang);
+        document.documentElement.dataset.lang = lang;
+
+        document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+          const key = el.dataset.i18n;
+          if (key) el.textContent = UI[lang][key] ?? UI.en[key] ?? el.textContent ?? '';
+        });
+        document.querySelectorAll<HTMLElement>('[data-i18n-html]').forEach((el) => {
+          const key = el.dataset.i18nHtml;
+          if (key) el.innerHTML = UI[lang][key] ?? UI.en[key] ?? el.innerHTML;
+        });
+        /* Per-instance bilingual text not worth a global dict key (e.g. one
+           game's blurb): data-i18n-en="..." data-i18n-de="..." */
+        document.querySelectorAll<HTMLElement>('[data-i18n-en]').forEach((el) => {
+          const value = lang === 'de' ? el.dataset.i18nDe : el.dataset.i18nEn;
+          if (value !== undefined) el.textContent = value;
+        });
+        /* data-i18n-attr-<name>="key" sets that attribute instead of textContent */
+        document.querySelectorAll<HTMLElement>('*').forEach((el) => {
+          for (const attr of Array.from(el.attributes)) {
+            if (!attr.name.startsWith('data-i18n-attr-')) continue;
+            const targetAttr = attr.name.replace('data-i18n-attr-', '');
+            const value = UI[lang][attr.value] ?? UI.en[attr.value];
+            if (value) el.setAttribute(targetAttr, value);
+          }
+        });
+
+        const toggle = document.getElementById('lang-toggle');
+        if (toggle) {
+          toggle.setAttribute('aria-checked', String(lang === 'de'));
+          toggle.setAttribute('aria-label', lang === 'de' ? 'Sprache auf Englisch stellen' : 'Switch language to German');
+        }
+
+        document.dispatchEvent(new CustomEvent('mg:langchange', { detail: { lang } }));
+      };
+
+      const setLang = (lang: Lang) => {
+        try {
+          localStorage.setItem(LANG_STORAGE_KEY, lang);
+        } catch (e) {
+          /* ignore (private mode etc.) */
+        }
+        applyLanguage(lang);
+      };
+
+      (window as any).mgSetLang = setLang;
+      (window as any).mgGetLang = () => (document.documentElement.dataset.lang === 'de' ? 'de' : 'en');
+
+      const initialLang: Lang = document.documentElement.dataset.lang === 'de' ? 'de' : 'en';
+      applyLanguage(initialLang);
+
+      document.getElementById('lang-toggle')?.addEventListener('click', () => {
+        setLang((window as any).mgGetLang() === 'de' ? 'en' : 'de');
       });
     </script>
   </body>

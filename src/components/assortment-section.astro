@@ -4,6 +4,7 @@ import GamePattern from './game-pattern.astro';
 import MediaFrame from './media-frame.astro';
 import SectionHeading from './section-heading.astro';
 import { CATEGORIES, GAME_EVENTS, GAMES, MEDIA } from '../lib/config';
+import { UI } from '../lib/i18n';
 
 /**
  * Small descriptive badge for the flip-card back, derived only from data
@@ -11,7 +12,7 @@ import { CATEGORIES, GAME_EVENTS, GAMES, MEDIA } from '../lib/config';
  * badge: with 3 upcoming slots already listed, a second badge like
  * "Multiple Formats" is redundant and only forces a wrap on narrow cards.
  */
-const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Weekly Play'] : []);
+const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['assortment.weeklyPlay'] : []);
 ---
 
 <section id="assortment" class="relative scroll-mt-24 py-20 sm:py-28">
@@ -20,11 +21,21 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
 
   <div class="mx-auto max-w-7xl px-5 sm:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-      <SectionHeading eyebrow="02 — Assortment" title="Everything you need" accent="to play." />
+      <SectionHeading
+        eyebrow="02 — Assortment"
+        eyebrowKey="assortment.eyebrow"
+        title="Everything you need"
+        titleKey="assortment.title"
+        accent="to play."
+        accentKey="assortment.accent"
+      />
       <p data-reveal style="--reveal-delay:120ms" class="max-w-md text-lg leading-relaxed text-neutral-400">
-        Enjoy a big variety of <span class="font-semibold text-neutral-200">Singles</span>,
-        <span class="font-semibold text-neutral-200">Sealed Products</span> and
-        <span class="font-semibold text-neutral-200">Accessoires</span>!
+        <span data-i18n="assortment.intro1">Enjoy a big variety of</span>{' '}
+        <span class="font-semibold text-neutral-200" data-i18n="ticker.singles">Singles</span>{' '}
+        <span data-i18n="assortment.intro2">,</span>{' '}
+        <span class="font-semibold text-neutral-200" data-i18n="assortment.sealed">Sealed Products</span>{' '}
+        <span data-i18n="assortment.intro3">and</span>{' '}
+        <span class="font-semibold text-neutral-200" data-i18n="ticker.accessoires">Accessoires</span>!
       </p>
     </div>
 
@@ -42,8 +53,12 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
             <span class="relative grid h-12 w-12 place-items-center rounded-xl border border-mana-400/25 bg-black/50 text-mana-300 transition-all duration-500 group-hover:border-mana-400/70 group-hover:text-mana-100">
               <Icon name={category.icon} size={22} />
             </span>
-            <h3 class="relative mt-5 font-display text-xl font-bold text-neutral-50">{category.title}</h3>
-            <p class="relative mt-2.5 text-sm leading-relaxed text-neutral-400">{category.text}</p>
+            <h3 class="relative mt-5 font-display text-xl font-bold text-neutral-50" data-i18n={`assortment.${category.key}Title`}>
+              {UI.en[`assortment.${category.key}Title`]}
+            </h3>
+            <p class="relative mt-2.5 text-sm leading-relaxed text-neutral-400" data-i18n={`assortment.${category.key}Text`}>
+              {UI.en[`assortment.${category.key}Text`]}
+            </p>
           </li>
         ))
       }
@@ -53,8 +68,10 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
     <div class="mt-16 grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-12">
       <div>
         <div data-reveal class="flex items-baseline justify-between gap-4">
-          <h3 class="font-display text-2xl font-bold text-neutral-50">We offer</h3>
-          <span class="eyebrow text-[10px] text-mana-300/70">{GAMES.length} games</span>
+          <h3 class="font-display text-2xl font-bold text-neutral-50" data-i18n="assortment.weOffer">We offer</h3>
+          <span class="eyebrow text-[10px] text-mana-300/70">
+            {GAMES.length} <span data-i18n="assortment.games">games</span>
+          </span>
         </div>
 
         <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -88,8 +105,12 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
                       <span class="relative mt-6 block font-display text-sm font-bold leading-tight text-neutral-50 sm:text-base">
                         {game.name}
                       </span>
-                      <span class="relative mt-1.5 block text-[11px] leading-snug text-neutral-500 transition-colors duration-500 group-hover:text-neutral-300">
-                        {game.blurb}
+                      <span
+                        class="relative mt-1.5 block text-[11px] leading-snug text-neutral-500 transition-colors duration-500 group-hover:text-neutral-300"
+                        data-i18n-en={game.blurb.en}
+                        data-i18n-de={game.blurb.de}
+                      >
+                        {game.blurb.en}
                       </span>
                       <span class="next-line relative mt-3 flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-wide text-neutral-500" data-next-slot />
                     </span>
@@ -102,15 +123,15 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
                           <Icon name="tabler:x" size={13} />
                         </span>
                       </span>
-                      <span class="eyebrow relative mt-1.5 block text-[9px] text-mana-300/70">Weekly Schedule</span>
+                      <span class="eyebrow relative mt-1.5 block text-[9px] text-mana-300/70" data-i18n="assortment.weeklySchedule">Weekly Schedule</span>
                       <ul class="upcoming-list relative mt-1 flex flex-col" data-upcoming-list />
                       <span class="relative mt-auto flex flex-wrap gap-1.5 pt-1.5" data-badges>
-                        {badgesFor(game.key).map((badge) => (
-                          <span class="mini-badge">{badge}</span>
+                        {badgesFor(game.key).map((badgeKey) => (
+                          <span class="mini-badge" data-i18n={badgeKey}>{UI.en[badgeKey]}</span>
                         ))}
                       </span>
                       <a href="#schedule" class="all-events relative mt-1.5 inline-flex items-center gap-1 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-mana-300" data-no-flip>
-                        All events
+                        <span data-i18n="assortment.allEvents">All events</span>
                         <Icon name="tabler:arrow-right" size={12} />
                       </a>
                     </span>
@@ -123,7 +144,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
 
         <p data-reveal class="mt-6 flex items-start gap-2.5 text-sm text-neutral-400">
           <Icon name="tabler:refresh" size={17} class="mt-0.5 shrink-0 text-mana-400" />
-          Boosters, decks and single cards are in stock for almost every TCG and restocked continuously.
+          <span data-i18n="assortment.restockNote">Boosters, decks and single cards are in stock for almost every TCG and restocked continuously.</span>
         </p>
       </div>
 
@@ -134,6 +155,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
             src={MEDIA.mascotPresent.src}
             alt="Our Mana Games mascot presenting the assortment"
             label="Take your pick!"
+            labelKey="assortment.presentLabel"
             ratio="aspect-[2/3]"
             tilt={6}
           />
@@ -142,12 +164,14 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
           src={MEDIA.shelf.src}
           alt="Shop shelf with boosters, displays and accessoires at Mana Games"
           label="Our shelf at the store"
+          labelKey="assortment.shelfLabel"
           pending={MEDIA.shelf.pending}
           pendingLabel="Shelf photo coming soon"
+          pendingLabelKey="assortment.shelfPending"
           ratio="aspect-[3/4]"
           tilt={6}
         />
-        <p class="mt-4 text-center text-xs text-neutral-500">
+        <p class="mt-4 text-center text-xs text-neutral-500" data-i18n="assortment.shelfCaption">
           Come by and browse for yourself — or just ask us for a specific card.
         </p>
       </div>
@@ -378,14 +402,16 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
 </style>
 
 <script>
-  type GameEvent = { weekday: number; time: string; format?: string };
+  import { DAY_SHORT, UI, type Lang } from '../lib/i18n';
 
-  const dayShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  type GameEvent = { weekday: number; time: string; format?: string };
 
   const toMinutes = (time: string) => {
     const [h, m] = time.split(':').map(Number);
     return h * 60 + m;
   };
+
+  const getLang = (): Lang => ((window as any).mgGetLang?.() as Lang) ?? 'en';
 
   const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-flip-card]'));
 
@@ -403,81 +429,89 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['Week
       return dayDelta * 1440 + minutes - minutesNow;
     };
 
-    cards.forEach((card) => {
-      const gameName = card.dataset.game ?? '';
-      let events: GameEvent[] = [];
-      try {
-        events = JSON.parse(card.dataset.events ?? '[]');
-      } catch {
-        events = [];
-      }
+    const renderCards = () => {
+      const lang = getLang();
+      const dayShort = DAY_SHORT[lang];
 
-      const sorted = events
-        .map((event) => ({ ...event, delta: distance(event.weekday, event.time) }))
-        .sort((a, b) => a.delta - b.delta);
-
-      /* Full list for the back face: Monday first through Saturday, not
-         "soonest from today" like the front's next-event line. */
-      const weekOrder = (weekday: number) => (weekday === 0 ? 7 : weekday);
-      const byWeekday = [...events].sort(
-        (a, b) => weekOrder(a.weekday) - weekOrder(b.weekday) || toMinutes(a.time) - toMinutes(b.time),
-      );
-
-      const nextSlot = card.querySelector<HTMLElement>('[data-next-slot]');
-      const upcomingList = card.querySelector<HTMLElement>('[data-upcoming-list]');
-
-      if (sorted.length === 0) {
-        nextSlot?.replaceChildren();
-        upcomingList?.replaceChildren();
-        return;
-      }
-
-      const first = sorted[0];
-      const label = first.format || gameName;
-      const isToday = first.weekday === dayNow && first.delta < 1440;
-
-      if (nextSlot) {
-        nextSlot.dataset.today = String(isToday);
-        nextSlot.replaceChildren();
-
-        if (isToday) {
-          const dot = document.createElement('span');
-          dot.className = 'today-dot';
-          const text = document.createElement('span');
-          text.textContent = `TODAY · ${first.time} · ${label}`;
-          nextSlot.append(dot, text);
-        } else {
-          const text = document.createElement('span');
-          text.textContent = `NEXT · ${dayShort[first.weekday]} ${first.time} · ${label}`;
-          nextSlot.append(text);
+      cards.forEach((card) => {
+        const gameName = card.dataset.game ?? '';
+        let events: GameEvent[] = [];
+        try {
+          events = JSON.parse(card.dataset.events ?? '[]');
+        } catch {
+          events = [];
         }
 
-        const arrow = document.createElement('span');
-        arrow.className = 'next-arrow';
-        arrow.setAttribute('aria-hidden', 'true');
-        arrow.textContent = '→';
-        nextSlot.append(arrow);
-      }
+        const sorted = events
+          .map((event) => ({ ...event, delta: distance(event.weekday, event.time) }))
+          .sort((a, b) => a.delta - b.delta);
 
-      if (upcomingList) {
-        upcomingList.replaceChildren();
-        byWeekday.forEach((event) => {
-          const item = document.createElement('li');
-          item.className = 'upcoming-item';
+        /* Full list for the back face: Monday first through Saturday, not
+           "soonest from today" like the front's next-event line. */
+        const weekOrder = (weekday: number) => (weekday === 0 ? 7 : weekday);
+        const byWeekday = [...events].sort(
+          (a, b) => weekOrder(a.weekday) - weekOrder(b.weekday) || toMinutes(a.time) - toMinutes(b.time),
+        );
 
-          const when = document.createElement('span');
-          when.className = 'upcoming-when';
-          when.textContent = `${dayShort[event.weekday]} · ${event.time}`;
+        const nextSlot = card.querySelector<HTMLElement>('[data-next-slot]');
+        const upcomingList = card.querySelector<HTMLElement>('[data-upcoming-list]');
 
-          const evLabel = document.createElement('span');
-          evLabel.className = 'upcoming-label';
-          evLabel.textContent = `— ${event.format || gameName}`;
+        if (sorted.length === 0) {
+          nextSlot?.replaceChildren();
+          upcomingList?.replaceChildren();
+          return;
+        }
 
-          item.append(when, evLabel);
-          upcomingList.append(item);
-        });
-      }
-    });
+        const first = sorted[0];
+        const label = first.format || gameName;
+        const isToday = first.weekday === dayNow && first.delta < 1440;
+
+        if (nextSlot) {
+          nextSlot.dataset.today = String(isToday);
+          nextSlot.replaceChildren();
+
+          if (isToday) {
+            const dot = document.createElement('span');
+            dot.className = 'today-dot';
+            const text = document.createElement('span');
+            text.textContent = `${UI[lang]['hero.today']} · ${first.time} · ${label}`;
+            nextSlot.append(dot, text);
+          } else {
+            const text = document.createElement('span');
+            text.textContent = `${UI[lang]['hero.next']} · ${dayShort[first.weekday]} ${first.time} · ${label}`;
+            nextSlot.append(text);
+          }
+
+          const arrow = document.createElement('span');
+          arrow.className = 'next-arrow';
+          arrow.setAttribute('aria-hidden', 'true');
+          arrow.textContent = '→';
+          nextSlot.append(arrow);
+        }
+
+        if (upcomingList) {
+          upcomingList.replaceChildren();
+          byWeekday.forEach((event) => {
+            const item = document.createElement('li');
+            item.className = 'upcoming-item';
+
+            const when = document.createElement('span');
+            when.className = 'upcoming-when';
+            when.textContent = `${dayShort[event.weekday]} · ${event.time}`;
+
+            const evLabel = document.createElement('span');
+            evLabel.className = 'upcoming-label';
+            evLabel.textContent = `— ${event.format || gameName}`;
+
+            item.append(when, evLabel);
+            upcomingList.append(item);
+          });
+        }
+      });
+    };
+
+    renderCards();
+    document.addEventListener('mg:langchange', renderCards);
 
     /* Flip toggle: click/tap anywhere on the card, Enter/Space when focused.
        Controls inside the card (the "All events" link) opt out via

@@ -6,9 +6,26 @@ interface Props {
   accent?: string;
   align?: 'left' | 'center';
   class?: string;
+  /** Optional i18n dict keys — text above is used as the SSR/English default */
+  eyebrowKey?: string;
+  titleKey?: string;
+  accentKey?: string;
+  /** For accent text with embedded dynamic values (e.g. a count) — pass the
+      already-built English/German strings directly instead of a dict key */
+  accentDe?: string;
 }
 
-const { eyebrow, title, accent, align = 'left', class: className = '' } = Astro.props;
+const {
+  eyebrow,
+  title,
+  accent,
+  align = 'left',
+  class: className = '',
+  eyebrowKey,
+  titleKey,
+  accentKey,
+  accentDe,
+} = Astro.props;
 const isCenter = align === 'center';
 ---
 
@@ -23,12 +40,19 @@ const isCenter = align === 'center';
       <span class="absolute inline-flex h-full w-full rounded-full bg-mana-400 animate-pulse-ring"></span>
       <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-mana-300"></span>
     </span>
-    <span class="eyebrow text-[10px] font-semibold text-mana-200">{eyebrow}</span>
+    <span class="eyebrow text-[10px] font-semibold text-mana-200" data-i18n={eyebrowKey}>{eyebrow}</span>
   </span>
 
   <h2 class="font-display text-4xl font-bold leading-[1.05] tracking-tight text-neutral-50 sm:text-5xl lg:text-6xl">
-    {title}
-    {accent && <><br /><span class="text-gradient">{accent}</span></>}
+    <span data-i18n={titleKey}>{title}</span>
+    {accent && (
+      <>
+        <br />
+        <span class="text-gradient" data-i18n={accentKey} data-i18n-en={accentDe ? accent : undefined} data-i18n-de={accentDe}>
+          {accent}
+        </span>
+      </>
+    )}
   </h2>
 
   <span
