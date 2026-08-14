@@ -1,5 +1,6 @@
 ﻿---
 import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/nunito';
 import SiteNav from '../components/site-nav.astro';
 import SiteFooter from '../components/site-footer.astro';
 
@@ -425,6 +426,96 @@ const {
         .animate-pulse-ring {
           animation: none !important;
         }
+      }
+
+      /* ---------- Brand wordmark ---------- */
+      .brand-wordmark {
+        font-family: 'Nunito Variable', 'Nunito', sans-serif;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #3d9e52;
+        line-height: 1;
+      }
+
+      /* ---------- Mascot speech bubbles ---------- */
+      .mascot-bubble-wrap {
+        position: relative;
+        display: inline-block;
+      }
+      .mascot-bubble {
+        position: absolute;
+        bottom: calc(100% - 1.5rem);
+        left: -0.5rem;
+        transform: translateX(-100%);
+        background: rgba(4, 18, 11, 0.92);
+        border: 1.5px solid rgba(46, 224, 131, 0.55);
+        border-radius: 1rem;
+        padding: 0.45rem 0.75rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #d1fae5;
+        white-space: normal;
+        max-width: 13rem;
+        text-align: center;
+        line-height: 1.45;
+        box-shadow: 0 0 14px -2px rgba(46, 224, 131, 0.35), inset 0 0 0 1px rgba(46, 224, 131, 0.08);
+        animation: bubble-float 3.2s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 20;
+        backdrop-filter: blur(6px);
+      }
+      /* tail pointing right toward mascot */
+      .mascot-bubble::after {
+        content: '';
+        position: absolute;
+        right: -0.55rem;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 6px solid transparent;
+        border-left-color: rgba(46, 224, 131, 0.55);
+      }
+      .mascot-bubble::before {
+        content: '';
+        position: absolute;
+        right: -0.45rem;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 5px solid transparent;
+        border-left-color: rgba(4, 18, 11, 0.92);
+        z-index: 1;
+      }
+      /* schedule mascot bubble: tail on right, bubble to the left */
+      .mascot-bubble-left {
+        left: auto;
+        right: -0.5rem;
+        transform: translateX(100%);
+      }
+      .mascot-bubble-left::after {
+        right: auto;
+        left: -0.55rem;
+        border-left-color: transparent;
+        border-right-color: rgba(46, 224, 131, 0.55);
+      }
+      .mascot-bubble-left::before {
+        right: auto;
+        left: -0.45rem;
+        border-left-color: transparent;
+        border-right-color: rgba(4, 18, 11, 0.92);
+      }
+      @keyframes bubble-float {
+        0%, 100% { transform: translateX(-100%) translateY(0); }
+        50%       { transform: translateX(-100%) translateY(-5px); }
+      }
+      .mascot-bubble-left {
+        animation-name: bubble-float-left;
+      }
+      @keyframes bubble-float-left {
+        0%, 100% { transform: translateX(100%) translateY(0); }
+        50%       { transform: translateX(100%) translateY(-5px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .mascot-bubble { animation: none; }
       }
     </style>
 

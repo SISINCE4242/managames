@@ -23,12 +23,15 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
         />
         <!-- Mobile/tablet only: desktop keeps its own floating mascot below, untouched -->
         <div data-reveal="right" class="mascot-point-mobile shrink-0 lg:hidden">
-          <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
+          <div class="mascot-bubble-wrap">
+            <span class="mascot-bubble" style="bottom:auto;top:0.25rem" data-i18n="bubble.schedule">Pick a night and join us! 🎴</span>
+            <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
+          </div>
         </div>
       </div>
       <div data-reveal style="--reveal-delay:120ms" class="flex flex-col gap-3">
-        <p class="max-w-sm text-lg leading-relaxed text-neutral-400" data-i18n="schedule.introText">
-          Locked into the calendar every week. Pick your day — we take care of the rest.
+        <p class="max-w-sm text-lg leading-relaxed text-neutral-400" data-i18n-html="schedule.introText">
+          Locked into the calendar every week.<br>Pick your day — we take care of the rest.
         </p>
         <p class="flex items-center gap-2 text-sm font-semibold text-mana-300">
           <Icon name="tabler:alert-circle" size={17} />
@@ -57,7 +60,10 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
     <!-- Tabs -->
     <div data-reveal class="relative mt-8">
       <div data-reveal="right" class="mascot-point-desktop absolute -top-24 right-0 z-10 hidden lg:block">
-        <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
+        <div class="mascot-bubble-wrap">
+          <span class="mascot-bubble" data-i18n="bubble.schedule">Pick a night and join us! 🎴</span>
+          <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
+        </div>
       </div>
 
       <div

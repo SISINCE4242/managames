@@ -113,7 +113,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     // Schedule
     'schedule.eyebrow': '03 — Tournament Schedule',
     'schedule.title': 'Six evenings.',
-    'schedule.introText': 'Locked into the calendar every week. Pick your day — we take care of the rest.',
+    'schedule.introText': 'Locked into the calendar every week.<br>Pick your day — we take care of the rest.',
     'schedule.regOnly': 'On-site registration only!',
     'schedule.regOnlyDe': '(Anmeldung nur vor Ort)',
     'schedule.upNext': 'Up next',
@@ -130,6 +130,12 @@ export const UI: Record<Lang, Record<string, string>> = {
     'schedule.tomorrowAt': 'tomorrow at',
     'schedule.pointLabel': 'Check this out!',
 
+    // Mascot speech bubbles
+    'bubble.hero': "Hi! I'm Mana-chan!<br>Welcome to Mana Games!",
+    'bubble.assortment': 'So many TCGs! Click the one you like!',
+    'bubble.schedule': 'Pick a night and join us! 🎴',
+    'bubble.visit': "Never played before? Let's learn it together!",
+
     // Visit
     'visit.eyebrow': '04 — Visit us',
     'visit.title': 'See you',
@@ -144,7 +150,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     'visit.closedNow': 'Currently closed',
     'visit.at': 'at',
     'visit.ctaTitle': 'Never played a TCG before?',
-    'visit.ctaText': 'No problem — just drop by. We will explain the rules, lend you a deck and play the first round with you.',
+    'visit.ctaText': 'No problem — just drop by.<br>We will explain the rules, lend you a deck and play the first round with you.',
     'visit.igBtn': 'Follow us on Instagram',
     'visit.twitchBtn': 'Watch us on Twitch',
     'visit.mascotAlt': 'Our Mana Games mascot, puzzling over a hand of cards',
@@ -252,7 +258,7 @@ export const UI: Record<Lang, Record<string, string>> = {
 
     'schedule.eyebrow': '03 — Turnierplan',
     'schedule.title': 'Sechs Abende.',
-    'schedule.introText': 'Fest im Kalender verankert, jede Woche. Wähl deinen Tag — wir kümmern uns um den Rest.',
+    'schedule.introText': 'Fest im Kalender verankert, jede Woche.<br>Wähl deinen Tag — wir kümmern uns um den Rest.',
     'schedule.regOnly': 'Nur Anmeldung vor Ort!',
     'schedule.regOnlyDe': '(On-site registration only)',
     'schedule.upNext': 'Als Nächstes',
@@ -269,6 +275,12 @@ export const UI: Record<Lang, Record<string, string>> = {
     'schedule.tomorrowAt': 'morgen um',
     'schedule.pointLabel': 'Schau hier vorbei!',
 
+    // Mascot speech bubbles
+    'bubble.hero': 'Hi! Ich bin Mana-chan!<br>Willkommen bei Mana Games!',
+    'bubble.assortment': 'So viele TCGs! Klick auf dein Lieblingsspiel!',
+    'bubble.schedule': 'Such dir einen Abend aus! 🎴',
+    'bubble.visit': 'Noch nie gespielt? Wir lernen es zusammen!',
+
     'visit.eyebrow': '04 — Besuch uns',
     'visit.title': 'Wir sehen uns',
     'visit.accent': 'im Laden.',
@@ -282,7 +294,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     'visit.closedNow': 'Aktuell geschlossen',
     'visit.at': 'um',
     'visit.ctaTitle': 'Noch nie ein TCG gespielt?',
-    'visit.ctaText': 'Kein Problem — komm einfach vorbei. Wir erklären dir die Regeln, leihen dir ein Deck und spielen die erste Runde mit dir.',
+    'visit.ctaText': 'Kein Problem — komm einfach vorbei.<br>Wir erklären dir die Regeln, leihen dir ein Deck und spielen die erste Runde mit dir.',
     'visit.igBtn': 'Folg uns auf Instagram',
     'visit.twitchBtn': 'Schau uns auf Twitch',
     'visit.mascotAlt': 'Unser Mana Games Maskottchen, grübelnd über eine Kartenhand',

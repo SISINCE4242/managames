@@ -22,7 +22,7 @@ export const TWITTER_URL = 'https://www.twitter.com/example';
 export const MEDIA = {
   // No fallback on purpose: the old logo (PB.jpeg) must not be shown any more.
   // Until /logo.png exists, <BrandMark> renders a drawn card fan instead.
-  logo: { src: '/Mana Games Logo.png' },
+  logo: { src: '/LogoNeu.png' },
   storefront: { src: '/storefront.jpeg', fallback: '/VordererLaden.jpeg' },
   community: { src: '/community.jpeg', fallback: '/MY.jpeg' },
   signage: { src: '/Mana Games.png' },
@@ -399,9 +399,9 @@ export const SCHEDULE: Day[] = [
     short: 'Fri',
     weekday: 5,
     slots: [
-      { time: '19:00', game: 'Magic', format: 'Draft' },
       { time: '18:15', game: 'Yu-Gi-Oh!', format: 'Nexus' },
       { time: '18:30', game: 'One Piece' },
+      { time: '19:00', game: 'Magic', format: 'Draft' },
     ],
   },
   {

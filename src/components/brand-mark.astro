@@ -15,24 +15,16 @@ const { size = 44, class: className = '' } = Astro.props;
   no longer used as a fallback.
 -->
 <span
-  class={`relative block overflow-hidden rounded-xl border border-mana-400/30 bg-black ${className}`}
+  class={`relative block ${className}`}
   style={`width:${size}px;height:${size}px`}
 >
-  <svg viewBox="0 0 64 64" class="absolute inset-0 h-full w-full p-1.5 text-mana-400" aria-hidden="true">
-    <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round">
-      <rect x="8" y="14" width="24" height="36" rx="4" />
-      <rect x="8" y="14" width="24" height="36" rx="4" transform="rotate(18 20 50)" opacity=".7" />
-      <rect x="8" y="14" width="24" height="36" rx="4" transform="rotate(36 20 50)" opacity=".45" />
-    </g>
-  </svg>
-
   <img
     src={MEDIA.logo.src}
     data-brand-img
     alt=""
     width={size}
     height={size}
-    class="absolute inset-0 h-full w-full object-contain p-0.5 opacity-0 transition-opacity duration-300"
+    class="h-full w-full object-contain opacity-0 transition-opacity duration-300"
   />
 </span>
 

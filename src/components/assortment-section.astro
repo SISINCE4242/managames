@@ -151,14 +151,17 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
       <!-- Shelf slot -->
       <div data-reveal="right" class="lg:sticky lg:top-28">
         <div class="mx-auto mb-5 w-full max-w-[13rem]">
-          <MediaFrame
-            src={MEDIA.mascotPresent.src}
-            alt="Our Mana Games mascot presenting the assortment"
-            label="Take your pick!"
-            labelKey="assortment.presentLabel"
-            ratio="aspect-[2/3]"
-            tilt={6}
-          />
+          <div class="relative">
+            <span class="mascot-bubble mascot-bubble-left" style="top:auto;bottom:calc(100% - 3.5rem)" data-i18n="bubble.assortment">So many TCGs! Click the one you like!</span>
+            <MediaFrame
+              src={MEDIA.mascotPresent.src}
+              alt="Our Mana Games mascot presenting the assortment"
+              label="Take your pick!"
+              labelKey="assortment.presentLabel"
+              ratio="aspect-[2/3]"
+              tilt={6}
+            />
+          </div>
         </div>
         <MediaFrame
           src={MEDIA.shelf.src}

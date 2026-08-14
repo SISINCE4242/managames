@@ -117,21 +117,23 @@ import { DAY_NAMES } from '../lib/i18n';
 
       <div class="relative grid items-center gap-4 text-center lg:grid-cols-[11rem_1fr] lg:gap-10 lg:text-left">
         <div class="mascot-cutout mx-auto w-full max-w-[11rem]">
-          <img
-            src={MEDIA.mascotHowTo.src}
-            alt="Our Mana Games mascot, puzzling over a hand of cards"
-            loading="lazy"
-            decoding="async"
-          />
+          <div class="mascot-bubble-wrap">
+            <span class="mascot-bubble mascot-bubble-left" data-i18n="bubble.visit">Never played before? Let's learn it together!</span>
+            <img
+              src={MEDIA.mascotHowTo.src}
+              alt="Our Mana Games mascot, puzzling over a hand of cards"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
 
         <div>
           <h3 class="font-display text-3xl font-bold leading-tight text-neutral-50 sm:text-4xl" data-i18n="visit.ctaTitle">
             Never played a TCG before?
           </h3>
-          <p class="mx-auto mt-4 max-w-xl text-neutral-400 lg:mx-0" data-i18n="visit.ctaText">
-            No problem — just drop by. We will explain the rules, lend you a deck
-            and play the first round with you.
+          <p class="mx-auto mt-4 max-w-xl text-neutral-400 lg:mx-0" data-i18n-html="visit.ctaText">
+            No problem — just drop by.<br>We will explain the rules, lend you a deck and play the first round with you.
           </p>
           <div class="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-primary">
