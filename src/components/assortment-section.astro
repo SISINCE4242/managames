@@ -152,7 +152,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
       <div data-reveal="right" class="lg:sticky lg:top-28">
         <div class="mx-auto mb-5 w-full max-w-[13rem]">
           <div class="relative">
-            <span class="mascot-bubble mascot-bubble-left" style="top:auto;bottom:calc(100% - 3.5rem)" data-i18n="bubble.assortment">So many TCGs! Click the one you like!</span>
+            <span class="mascot-bubble mascot-bubble-left assortment-bubble bubble-mobile-center" data-i18n="bubble.assortment">So many TCGs! Click the one you like!</span>
             <MediaFrame
               src={MEDIA.mascotPresent.src}
               alt="Our Mana Games mascot presenting the assortment"
@@ -183,6 +183,15 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
 </section>
 
 <style>
+  /* Desktop-only: pin the bubble lower over the mascot's shoulder. Mobile
+     uses the centered .bubble-mobile-center variant from Layout.astro instead. */
+  @media (min-width: 768px) {
+    .assortment-bubble {
+      top: auto;
+      bottom: calc(100% - 3.5rem);
+    }
+  }
+
   .game-tile {
     border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
     background:

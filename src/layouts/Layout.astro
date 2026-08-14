@@ -170,6 +170,18 @@ const {
       [data-reveal='right'] {
         transform: translateX(36px);
       }
+      /* On narrow screens a -36px/+36px pre-reveal offset can push an
+         off-screen (not-yet-revealed) element a few pixels past the edge
+         of the viewport. Mobile browsers count that toward the page's
+         scrollable width even though it's invisible, which forces the
+         whole page to zoom out to "fit" it. Falling back to the plain
+         fade-up avoids that edge case; desktop keeps the side-slide. */
+      @media (max-width: 767px) {
+        [data-reveal='left'],
+        [data-reveal='right'] {
+          transform: translateY(30px);
+        }
+      }
       [data-reveal='zoom'] {
         transform: scale(0.94);
       }
@@ -516,6 +528,65 @@ const {
       }
       @media (prefers-reduced-motion: reduce) {
         .mascot-bubble { animation: none; }
+      }
+
+      /* ---------- Mobile-only bubble variant ----------
+         Desktop anchors bubbles hard left/right off the mascot, which only
+         works when there's open space on that side. On phone widths several
+         mascots sit centered (or flush to an edge) in a narrow column, so
+         that fixed offset pushes the bubble past the viewport edge and it
+         gets silently clipped by body's overflow-x:hidden. This variant
+         centers the bubble above the mascot instead and points its tail
+         down — opt-in via .bubble-mobile-center so desktop is untouched. */
+      @media (max-width: 767px) {
+        /* A bubble's containing block is its small mascot image, so
+           width:auto shrink-to-fit gets capped by the image's own width —
+           far below max-width — making text wrap into a tall, narrow
+           column no matter how much max-width allows. width:max-content
+           sizes off the text itself instead, still capped by max-width. */
+        .mascot-bubble,
+        .mascot-bubble-left {
+          width: max-content;
+        }
+
+        .mascot-bubble.bubble-mobile-center,
+        .mascot-bubble-left.bubble-mobile-center {
+          left: 50%;
+          right: auto;
+          top: auto;
+          bottom: calc(100% + 0.4rem);
+          transform: translateX(-50%);
+          max-width: 9.5rem;
+          font-size: 0.7rem;
+          padding: 0.4rem 0.65rem;
+          animation-name: bubble-float-center;
+        }
+        .mascot-bubble.bubble-mobile-center::after,
+        .mascot-bubble-left.bubble-mobile-center::after {
+          left: 50%;
+          right: auto;
+          top: 100%;
+          bottom: auto;
+          transform: translateX(-50%);
+          border-left-color: transparent;
+          border-right-color: transparent;
+          border-top-color: rgba(46, 224, 131, 0.55);
+        }
+        .mascot-bubble.bubble-mobile-center::before,
+        .mascot-bubble-left.bubble-mobile-center::before {
+          left: 50%;
+          right: auto;
+          top: 100%;
+          bottom: auto;
+          transform: translateX(-50%);
+          border-left-color: transparent;
+          border-right-color: transparent;
+          border-top-color: rgba(4, 18, 11, 0.92);
+        }
+        @keyframes bubble-float-center {
+          0%, 100% { transform: translateX(-50%) translateY(0); }
+          50%       { transform: translateX(-50%) translateY(-4px); }
+        }
       }
     </style>
 

@@ -24,7 +24,7 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
         <!-- Mobile/tablet only: desktop keeps its own floating mascot below, untouched -->
         <div data-reveal="right" class="mascot-point-mobile shrink-0 lg:hidden">
           <div class="mascot-bubble-wrap">
-            <span class="mascot-bubble" style="bottom:auto;top:0.25rem" data-i18n="bubble.schedule">Pick a night and join us! 🎴</span>
+            <span class="mascot-bubble" style="bottom:auto;top:0.7rem" data-i18n="bubble.schedule">Pick a night and join us! 🎴</span>
             <img src={MEDIA.mascotPoint.src} alt="Our Mana Games mascot pointing at the schedule" loading="lazy" decoding="async" />
           </div>
         </div>
@@ -203,6 +203,14 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
     height: 11rem;
     width: auto;
     filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5));
+  }
+
+  /* Keep this bubble narrow enough to stay clear of the viewport's left
+     edge — it extends leftward from a mascot flush against the right side. */
+  @media (max-width: 767px) {
+    .mascot-point-mobile .mascot-bubble {
+      max-width: 10.5rem;
+    }
   }
 
   .day-tab[aria-selected='true'] {
