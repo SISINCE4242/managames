@@ -109,7 +109,7 @@ import { DAY_NAMES } from '../lib/i18n';
     <!-- CTA banner -->
     <div
       data-reveal
-      class="relative mt-4 overflow-hidden rounded-2xl border border-mana-400/25 bg-[linear-gradient(140deg,rgba(18,201,107,.14),rgba(5,7,10,.85)_60%)] p-8 sm:p-12"
+      class="relative mt-4 overflow-hidden rounded-2xl border border-mana-400/25 bg-[linear-gradient(140deg,rgba(18,201,107,.14),rgba(5,7,10,.85)_60%)] p-8 sm:p-12 visit-cta"
     >
       <div class="pointer-events-none absolute inset-0 opacity-40">
         <div class="absolute left-1/2 top-0 h-56 w-[70%] -translate-x-1/2 rounded-full bg-mana-400/30 blur-[80px]"></div>
@@ -152,6 +152,17 @@ import { DAY_NAMES } from '../lib/i18n';
 </section>
 
 <style>
+  /* Give the CTA banner enough top padding on mobile so the bubble
+     (positioned above the mascot via bottom: calc(100% + 0.4rem)) is
+     not clipped by the banner's overflow-hidden. Desktop is unaffected
+     since p-12 already provides enough room and the bubble is beside
+     the mascot rather than above. */
+  @media (max-width: 767px) {
+    .visit-cta {
+      padding-top: 5rem;
+    }
+  }
+
   .mascot-cutout img {
     display: block;
     width: 100%;
