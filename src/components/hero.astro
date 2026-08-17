@@ -732,7 +732,10 @@ const RIFT_ARM = (() => {
     gap: 0.65rem;
   }
   :global(.stat-label) {
-    width: 84px;
+    /* Fits the longest label in either language — "Zugänglichkeit" needs
+       87px and "Collectibility" 81px, both of which are single words that
+       cannot wrap, so a narrower column clips them. */
+    width: 92px;
     flex-shrink: 0;
     font-size: 10px;
     font-weight: 600;

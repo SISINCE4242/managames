@@ -200,7 +200,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     'hero.stat.strategy': 'Strategie',
     'hero.stat.pace': 'Tempo',
     'hero.stat.collecting': 'Sammeln',
-    'hero.stat.accessibility': 'Einstieg',
+    'hero.stat.accessibility': 'Zugänglichkeit',
     'hero.backToHand': 'Zurück zur Hand',
     'hero.whatsItAbout': 'Worum geht’s?',
     'hero.youllLikeIf': 'Das könnte dir gefallen, wenn...',
