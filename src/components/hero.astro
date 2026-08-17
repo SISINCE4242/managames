@@ -489,10 +489,14 @@ const RIFT_ARM = (() => {
     filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.5));
   }
 
-  /* Mobile/tablet only — desktop sizing/spacing above is untouched */
+  /* Stacked layout — desktop sizing/spacing above is untouched.
+     The bubble switches to .bubble-mobile-center here and floats above the
+     mascot, up to 70px up on the three-line German copy. Being absolutely
+     positioned it reserves no height of its own, so without this margin it
+     lands on the stats block above. */
   @media (max-width: 1023px) {
     .mascot-topper {
-      margin-top: 0.5rem;
+      margin-top: 5.25rem;
       margin-bottom: 1.25rem;
     }
     .mascot-topper img {

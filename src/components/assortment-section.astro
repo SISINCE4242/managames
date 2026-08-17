@@ -150,7 +150,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
 
       <!-- Shelf slot -->
       <div data-reveal="right" class="lg:sticky lg:top-28">
-        <div class="mx-auto mb-5 mt-9 w-full max-w-[13rem] lg:mt-0">
+        <div class="assortment-mascot mx-auto mb-5 w-full max-w-[13rem]">
           <div class="relative">
             <span class="mascot-bubble mascot-bubble-left assortment-bubble bubble-mobile-center" data-i18n-html="bubble.assortment">So many TCGs!<br>Click the one you like!</span>
             <MediaFrame
@@ -185,18 +185,57 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
 <style>
   /* Desktop-only: pin the bubble lower over the mascot's shoulder. Mobile
      uses the centered .bubble-mobile-center variant from Layout.astro instead. */
-  @media (min-width: 768px) {
+  /* This mascot sits in the right-hand column, so anchoring the bubble off
+     its side pushes it past the viewport edge: it needs ~148px and has only
+     114px at a 1024px window. Centring it over the mascot keeps it inside
+     the 208px column at every width, so it keeps the stacked layout's
+     placement here rather than switching to the shoulder position.
+
+     The width also has to come from the text: .mascot-bubble-wrap is an
+     inline-block sized from an image that is itself width:100%, so it
+     resolves to zero width and shrink-to-fit would stack the text into a
+     narrow column, swallowing the line break in the copy. */
+  @media (min-width: 1024px) {
     .assortment-bubble {
+      left: 50%;
+      right: auto;
       top: auto;
-      bottom: calc(100% - 3.5rem);
-      /* The wrap is an inline-block sized from an image that is itself
-         width:100%, so it resolves to zero width and the bubble's
-         shrink-to-fit stacks the text into a narrow column, swallowing
-         the explicit line break. Size from the text instead — the mobile
-         variant in Layout.astro already does this below 768px. */
+      bottom: calc(100% + 0.4rem);
+      transform: translateX(-50%);
       width: max-content;
-      max-width: 15rem;
+      max-width: 13rem;
+      animation-name: bubble-float-center;
     }
+    .assortment-bubble::after,
+    .assortment-bubble::before {
+      left: 50%;
+      right: auto;
+      top: 100%;
+      bottom: auto;
+      transform: translateX(-50%);
+      border-left-color: transparent;
+      border-right-color: transparent;
+    }
+    .assortment-bubble::after {
+      border-top-color: rgba(46, 224, 131, 0.55);
+    }
+    .assortment-bubble::before {
+      border-top-color: rgba(4, 18, 11, 0.92);
+    }
+  }
+
+  /* Same reasoning as the hero mascot: below 768px the bubble floats above
+     the artwork (up to 70px on the German copy) without reserving height,
+     so it reached down over the paragraph ending this column. mt-9 covered
+     the shorter English string only. Above 768px the bubble sits over the
+     mascot's shoulder instead and the utility spacing is right as-is. */
+  /* The bubble is centred above the artwork at every width and, being
+     absolutely positioned, reserves no height of its own — it floats up to
+     70px above the mascot on the three-line German copy. Without this it
+     reaches over the paragraph that ends the column above. Set here rather
+     than as mt-9/lg:mt-0 utilities so one value covers both layouts. */
+  .assortment-mascot {
+    margin-top: 5.25rem;
   }
 
   .game-tile {

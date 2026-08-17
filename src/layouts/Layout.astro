@@ -191,8 +191,10 @@ const {
          of the viewport. Mobile browsers count that toward the page's
          scrollable width even though it's invisible, which forces the
          whole page to zoom out to "fit" it. Falling back to the plain
-         fade-up avoids that edge case; desktop keeps the side-slide. */
-      @media (max-width: 767px) {
+         fade-up avoids that edge case; desktop keeps the side-slide.
+         Capped at the lg breakpoint, where the layout goes two-column —
+         a phone in landscape sits in the 768-1023px band and hit this. */
+      @media (max-width: 1023px) {
         [data-reveal='left'],
         [data-reveal='right'] {
           transform: translateY(30px);
@@ -546,15 +548,20 @@ const {
         .mascot-bubble { animation: none; }
       }
 
-      /* ---------- Mobile-only bubble variant ----------
+      /* ---------- Stacked-layout bubble variant ----------
          Desktop anchors bubbles hard left/right off the mascot, which only
-         works when there's open space on that side. On phone widths several
-         mascots sit centered (or flush to an edge) in a narrow column, so
-         that fixed offset pushes the bubble past the viewport edge and it
-         gets silently clipped by body's overflow-x:hidden. This variant
-         centers the bubble above the mascot instead and points its tail
-         down — opt-in via .bubble-mobile-center so desktop is untouched. */
-      @media (max-width: 767px) {
+         works when there's open space on that side. In the stacked layout
+         several mascots sit centered (or flush to an edge) in a narrow
+         column, so that fixed offset pushes the bubble past the viewport
+         edge and it gets silently clipped by body's overflow-x:hidden.
+         This variant centers the bubble above the mascot instead and points
+         its tail down — opt-in via .bubble-mobile-center.
+
+         The cap is the lg breakpoint, matching where the mascots actually
+         stop being stacked. It used to be 767px, which left the 768-1023px
+         band — a phone in landscape — using the side anchoring with no room
+         for it, so bubbles sat across the stats and the schedule heading. */
+      @media (max-width: 1023px) {
         /* A bubble's containing block is its small mascot image, so
            width:auto shrink-to-fit gets capped by the image's own width —
            far below max-width — making text wrap into a tall, narrow
@@ -599,10 +606,14 @@ const {
           border-right-color: transparent;
           border-top-color: rgba(4, 18, 11, 0.92);
         }
-        @keyframes bubble-float-center {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50%       { transform: translateX(-50%) translateY(-4px); }
-        }
+      }
+
+      /* Outside the media query on purpose: the assortment bubble uses this
+         centred placement at every width, because its mascot sits in the
+         right-hand column where a side-anchored bubble runs off the page. */
+      @keyframes bubble-float-center {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50%       { transform: translateX(-50%) translateY(-4px); }
       }
     </style>
 
