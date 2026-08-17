@@ -118,7 +118,7 @@ import { DAY_NAMES } from '../lib/i18n';
       <div class="relative grid items-center gap-4 text-center lg:grid-cols-[11rem_1fr] lg:gap-10 lg:text-left">
         <div class="mascot-cutout mx-auto w-full max-w-[11rem]">
           <div class="mascot-bubble-wrap">
-            <span class="mascot-bubble mascot-bubble-left bubble-mobile-center" data-i18n="bubble.visit">Never played before? Let's learn it together!</span>
+            <span class="mascot-bubble mascot-bubble-left bubble-mobile-center" data-i18n-html="bubble.visit">Never played before?<br>Don't worry, I will teach you!</span>
             <img
               src={MEDIA.mascotHowTo.src}
               alt="Our Mana Games mascot, puzzling over a hand of cards"
@@ -160,6 +160,28 @@ import { DAY_NAMES } from '../lib/i18n';
   @media (max-width: 767px) {
     .visit-cta {
       padding-top: 5rem;
+    }
+
+    /* This bubble carries an explicit line break. At the 9.5rem cap the
+       shared mobile variant applies, the second sentence rewraps across
+       three lines and the break stops meaning anything — so widen just
+       this one enough to hold it. Still far inside the viewport. */
+    .visit-cta .mascot-bubble {
+      max-width: 12rem;
+    }
+  }
+
+  /* On desktop .mascot-bubble-wrap is an inline-block sized from an image
+     that is itself width:100%, so the wrap resolves to zero width. The
+     bubble's shrink-to-fit then has almost nothing to work with and the
+     text stacks into a narrow column — the explicit line break above never
+     survives. Sizing from the text instead fixes it; the mobile variant
+     already does this globally, this is the same fix for wide screens,
+     scoped so the hero and schedule bubbles keep their current look. */
+  @media (min-width: 768px) {
+    .visit-cta .mascot-bubble {
+      width: max-content;
+      max-width: 15rem;
     }
   }
 

@@ -152,7 +152,7 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
       <div data-reveal="right" class="lg:sticky lg:top-28">
         <div class="mx-auto mb-5 mt-9 w-full max-w-[13rem] lg:mt-0">
           <div class="relative">
-            <span class="mascot-bubble mascot-bubble-left assortment-bubble bubble-mobile-center" data-i18n="bubble.assortment">So many TCGs! Click the one you like!</span>
+            <span class="mascot-bubble mascot-bubble-left assortment-bubble bubble-mobile-center" data-i18n-html="bubble.assortment">So many TCGs!<br>Click the one you like!</span>
             <MediaFrame
               src={MEDIA.mascotPresent.src}
               alt="Our Mana Games mascot presenting the assortment"
@@ -189,6 +189,13 @@ const badgesFor = (key: string) => ((GAME_EVENTS[key] ?? []).length > 0 ? ['asso
     .assortment-bubble {
       top: auto;
       bottom: calc(100% - 3.5rem);
+      /* The wrap is an inline-block sized from an image that is itself
+         width:100%, so it resolves to zero width and the bubble's
+         shrink-to-fit stacks the text into a narrow column, swallowing
+         the explicit line break. Size from the text instead — the mobile
+         variant in Layout.astro already does this below 768px. */
+      width: max-content;
+      max-width: 15rem;
     }
   }
 

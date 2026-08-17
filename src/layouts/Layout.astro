@@ -103,6 +103,22 @@ const {
         overflow-x: hidden;
       }
 
+      /* Better line breaks without hard-coding <br> into the copy:
+         headings even out their line lengths, body text avoids leaving a
+         single word stranded on the last line. This adapts to whatever
+         width the text actually gets, which a manual break cannot — and
+         browsers without support just wrap as before. */
+      h1,
+      h2,
+      h3,
+      h4 {
+        text-wrap: balance;
+      }
+
+      p {
+        text-wrap: pretty;
+      }
+
       ::selection {
         background: rgba(46, 224, 131, 0.32);
         color: #eafff3;

@@ -132,9 +132,9 @@ export const UI: Record<Lang, Record<string, string>> = {
 
     // Mascot speech bubbles
     'bubble.hero': "Hi! I'm Mana-chan!<br>Welcome to Mana Games!",
-    'bubble.assortment': 'So many TCGs! Click the one you like!',
+    'bubble.assortment': 'So many TCGs!<br>Click the one you like!',
     'bubble.schedule': 'Pick a night and join us! 🎴',
-    'bubble.visit': "Never played before? Let's learn it together!",
+    'bubble.visit': "Never played before?<br>Don't worry, I will teach you!",
 
     // Visit
     'visit.eyebrow': '04 — Visit us',
@@ -277,9 +277,9 @@ export const UI: Record<Lang, Record<string, string>> = {
 
     // Mascot speech bubbles
     'bubble.hero': 'Hi! Ich bin Mana-chan!<br>Willkommen bei Mana Games!',
-    'bubble.assortment': 'So viele TCGs! Klick auf dein Lieblingsspiel!',
+    'bubble.assortment': 'So viele TCGs!<br>Klick auf dein Lieblingsspiel!',
     'bubble.schedule': 'Such dir einen Abend aus! 🎴',
-    'bubble.visit': 'Noch nie gespielt? Wir lernen es zusammen!',
+    'bubble.visit': 'Noch nie gespielt?<br>Keine Sorge, ich bring es dir bei!',
 
     'visit.eyebrow': '04 — Besuch uns',
     'visit.title': 'Wir sehen uns',

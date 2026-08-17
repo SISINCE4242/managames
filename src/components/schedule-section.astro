@@ -208,6 +208,15 @@ const totalEvents = SCHEDULE.reduce((sum, day) => sum + day.slots.length, 0);
     filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5));
   }
 
+  /* The wrap is an inline-block sized from an image that is itself
+     width:100%, so it resolves to zero width. The bubble's shrink-to-fit
+     then collapsed to ~56px and stacked into a seven-line column that
+     reached across the registration note beside it. Size from the text. */
+  .mascot-point-desktop .mascot-bubble {
+    width: max-content;
+    max-width: 15rem;
+  }
+
 
   .day-tab[aria-selected='true'] {
     border-color: rgba(46, 224, 131, 0.65);
