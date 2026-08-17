@@ -301,35 +301,23 @@ const RIFT_ARM = (() => {
                     {game.key === 'One Piece' && (
                       <svg viewBox="0 0 100 100" class="h-16 w-16 opacity-95">
                         <defs>
-                          <radialGradient id="rg-onepiece" cx="50%" cy="38%" r="45%">
+                          <radialGradient id="rg-onepiece" cx="50%" cy="50%" r="50%">
                             <stop offset="0%"   stop-color="currentColor" stop-opacity="0.4"/>
                             <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
                           </radialGradient>
+                          {/*
+                            The Jolly Roger artwork goes in as a luminance mask
+                            rather than a plain <image>, so the card accent paints
+                            the skull instead of it staying flat white: bright
+                            areas of the art let the fill through, its black
+                            linework and eye sockets drop out to the card behind.
+                          */}
+                          <mask id="mask-onepiece" style="mask-type:luminance">
+                            <image href="/one-piece-skull.png" x="5" y="10" width="90" height="79.6"/>
+                          </mask>
                         </defs>
-                        {/* Glow behind skull */}
-                        <circle cx="50" cy="38" r="46" fill="url(#rg-onepiece)"/>
-                        {/* Skull head — filled */}
-                        <circle cx="50" cy="37" r="24" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="2.2"/>
-                        {/* Cheekbones / jaw curve */}
-                        <path d="M32 50 Q28 60 36 63 L64 63 Q72 60 68 50" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.8"/>
-                        {/* Eye sockets — filled */}
-                        <ellipse cx="39" cy="34" rx="8.5" ry="9.5" fill="currentColor" fill-opacity="0.7" stroke="currentColor" stroke-width="1.4"/>
-                        <ellipse cx="61" cy="34" rx="8.5" ry="9.5" fill="currentColor" fill-opacity="0.7" stroke="currentColor" stroke-width="1.4"/>
-                        {/* Eye glints */}
-                        <ellipse cx="36.5" cy="31" rx="2.5" ry="2" fill="white" fill-opacity="0.25" stroke="none"/>
-                        <ellipse cx="58.5" cy="31" rx="2.5" ry="2" fill="white" fill-opacity="0.25" stroke="none"/>
-                        {/* Nose hint */}
-                        <path d="M47 48 L50 52 L53 48" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
-                        {/* Teeth */}
-                        <line x1="37" y1="62" x2="63" y2="62" stroke="currentColor" stroke-width="1.5" opacity="0.65"/>
-                        {[42,48,54,60].map((x) => (
-                          <line x1={x} y1="62" x2={x} y2="68" stroke="currentColor" stroke-width="1.5" opacity="0.65" stroke-linecap="round"/>
-                        ))}
-                        {/* Ocean waves */}
-                        <path d="M10 76 Q20 70 30 76 T50 76 T70 76 T90 76" fill="none" stroke="currentColor" stroke-width="2" opacity="0.75" stroke-linecap="round"/>
-                        <path d="M10 84 Q20 78 30 84 T50 84 T70 84 T90 84" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.45" stroke-linecap="round"/>
-                        {/* Forehead spiral */}
-                        <path d="M50 23 C55 23 58 26 58 30 C58 35 54 38 50 38 C46 38 43 36 43 33 C43 31 45 29 47 30" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.55" stroke-linecap="round"/>
+                        <circle cx="50" cy="50" r="46" fill="url(#rg-onepiece)"/>
+                        <rect width="100" height="100" fill="currentColor" mask="url(#mask-onepiece)"/>
                       </svg>
                     )}
                     {game.key === 'Riftbound' && (
