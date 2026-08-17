@@ -33,7 +33,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     // Hero
     'hero.tagline': 'Your LGS for anything TCG!',
     'hero.description':
-      'Your local game store in Berlin-Wilmersdorf. Singles, sealed products and accessoires for 9 trading card games — plus tournaments six evenings a week.',
+      'Your local game store in Berlin-Wilmersdorf. Singles, sealed products and accessoires for 9 trading card games + tournaments six evenings a week.',
     'hero.seeSchedule': 'See the schedule',
     'hero.getDirections': 'Get directions',
     'hero.stat.games': 'Trading Card Games',
@@ -181,7 +181,7 @@ export const UI: Record<Lang, Record<string, string>> = {
 
     'hero.tagline': 'Dein LGS für alles rund um TCGs!',
     'hero.description':
-      'Dein lokaler Game Store in Berlin-Wilmersdorf. Einzelkarten, versiegelte Produkte und Zubehör für 9 Trading Card Games — plus Turniere an sechs Abenden die Woche.',
+      'Dein lokaler Game Store in Berlin-Wilmersdorf. Einzelkarten, versiegelte Produkte und Zubehör für 9 Trading Card Games + Turniere an sechs Abenden die Woche.',
     'hero.seeSchedule': 'Zum Zeitplan',
     'hero.getDirections': 'Route anzeigen',
     'hero.stat.games': 'Trading Card Games',
