@@ -234,36 +234,30 @@ const RIFT_ARM = (() => {
                     {game.key === 'Yu-Gi-Oh!' && (
                       <svg viewBox="0 0 100 100" class="h-16 w-16 opacity-95">
                         <defs>
-                          <radialGradient id="rg-yugioh" cx="50%" cy="65%" r="55%">
+                          <radialGradient id="rg-yugioh" cx="50%" cy="45%" r="52%">
                             <stop offset="0%"   stop-color="currentColor" stop-opacity="0.4"/>
                             <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
                           </radialGradient>
                         </defs>
-                        {/* Background glow */}
-                        <circle cx="50" cy="65" r="46" fill="url(#rg-yugioh)"/>
-                        {/* Filled pyramid */}
-                        <polygon points="50,10 88,78 12,78" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        {/* Inner pyramid lines */}
-                        <line x1="50" y1="10" x2="50" y2="78" stroke="currentColor" stroke-width="0.7" opacity="0.35"/>
-                        <line x1="31" y1="44" x2="69" y2="44" stroke="currentColor" stroke-width="0.7" opacity="0.35"/>
-                        {/* Eye whites */}
-                        <ellipse cx="50" cy="56" rx="19" ry="11" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.8"/>
-                        {/* Iris ring */}
-                        <ellipse cx="50" cy="56" rx="10" ry="8" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
-                        {/* Pupil */}
-                        <circle cx="50" cy="56" r="5" fill="currentColor"/>
-                        <circle cx="50" cy="56" r="2" fill="white" fill-opacity="0.3" stroke="none"/>
-                        {/* Eye shine lines */}
-                        <line x1="50" y1="45" x2="50" y2="40" stroke="currentColor" stroke-width="1.5" opacity="0.7" stroke-linecap="round"/>
-                        <line x1="57" y1="47" x2="61" y2="43" stroke="currentColor" stroke-width="1.2" opacity="0.55" stroke-linecap="round"/>
-                        <line x1="43" y1="47" x2="39" y2="43" stroke="currentColor" stroke-width="1.2" opacity="0.55" stroke-linecap="round"/>
-                        {/* 5 star rating — filled pentagons */}
-                        {[24,34,50,66,76].map((x) => (
-                          <polygon
-                            points={`${x},20 ${x+2.8},27 ${x+9},27 ${x+3.5},31 ${x+5.5},38 ${x},34 ${x-5.5},38 ${x-3.5},31 ${x-9},27 ${x-2.8},27`}
-                            fill="currentColor" opacity="0.75" stroke="none"
-                          />
-                        ))}
+                        <circle cx="50" cy="46" r="46" fill="url(#rg-yugioh)"/>
+                        {/*
+                          Eye of Horus, drawn as round-capped strokes to read as
+                          the tubular goldwork of the original. Nothing is filled:
+                          the sclera and the pupil are simply gaps the dark card
+                          shows through, the same relationship the artwork has.
+                        */}
+                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                          {/* Brow */}
+                          <path d="M10 34 C12 21 27 14 50 14 C69 14 83 17 90 22" stroke-width="6.5"/>
+                          {/* Eye */}
+                          <path d="M15 47 C24 30 40 24 55 24 C71 24 84 31 89 37 C83 48 69 60 52 61 C34 62 20 55 15 47 Z" stroke-width="5"/>
+                          {/* Iris ring — its inner hole is the pupil */}
+                          <circle cx="55" cy="42" r="9" stroke-width="5"/>
+                          {/* Teardrop leg */}
+                          <path d="M44 61 C43 70 40 78 33 84" stroke-width="5.5"/>
+                          {/* Curled leg */}
+                          <path d="M62 60 C61 70 63 78 70 82 C78 86 87 82 87 74 C87 67 79 64 75 69 C72 73 75 77 78 75" stroke-width="5.5"/>
+                        </g>
                       </svg>
                     )}
                     {game.key === 'Pokemon' && (
