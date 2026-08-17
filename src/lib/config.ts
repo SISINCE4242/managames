@@ -234,7 +234,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   Naruto: {
     displayName: 'Naruto Bandai',
     tags: { en: ['TBA'], de: ['TBA'] },
-    stats: { strategy: 0, pace: 0, collecting: 0, accessibility: 0 },
+    stats: { strategy: 9, pace: 8, collecting: 10, accessibility: 2 },
     short: {
       en: 'TBA',
       de: 'TBA',
