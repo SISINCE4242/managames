@@ -150,7 +150,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   Magic: {
     displayName: 'Magic: The Gathering',
     tags: { en: ['Deep', 'Versatile', 'Deckbuilding'], de: ['Tiefgründig', 'Vielseitig', 'Deckbau'] },
-    stats: { strategy: 10, pace: 6, collecting: 10, accessibility: 6 },
+    stats: { strategy: 10, pace: 8, collecting: 5, accessibility: 10 },
     short: {
       en: 'A huge strategic sandbox built around deck construction, synergies and many different ways to play.',
       de: 'Ein riesiger strategischer Sandkasten rund um Deckbau, Synergien und viele verschiedene Spielweisen.',
@@ -171,7 +171,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   'Yu-Gi-Oh!': {
     displayName: 'Yu-Gi-Oh!',
     tags: { en: ['Fast', 'Combo-driven', 'Technical'], de: ['Schnell', 'Combo-lastig', 'Technisch'] },
-    stats: { strategy: 9, pace: 9, collecting: 9, accessibility: 5 },
+    stats: { strategy: 10, pace: 5, collecting: 10, accessibility: 10 },
     short: {
       en: 'A fast tactical card game built around powerful combinations, sequencing and explosive turns.',
       de: 'Ein schnelles, taktisches Kartenspiel rund um starke Kombinationen, Reihenfolge und explosive Züge.',
@@ -192,7 +192,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   Pokemon: {
     displayName: 'Pokémon',
     tags: { en: ['Accessible', 'Tactical', 'Collectible'], de: ['Einsteigerfreundlich', 'Taktisch', 'Sammelbar'] },
-    stats: { strategy: 8, pace: 7, collecting: 10, accessibility: 9 },
+    stats: { strategy: 5, pace: 5, collecting: 10, accessibility: 1 },
     short: {
       en: 'An approachable strategy game where Pokémon evolve, use Energy and battle for Prize cards.',
       de: 'Ein zugängliches Strategiespiel, in dem Pokémon sich entwickeln, Energie nutzen und um Preiskarten kämpfen.',
@@ -213,7 +213,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   'One Piece': {
     displayName: 'One Piece',
     tags: { en: ['Tactical', 'Leader-based', 'Synergy'], de: ['Taktisch', 'Anführer-basiert', 'Synergie'] },
-    stats: { strategy: 8, pace: 7, collecting: 9, accessibility: 8 },
+    stats: { strategy: 10, pace: 10, collecting: 10, accessibility: 3 },
     short: {
       en: 'Build around a Leader and use DON!! efficiently to strengthen your characters and execute your game plan.',
       de: 'Baue rund um einen Anführer und setze DON!! effizient ein, um deine Charaktere zu stärken und deinen Plan umzusetzen.',
@@ -234,7 +234,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   Naruto: {
     displayName: 'Naruto',
     tags: { en: ['Tactical', 'Mission-based', 'Resource'], de: ['Taktisch', 'Missionsbasiert', 'Ressourcen'] },
-    stats: { strategy: 8, pace: 6, collecting: 8, accessibility: 7 },
+    stats: { strategy: 9, pace: 8, collecting: 10, accessibility: 2 },
     short: {
       en: 'Deploy ninja, manage Chakra and fight to complete missions before your opponent.',
       de: 'Setze Ninja ein, verwalte Chakra und erfülle Missionen vor deinem Gegner.',
@@ -255,7 +255,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   'Dragon Ball': {
     displayName: 'Dragon Ball',
     tags: { en: ['Fast', 'Aggressive', 'Combo'], de: ['Schnell', 'Aggressiv', 'Combo'] },
-    stats: { strategy: 8, pace: 9, collecting: 9, accessibility: 8 },
+    stats: { strategy: 9, pace: 7, collecting: 10, accessibility: 2 },
     short: {
       en: 'Fast battles built around Leaders, powerful attacks, Combo cards and dramatic Awaken moments.',
       de: 'Schnelle Kämpfe rund um Anführer, starke Angriffe, Combo-Karten und dramatische Awaken-Momente.',
@@ -276,7 +276,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   Riftbound: {
     displayName: 'Riftbound',
     tags: { en: ['Strategic', 'Positional', 'Objective-based'], de: ['Strategisch', 'Positionsbasiert', 'Zielbasiert'] },
-    stats: { strategy: 9, pace: 7, collecting: 8, accessibility: 8 },
+    stats: { strategy: 10, pace: 8, collecting: 9, accessibility: 7 },
     short: {
       en: 'Deploy Champions and units across shared battlefields and fight for control to score points.',
       de: 'Setze Champions und Einheiten auf gemeinsamen Schlachtfeldern ein und kämpfe um die Kontrolle, um Punkte zu sammeln.',
@@ -297,7 +297,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   'Flesh & Blood': {
     displayName: 'Flesh & Blood',
     tags: { en: ['Deep', 'Competitive', 'Skill-intensive'], de: ['Tiefgründig', 'Kompetitiv', 'Skill-intensiv'] },
-    stats: { strategy: 10, pace: 8, collecting: 8, accessibility: 5 },
+    stats: { strategy: 10, pace: 10, collecting: 3, accessibility: 10 },
     short: {
       en: 'A highly tactical combat TCG where nearly every card can become an attack, defense or resource.',
       de: 'Ein hochtaktisches Kampf-TCG, bei dem fast jede Karte zum Angriff, zur Verteidigung oder zur Ressource werden kann.',
@@ -318,7 +318,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   Digimon: {
     displayName: 'Digimon',
     tags: { en: ['Evolution', 'Tactical', 'Momentum'], de: ['Entwicklung', 'Taktisch', 'Momentum'] },
-    stats: { strategy: 8, pace: 8, collecting: 9, accessibility: 8 },
+    stats: { strategy: 6, pace: 5, collecting: 4, accessibility: 10 },
     short: {
       en: "Build Digimon through evolution while carefully managing a shared resource system and attacking your opponent's Security.",
       de: 'Entwickle deine Digimon durch Evolution, während du ein gemeinsames Ressourcensystem verwaltest und die Security deines Gegners angreifst.',
