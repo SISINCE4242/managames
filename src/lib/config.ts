@@ -190,7 +190,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
     },
   },
   Pokemon: {
-    displayName: 'Pokémon TCG',
+    displayName: 'Pokémon',
     tags: { en: ['Accessible', 'Tactical', 'Collectible'], de: ['Einsteigerfreundlich', 'Taktisch', 'Sammelbar'] },
     stats: { strategy: 8, pace: 7, collecting: 10, accessibility: 9 },
     short: {
@@ -211,7 +211,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
     },
   },
   'One Piece': {
-    displayName: 'One Piece Card Game',
+    displayName: 'One Piece',
     tags: { en: ['Tactical', 'Leader-based', 'Synergy'], de: ['Taktisch', 'Anführer-basiert', 'Synergie'] },
     stats: { strategy: 8, pace: 7, collecting: 9, accessibility: 8 },
     short: {
@@ -232,7 +232,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
     },
   },
   Naruto: {
-    displayName: 'Naruto Mythos TCG',
+    displayName: 'Naruto',
     tags: { en: ['Tactical', 'Mission-based', 'Resource'], de: ['Taktisch', 'Missionsbasiert', 'Ressourcen'] },
     stats: { strategy: 8, pace: 6, collecting: 8, accessibility: 7 },
     short: {
@@ -253,7 +253,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
     },
   },
   'Dragon Ball': {
-    displayName: 'Dragon Ball Super Card Game: Fusion World',
+    displayName: 'Dragon Ball',
     tags: { en: ['Fast', 'Aggressive', 'Combo'], de: ['Schnell', 'Aggressiv', 'Combo'] },
     stats: { strategy: 8, pace: 9, collecting: 9, accessibility: 8 },
     short: {
@@ -316,7 +316,7 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
     },
   },
   Digimon: {
-    displayName: 'Digimon Card Game',
+    displayName: 'Digimon',
     tags: { en: ['Evolution', 'Tactical', 'Momentum'], de: ['Entwicklung', 'Taktisch', 'Momentum'] },
     stats: { strategy: 8, pace: 8, collecting: 9, accessibility: 8 },
     short: {

@@ -51,7 +51,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     'hero.next': 'NEXT',
     'hero.stat.strategy': 'Strategy',
     'hero.stat.pace': 'Pace',
-    'hero.stat.collecting': 'Collecting',
+    'hero.stat.collecting': 'Collectibility',
     'hero.stat.accessibility': 'Accessibility',
     'hero.backToHand': 'Back to Hand',
     'hero.whatsItAbout': "What's it about?",
