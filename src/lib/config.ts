@@ -86,10 +86,10 @@ export const GAMES: Game[] = [
     pattern: 'onepiece',
   },
   {
-    name: 'Naruto',
+    name: 'Naruto Bandai',
     key: 'Naruto',
     color: '#fb923c',
-    blurb: { en: 'The classic — back in the weekly line-up', de: 'Der Klassiker — wieder fest im Wochenplan' },
+    blurb: { en: 'Coming soon — details TBA', de: 'Demnächst — Details folgen' },
     pattern: 'naruto',
   },
   {
@@ -232,24 +232,24 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
     },
   },
   Naruto: {
-    displayName: 'Naruto',
-    tags: { en: ['Tactical', 'Mission-based', 'Resource'], de: ['Taktisch', 'Missionsbasiert', 'Ressourcen'] },
-    stats: { strategy: 9, pace: 8, collecting: 10, accessibility: 2 },
+    displayName: 'Naruto Bandai',
+    tags: { en: ['TBA'], de: ['TBA'] },
+    stats: { strategy: 0, pace: 0, collecting: 0, accessibility: 0 },
     short: {
-      en: 'Deploy ninja, manage Chakra and fight to complete missions before your opponent.',
-      de: 'Setze Ninja ein, verwalte Chakra und erfülle Missionen vor deinem Gegner.',
+      en: 'TBA',
+      de: 'TBA',
     },
     about: {
-      en: 'New missions shape each round while players spend Chakra to deploy characters and compete for victory points, making positioning and resource management important.',
-      de: 'Neue Missionen prägen jede Runde, während Spieler Chakra einsetzen, um Charaktere zu spielen und um Siegpunkte zu kämpfen — Positionierung und Ressourcenmanagement sind entscheidend.',
+      en: 'TBA',
+      de: 'TBA',
     },
     likeIf: {
-      en: 'you enjoy tactical objectives, resource decisions and adapting your plan as the battlefield changes.',
-      de: 'du taktische Ziele, Ressourcenentscheidungen und das Anpassen deines Plans magst, während sich das Schlachtfeld verändert.',
+      en: 'TBA',
+      de: 'TBA',
     },
     goodToKnow: {
-      en: ['Mission System', 'Chakra Management', 'Victory Points'],
-      de: ['Missionssystem', 'Chakra-Management', 'Siegpunkte'],
+      en: ['TBA'],
+      de: ['TBA'],
     },
   },
   'Dragon Ball': {
