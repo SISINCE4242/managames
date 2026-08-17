@@ -191,15 +191,15 @@ export const TCG_PROFILES: Record<string, TcgProfile> = {
   },
   Pokemon: {
     displayName: 'Pokémon',
-    tags: { en: ['Accessible', 'Tactical', 'Collectible'], de: ['Einsteigerfreundlich', 'Taktisch', 'Sammelbar'] },
+    tags: { en: ['Adventurous', 'Iconic', 'Collectible'], de: ['Abenteuerlich', 'Ikonisch', 'Sammelbar'] },
     stats: { strategy: 5, pace: 5, collecting: 10, accessibility: 1 },
     short: {
       en: 'An approachable strategy game where Pokémon evolve, use Energy and battle for Prize cards.',
       de: 'Ein zugängliches Strategiespiel, in dem Pokémon sich entwickeln, Energie nutzen und um Preiskarten kämpfen.',
     },
     about: {
-      en: 'Build a 60-card deck around Pokémon, Trainers and Energy, develop your board and take Prize cards by knocking out opposing Pokémon.',
-      de: 'Baue ein 60-Karten-Deck aus Pokémon, Trainern und Energie, entwickle dein Board und sichere dir Preiskarten, indem du gegnerische Pokémon besiegst.',
+      en: 'Build a deck around Pokémon, Trainers and Energy, develop your board and take Prize cards by knocking out opposing Pokémon.',
+      de: 'Baue ein Deck aus Pokémon, Trainern und Energie, entwickle dein Board und sichere dir Preiskarten, indem du gegnerische Pokémon besiegst.',
     },
     likeIf: {
       en: 'you want an easy entry into TCGs with plenty of strategy and a huge collecting side.',
