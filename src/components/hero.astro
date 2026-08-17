@@ -234,30 +234,26 @@ const RIFT_ARM = (() => {
                     {game.key === 'Yu-Gi-Oh!' && (
                       <svg viewBox="0 0 100 100" class="h-16 w-16 opacity-95">
                         <defs>
-                          <radialGradient id="rg-yugioh" cx="50%" cy="45%" r="52%">
+                          <radialGradient id="rg-yugioh" cx="50%" cy="50%" r="50%">
                             <stop offset="0%"   stop-color="currentColor" stop-opacity="0.4"/>
                             <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
                           </radialGradient>
+                          {/*
+                            The emblem goes in as a luminance mask rather than a
+                            plain <image>, so the card accent paints it instead of
+                            it staying gold: bright areas let the fill through, the
+                            engraved linework and the ring's eye drop out to the
+                            card behind. The source art is shaded metal, whose
+                            mid-tone gold would have masked to a patchy 60% — the
+                            committed asset is thresholded to flat black and white
+                            first so the fill comes out even.
+                          */}
+                          <mask id="mask-yugioh" style="mask-type:luminance">
+                            <image href="/yugioh-emblem.png" x="6" y="7.6" width="88" height="84.7"/>
+                          </mask>
                         </defs>
-                        <circle cx="50" cy="46" r="46" fill="url(#rg-yugioh)"/>
-                        {/*
-                          Eye of Horus, drawn as round-capped strokes to read as
-                          the tubular goldwork of the original. Nothing is filled:
-                          the sclera and the pupil are simply gaps the dark card
-                          shows through, the same relationship the artwork has.
-                        */}
-                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                          {/* Brow */}
-                          <path d="M10 34 C12 21 27 14 50 14 C69 14 83 17 90 22" stroke-width="6.5"/>
-                          {/* Eye */}
-                          <path d="M15 47 C24 30 40 24 55 24 C71 24 84 31 89 37 C83 48 69 60 52 61 C34 62 20 55 15 47 Z" stroke-width="5"/>
-                          {/* Iris ring — its inner hole is the pupil */}
-                          <circle cx="55" cy="42" r="9" stroke-width="5"/>
-                          {/* Teardrop leg */}
-                          <path d="M44 61 C43 70 40 78 33 84" stroke-width="5.5"/>
-                          {/* Curled leg */}
-                          <path d="M62 60 C61 70 63 78 70 82 C78 86 87 82 87 74 C87 67 79 64 75 69 C72 73 75 77 78 75" stroke-width="5.5"/>
-                        </g>
+                        <circle cx="50" cy="50" r="46" fill="url(#rg-yugioh)"/>
+                        <rect width="100" height="100" fill="currentColor" mask="url(#mask-yugioh)"/>
                       </svg>
                     )}
                     {game.key === 'Pokemon' && (
