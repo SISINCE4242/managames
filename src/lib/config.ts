@@ -22,16 +22,16 @@ export const TWITTER_URL = 'https://www.twitter.com/example';
 export const MEDIA = {
   // No fallback on purpose: the old logo (PB.jpeg) must not be shown any more.
   // Until /logo.png exists, <BrandMark> renders a drawn card fan instead.
-  logo: { src: '/LogoNeu.png' },
+  logo: { src: '/LogoNeu.webp' },
   storefront: { src: '/storefront.jpeg', fallback: '/VordererLaden.jpeg' },
   community: { src: '/community.jpeg', fallback: '/MY.jpeg' },
   signage: { src: '/Mana Games.png' },
   shelf: { src: '/Regal.jpeg', pending: false },
-  mascot: { src: '/Mana-Girl.png' },
-  mascotWave: { src: '/mana-girl-winken.png' },
-  mascotPresent: { src: '/mana-girl-präsentieren.png' },
-  mascotPoint: { src: '/mana-girl-zeigen.png' },
-  mascotHowTo: { src: '/mana-girl-howtoplay.png' },
+  mascot: { src: '/Mana-Girl.webp' },
+  mascotWave: { src: '/mana-girl-winken.webp' },
+  mascotPresent: { src: '/mana-girl-präsentieren.webp' },
+  mascotPoint: { src: '/mana-girl-zeigen.webp' },
+  mascotHowTo: { src: '/mana-girl-howtoplay.webp' },
 };
 
 export type GamePattern =
